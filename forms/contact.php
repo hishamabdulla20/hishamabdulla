@@ -6,37 +6,54 @@
   * For more info and help: https://bootstrapmade.com/php-email-form/
   */
 
-  // Replace contact@example.com with your real receiving email address
-  $receiving_email_address = 'contact@example.com';
+  // Simple contact form handler
+  // Update the receiving email address below to your real address
+  $receiving_email_address = 'hishamabdulla20@gmail.com';
 
-  if( file_exists($php_email_form = '../assets/vendor/php-email-form/php-email-form.php' )) {
-    include( $php_email_form );
-  } else {
-    die( 'Unable to load the "PHP Email Form" Library!');
+  header('Content-Type: text/plain; charset=UTF-8');
+
+  // Basic server-side validation and sanitization
+  $name = isset($_POST['name']) ? trim($_POST['name']) : '';
+  $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+  $subject = isset($_POST['subject']) ? trim($_POST['subject']) : 'New contact message';
+  $message = isset($_POST['message']) ? trim($_POST['message']) : '';
+
+  if (empty($name) || empty($email) || empty($message)) {
+    http_response_code(400);
+    echo 'Please fill in all required fields.';
+    exit;
   }
 
-  $contact = new PHP_Email_Form;
-  $contact->ajax = true;
-  
-  $contact->to = $receiving_email_address;
-  $contact->from_name = $_POST['name'];
-  $contact->from_email = $_POST['email'];
-  $contact->subject = $_POST['subject'];
+  if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    http_response_code(400);
+    echo 'Please provide a valid email address.';
+    exit;
+  }
 
-  // Uncomment below code if you want to use SMTP to send emails. You need to enter your correct SMTP credentials
-  /*
-  $contact->smtp = array(
-    'host' => 'example.com',
-    'username' => 'example',
-    'password' => 'pass',
-    'port' => '587'
-  );
-  */
+  // Build email
+  $email_subject = "[Portfolio Contact] " . $subject;
+  $email_body = "Name: " . htmlspecialchars($name) . "\n";
+  $email_body .= "Email: " . htmlspecialchars($email) . "\n\n";
+  $email_body .= "Message:\n" . htmlspecialchars($message) . "\n";
 
-  $contact->add_message( $_POST['name'], 'From');
-  $contact->add_message( $_POST['email'], 'Email');
-  isset($_POST['phone']) && $contact->add_message($_POST['phone'], 'Phone');
-  $contact->add_message( $_POST['message'], 'Message', 10);
+  $headers = [];
+  $headers[] = 'From: ' . $name . ' <' . $email . '>';
+  $headers[] = 'Reply-To: ' . $email;
+  $headers[] = 'MIME-Version: 1.0';
+  $headers[] = 'Content-Type: text/plain; charset=UTF-8';
 
-  echo $contact->send();
+  // Try to send mail using PHP mail(). If unavailable on hosting, user can configure SMTP.
+  $sent = false;
+  try {
+    $sent = mail($receiving_email_address, $email_subject, $email_body, implode("\r\n", $headers));
+  } catch (Exception $e) {
+    $sent = false;
+  }
+
+  if ($sent) {
+    echo 'OK';
+  } else {
+    http_response_code(500);
+    echo 'There was an error sending the message. Please try again later.';
+  }
 ?>
