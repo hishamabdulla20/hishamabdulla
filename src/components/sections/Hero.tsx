@@ -1,4 +1,3 @@
-import heroPortrait from '../../assets/hisham-portrait.png'
 import { profile } from '../../data/portfolio'
 import { ButtonLink } from '../ui/ButtonLink'
 
@@ -29,15 +28,11 @@ export function Hero() {
         </div>
       </div>
       <div className="hero-portrait">
-        <div className="hero-portrait__frame">
-          <img
-            src={heroPortrait}
-            alt="Sepia architectural portrait of Hisham Abdulla"
-            width="1312"
-            height="1199"
-            fetchPriority="high"
-          />
-        </div>
+        <div
+          className="hero-portrait__frame hero-portrait__frame--empty"
+          role="img"
+          aria-label="Reserved space for a future portrait of Hisham Abdulla"
+        />
       </div>
       <a className="scroll-cue technical-label" href="#about">
         Scroll to explore <span aria-hidden="true">↓</span>

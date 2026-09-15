@@ -257,11 +257,12 @@
   box-shadow: inset 0 0 7rem rgba(13, 13, 13, 0.65);
 }
 
-.hero-portrait img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
+.hero-portrait__frame--empty {
+  background:
+    linear-gradient(var(--hairline) 1px, transparent 1px),
+    linear-gradient(90deg, var(--hairline) 1px, transparent 1px),
+    var(--surface-low);
+  background-size: 4rem 4rem;
 }
 
 .scroll-cue {
