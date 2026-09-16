@@ -1,8 +1,23 @@
 import { useEffect, useRef, useState } from 'react'
 import { navigation } from '../../data/portfolio'
 
+type Theme = 'dark' | 'light'
+
+const themeStorageKey = 'portfolio-theme'
+
+function applyTheme(theme: Theme) {
+  document.documentElement.dataset.theme = theme
+  document.documentElement.style.colorScheme = theme
+  document
+    .querySelector('meta[name="theme-color"]')
+    ?.setAttribute('content', theme === 'light' ? '#F3EFE5' : '#000000')
+}
+
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
+  const [theme, setTheme] = useState<Theme>(() =>
+    document.documentElement.dataset.theme === 'light' ? 'light' : 'dark',
+  )
   const headerRef = useRef<HTMLElement>(null)
   const toggleRef = useRef<HTMLButtonElement>(null)
   const firstLinkRef = useRef<HTMLAnchorElement>(null)
@@ -73,6 +88,40 @@ export function Navbar() {
     return () => desktopQuery.removeEventListener('change', closeAtDesktop)
   }, [])
 
+  useEffect(() => {
+    applyTheme(theme)
+  }, [theme])
+
+  useEffect(() => {
+    const systemTheme = window.matchMedia('(prefers-color-scheme: light)')
+    const followSystemTheme = (event: MediaQueryListEvent) => {
+      let savedTheme: string | null = null
+      try {
+        savedTheme = localStorage.getItem(themeStorageKey)
+      } catch {
+        // System preference remains the safe fallback when storage is unavailable.
+      }
+
+      if (savedTheme !== 'dark' && savedTheme !== 'light') {
+        setTheme(event.matches ? 'light' : 'dark')
+      }
+    }
+
+    systemTheme.addEventListener('change', followSystemTheme)
+    return () => systemTheme.removeEventListener('change', followSystemTheme)
+  }, [])
+
+  const toggleTheme = () => {
+    const nextTheme: Theme = theme === 'dark' ? 'light' : 'dark'
+    applyTheme(nextTheme)
+    setTheme(nextTheme)
+    try {
+      localStorage.setItem(themeStorageKey, nextTheme)
+    } catch {
+      // The theme still works for this session when storage is unavailable.
+    }
+  }
+
   return (
     <header
       ref={headerRef}
@@ -86,6 +135,29 @@ export function Navbar() {
       >
         HA<span className="wordmark__dot">.</span>
       </a>
+      <div className="header-actions">
+        <button
+          className="theme-toggle"
+          type="button"
+          aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+          title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+          onClick={toggleTheme}
+        >
+          {theme === 'dark' ? (
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="3.5" />
+              <path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M18.7 5.3l-1.4 1.4M6.7 17.3l-1.4 1.4" />
+            </svg>
+          ) : (
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M19.5 15.1A8 8 0 0 1 8.9 4.5 8 8 0 1 0 19.5 15.1Z" />
+            </svg>
+          )}
+        </button>
+        <a className="header-contact" href="#contact">
+          Let’s talk <span aria-hidden="true">↗</span>
+        </a>
+      </div>
       <button
         ref={toggleRef}
         className="menu-toggle"
@@ -118,9 +190,6 @@ export function Navbar() {
           ))}
         </ul>
       </nav>
-      <a className="header-contact" href="#contact">
-        Let’s talk <span aria-hidden="true">↗</span>
-      </a>
     </header>
   )
 }
