@@ -1,18 +1,28 @@
 :root {
-  --bg: #0d0d0d;
-  --surface: #141414;
-  --surface-low: #111111;
-  --surface-high: #1c1c1c;
+  --bg-primary: #000000;
+  --bg-elevated: #080808;
+  --bg-hover: #0d0d0d;
+  --text-primary: #f1eae0;
+  --text-secondary: #aaa59d;
+  --accent: #b89b72;
+  --border-subtle: rgba(190, 160, 120, 0.1);
+  --grid-line: rgba(190, 160, 120, 0.08);
+  --bg: var(--bg-primary);
+  --surface: var(--bg-elevated);
+  --surface-low: var(--bg-primary);
+  --surface-high: var(--bg-hover);
   --sepia: #b89b72;
   --sepia-dark: #a3865d;
   --sepia-light: #e1c296;
-  --cream: #f1eae0;
+  --cream: var(--text-primary);
   --text: #d3cec5;
-  --muted: #aaa59d;
-  --outline: #4d463c;
-  --hairline: rgba(184, 155, 114, 0.22);
-  --serif: Didot, 'Didot LT STD', 'Bodoni Moda', 'Bodoni 72', serif;
-  --sans: 'Avenir Next', Avenir, Manrope, system-ui, sans-serif;
+  --muted: var(--text-secondary);
+  --outline: rgba(190, 160, 120, 0.18);
+  --hairline: var(--border-subtle);
+  --font-display: 'Cormorant Garamond', 'Bodoni Moda', 'Bodoni 72', Georgia, serif;
+  --font-body: Inter, Manrope, 'Avenir Next', Avenir, system-ui, sans-serif;
+  --serif: var(--font-display);
+  --sans: var(--font-body);
   --mono: 'JetBrains Mono', ui-monospace, monospace;
   --type-meta: clamp(0.6875rem, 0.66rem + 0.12vw, 0.75rem);
   --type-ui: clamp(0.6875rem, 0.65rem + 0.2vw, 0.8125rem);
@@ -24,6 +34,8 @@
   background: var(--bg);
   font-family: var(--sans);
   font-size: var(--type-body);
+  font-weight: 400;
+  letter-spacing: 0.01em;
   line-height: 1.7;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -34,7 +46,7 @@
 * { box-sizing: border-box; }
 
 html {
-  background: var(--bg);
+  background: #000000;
   scroll-padding-top: 5rem;
 }
 
@@ -42,6 +54,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  background: #000000;
   overflow-x: hidden;
 }
 
