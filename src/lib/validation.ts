@@ -47,5 +47,10 @@ export function required(value: string, maxLength: number): boolean {
 }
 
 export function safeError(context: string, error: unknown): void {
-  console.error(`[portfolio:${context}]`, error instanceof Error ? error.message : 'Unknown error')
+  if (error && typeof error === 'object') {
+    console.error(`[portfolio:${context}]`, JSON.stringify(error, null, 2))
+    return
+  }
+
+  console.error(`[portfolio:${context}]`, String(error))
 }
