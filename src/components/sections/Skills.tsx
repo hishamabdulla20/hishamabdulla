@@ -14,7 +14,11 @@ export function Skills({ skillGroups }: { skillGroups: SkillGroup[] }) {
               <h3>{group.category}</h3>
             </div>
             <div className="skill-tags">
-              {group.skills.map((skill) => <TechTag key={skill} muted={'isPlaceholder' in group}>{skill}</TechTag>)}
+              {group.skills.map((skill) => (
+                <TechTag key={skill} muted={Boolean(group.isPlaceholder)} showIcon={!group.isPlaceholder}>
+                  {skill}
+                </TechTag>
+              ))}
             </div>
           </article>
         ))}

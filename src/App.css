@@ -657,6 +657,8 @@ main { background: var(--bg-primary); }
 
 .tech-tag {
   display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   padding: 0.58rem 0.8rem;
   border: 1px solid var(--outline);
   color: var(--text);
@@ -664,6 +666,20 @@ main { background: var(--bg-primary); }
   font-family: var(--mono);
   font-size: var(--type-meta);
   letter-spacing: 0.04em;
+  white-space: nowrap;
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease,
+    transform 200ms var(--motion-ease-out);
+}
+
+.tech-tag__icon {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  color: var(--muted);
+  transition: color 200ms ease;
 }
 
 .tech-tag--muted { color: var(--muted); border-style: dashed; font-style: normal; }
@@ -777,14 +793,37 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
   align-items: center;
   min-height: 8.5rem;
   border-bottom: 1px solid var(--hairline);
-  transition: background-color 180ms ease;
+  transition:
+    background-color 260ms ease,
+    border-color 260ms ease;
 }
 
-.service-row:hover { background: var(--surface); }
-.service-row > .technical-label { color: var(--sepia); }
-.service-row h3 { font-size: clamp(1.5rem, 2vw, 2.25rem); line-height: 1.15; transition: transform 180ms var(--motion-ease-out); }
-.service-row p { margin: 0; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
-.service-row__arrow { color: var(--sepia); font-size: 1.3rem; transition: transform 180ms var(--motion-ease-out); }
+.service-row > .technical-label {
+  color: var(--sepia);
+  transition: color 240ms ease;
+}
+
+.service-row h3 {
+  font-size: clamp(1.5rem, 2vw, 2.25rem);
+  line-height: 1.15;
+  transition: transform 300ms var(--motion-ease-out);
+}
+
+.service-row p {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--type-body);
+  line-height: 1.7;
+  transition: color 240ms ease;
+}
+
+.service-row__arrow {
+  color: var(--sepia);
+  font-size: 1.3rem;
+  transition:
+    color 240ms ease,
+    transform 300ms var(--motion-ease-out);
+}
 
 .journey-layout { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem, 8vw, 9rem); }
 
@@ -961,7 +1000,6 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
 .section-block,
 .hero-portrait__frame,
 .skill-group,
-.tech-tag,
 .interest-item,
 .contact-form,
 .site-footer,
@@ -973,6 +1011,15 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
 }
 
 @media (hover: hover) and (pointer: fine) {
+  #skills .tech-tag:not(.tech-tag--muted):hover {
+    color: var(--cream);
+    background: var(--surface-high);
+    border-color: var(--sepia-dark);
+    transform: translateY(-1px);
+  }
+
+  #skills .tech-tag:not(.tech-tag--muted):hover .tech-tag__icon { color: var(--sepia-light); }
+
   .wordmark:hover .wordmark__dot { transform: scale(1.25); }
   .wordmark__dot { display: inline-block; transition: transform 180ms var(--motion-ease-out); }
   .header-contact:hover span { transform: translate(0.12rem, -0.12rem); }
@@ -981,8 +1028,11 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
   .button-link:active:not(.button-link--disabled):not(:disabled) { transform: translateY(0) scale(0.985); }
   .project-card:hover { border-color: var(--sepia-dark); background: var(--surface-high); transform: translate3d(0, -0.2rem, 0); }
   .project-card:hover h3 { color: var(--sepia-light); transform: translateX(0.15rem); }
-  .service-row:hover h3 { transform: translateX(0.2rem); }
-  .service-row:hover .service-row__arrow,
+  .service-row:hover { background: var(--surface); border-bottom-color: var(--outline); }
+  .service-row:hover > .technical-label { color: var(--sepia-light); }
+  .service-row:hover h3 { transform: translateX(0.5rem); }
+  .service-row:hover p { color: var(--text); }
+  .service-row:hover .service-row__arrow { color: var(--sepia-light); transform: translate(0.25rem, -0.25rem); }
   .interest-item:hover > span:last-child { transform: translate(0.12rem, -0.12rem); }
   .site-footer a:hover { color: var(--sepia-light); }
   .site-footer a:hover span { transform: translateY(-0.15rem); }
@@ -1045,6 +1095,7 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
   .text-link__arrow,
   .project-card,
   .project-card h3,
+  #skills .tech-tag,
   .service-row h3,
   .service-row__arrow,
   .interest-item > span:last-child,
