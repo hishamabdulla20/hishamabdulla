@@ -15,7 +15,7 @@
   --color-on-accent: #000000;
   --color-border: rgba(190, 160, 120, 0.18);
   --color-border-subtle: rgba(190, 160, 120, 0.1);
-  --color-grid: rgba(190, 160, 120, 0.08);
+  --color-grid: rgba(190, 160, 120, 0.04);
   --color-placeholder: #77736d;
   --color-overlay-soft: rgba(0, 0, 0, 0.12);
   --color-overlay-strong: rgba(0, 0, 0, 0.88);
@@ -38,7 +38,7 @@
   --color-on-accent: #171614;
   --color-border: rgba(40, 34, 27, 0.18);
   --color-border-subtle: rgba(40, 34, 27, 0.11);
-  --color-grid: rgba(55, 45, 35, 0.055);
+  --color-grid: rgba(70, 55, 40, 0.04);
   --color-placeholder: #7a7267;
   --color-overlay-soft: rgba(243, 239, 229, 0.08);
   --color-overlay-strong: rgba(243, 239, 229, 0.9);
@@ -54,6 +54,7 @@
   --accent: var(--color-accent);
   --border-subtle: var(--color-border-subtle);
   --grid-line: var(--color-grid);
+  --grid-size: clamp(4.5rem, 8.75vw, 8rem);
   --bg: var(--color-bg);
   --surface: var(--color-surface);
   --surface-low: var(--color-surface-alt);

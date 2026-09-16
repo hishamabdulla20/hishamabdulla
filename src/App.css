@@ -143,9 +143,9 @@ main { background: var(--bg-primary); }
 .grid-field {
   background-color: var(--bg-primary);
   background-image:
-    linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size: min(8vw, 7rem) min(8vw, 7rem);
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
 }
 
 .hero-section {
