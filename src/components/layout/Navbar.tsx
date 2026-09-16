@@ -19,6 +19,7 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [theme, setTheme] = useState<Theme>('dark')
   const [themeReady, setThemeReady] = useState(false)
+  const [activeHref, setActiveHref] = useState('')
   const headerRef = useRef<HTMLElement>(null)
   const toggleRef = useRef<HTMLButtonElement>(null)
   const firstLinkRef = useRef<HTMLAnchorElement>(null)
@@ -87,6 +88,25 @@ export function Navbar() {
 
     desktopQuery.addEventListener('change', closeAtDesktop)
     return () => desktopQuery.removeEventListener('change', closeAtDesktop)
+  }, [])
+
+  useEffect(() => {
+    const sections = navigation
+      .map((item) => document.querySelector<HTMLElement>(item.href))
+      .filter((section): section is HTMLElement => Boolean(section))
+
+    if (!sections.length || !('IntersectionObserver' in window)) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const activeEntry = entries.find((entry) => entry.isIntersecting)
+        if (activeEntry) setActiveHref(`#${activeEntry.target.id}`)
+      },
+      { rootMargin: '-20% 0px -70% 0px', threshold: 0 },
+    )
+
+    sections.forEach((section) => observer.observe(section))
+    return () => observer.disconnect()
   }, [])
 
   useEffect(() => {
@@ -190,6 +210,7 @@ export function Navbar() {
               <a
                 ref={index === 0 ? firstLinkRef : undefined}
                 href={item.href}
+                aria-current={activeHref === item.href ? 'location' : undefined}
                 onClick={() => setIsOpen(false)}
               >
                 <span>{item.number}</span>

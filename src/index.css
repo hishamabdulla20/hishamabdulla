@@ -78,6 +78,7 @@
   --type-body: clamp(1rem, 0.96rem + 0.18vw, 1.125rem);
   --type-section: clamp(2.375rem, 4vw, 4rem);
   --type-hero: clamp(4rem, 7vw, 6rem);
+  --motion-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   color: var(--text);
   background: var(--bg);
   font-family: var(--sans);
@@ -132,6 +133,7 @@ body,
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     scroll-behavior: auto !important;
+    animation-delay: 0s !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

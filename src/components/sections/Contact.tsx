@@ -78,8 +78,12 @@ export function Contact({ socialLinks }: { socialLinks: SocialLink[] }) {
     'aria-describedby': errors[name] ? `${name}-error` : undefined,
   })
 
+  const statusTone = Object.keys(errors).length
+    ? 'error'
+    : status.startsWith('Thanks') ? 'success' : 'neutral'
+
   return (
-    <section className="contact-section grid-field" id="contact" aria-labelledby="contact-title">
+    <section className="contact-section grid-field" id="contact" aria-labelledby="contact-title" data-reveal>
       <div className="contact-heading">
         <p className="section-header__eyebrow technical-label"><span>08</span> — Contact</p>
         <p className="contact-kicker">Have an idea?</p>
@@ -115,9 +119,9 @@ export function Contact({ socialLinks }: { socialLinks: SocialLink[] }) {
         </div>
         <div className="contact-form__footer">
           <button className="button-link" type="submit" disabled={isSubmitting}>
-            {isSubmitting ? 'Sending…' : 'Send message'} <span aria-hidden="true">→</span>
+            {isSubmitting ? 'Sending…' : 'Send message'} <span className="button-link__arrow" aria-hidden="true">→</span>
           </button>
-          <p className="form-status" role="status" aria-live="polite">{status}</p>
+          <p key={status} className={`form-status form-status--${statusTone}`} role="status" aria-live="polite">{status}</p>
         </div>
       </form>
     </section>

@@ -8,7 +8,7 @@ type JourneyProps = {
 
 export function Journey({ journey, currentFocus }: JourneyProps) {
   return (
-    <section className="section-block section-block--surface" id="journey" aria-labelledby="journey-title">
+    <section className="section-block section-block--surface" id="journey" aria-labelledby="journey-title" data-reveal>
       <SectionHeader id="journey-title" number="05" eyebrow="My journey" title="Still learning." italic="Always moving." />
       <div className="journey-layout">
         <div className="timeline">

@@ -5,7 +5,7 @@ import { TechTag } from '../ui/TechTag'
 
 export function Projects({ projects }: { projects: Project[] }) {
   return (
-    <section className="section-block projects-section grid-field" id="work" aria-labelledby="work-title">
+    <section className="section-block projects-section grid-field" id="work" aria-labelledby="work-title" data-reveal>
       <SectionHeader id="work-title" number="03" eyebrow="Selected projects" title="Work with" italic="purpose." />
       <div className="projects-list">
         {projects.map((project) => (

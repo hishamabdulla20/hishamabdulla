@@ -4,7 +4,7 @@ import { TechTag } from '../ui/TechTag'
 
 export function Skills({ skillGroups }: { skillGroups: SkillGroup[] }) {
   return (
-    <section className="section-block section-block--surface" id="skills" aria-labelledby="skills-title">
+    <section className="section-block section-block--surface" id="skills" aria-labelledby="skills-title" data-reveal>
       <SectionHeader id="skills-title" number="02" eyebrow="Skills & technologies" title="Tools for the" italic="whole build." />
       <div className="skills-grid">
         {skillGroups.map((group) => (

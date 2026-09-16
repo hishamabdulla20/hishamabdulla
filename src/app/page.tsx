@@ -9,6 +9,7 @@ import { Projects } from '../components/sections/Projects'
 import { Services } from '../components/sections/Services'
 import { Skills } from '../components/sections/Skills'
 import { Writing } from '../components/sections/Writing'
+import { RevealController } from '../components/ui/RevealController'
 import { getPortfolioData } from '../lib/portfolio-data'
 
 export const revalidate = 300
@@ -18,6 +19,7 @@ export default async function HomePage() {
 
   return (
     <div className="site-shell">
+      <RevealController />
       <Navbar />
       <main>
         <Hero profile={data.profile} />

@@ -3,7 +3,7 @@ import { SectionHeader } from '../ui/SectionHeader'
 
 export function Writing({ articles }: { articles: Article[] }) {
   return (
-    <section className="section-block" id="writing" aria-labelledby="writing-title">
+    <section className="section-block" id="writing" aria-labelledby="writing-title" data-reveal>
       <SectionHeader id="writing-title" number="07" eyebrow="Writing & thoughts" title="Notes from the" italic="workbench." />
       <div className="article-list">
         {articles.map((article, index) => (
