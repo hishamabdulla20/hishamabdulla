@@ -1,7 +1,7 @@
-import { profile } from '../../data/portfolio'
+import type { Profile } from '../../types/portfolio'
 import { ButtonLink } from '../ui/ButtonLink'
 
-export function Hero() {
+export function Hero({ profile }: { profile: Profile }) {
   return (
     <section className="hero-section grid-field" id="top" aria-labelledby="hero-title">
       <div className="hero-section__index technical-label" aria-hidden="true">
@@ -28,11 +28,17 @@ export function Hero() {
         </div>
       </div>
       <div className="hero-portrait">
-        <div
-          className="hero-portrait__frame hero-portrait__frame--empty"
-          role="img"
-          aria-label="Reserved space for a future portrait of Hisham Abdulla"
-        />
+        {profile.portraitUrl ? (
+          <div className="hero-portrait__frame">
+            <img src={profile.portraitUrl} alt={`Portrait of ${profile.name}`} />
+          </div>
+        ) : (
+          <div
+            className="hero-portrait__frame hero-portrait__frame--empty"
+            role="img"
+            aria-label={`Reserved space for a future portrait of ${profile.name}`}
+          />
+        )}
       </div>
       <a className="scroll-cue technical-label" href="#about">
         Scroll to explore <span aria-hidden="true">↓</span>

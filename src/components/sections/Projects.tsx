@@ -1,9 +1,9 @@
-import { projects } from '../../data/portfolio'
+import type { Project } from '../../types/portfolio'
 import { ExternalOrPlaceholder } from '../ui/ExternalOrPlaceholder'
 import { SectionHeader } from '../ui/SectionHeader'
 import { TechTag } from '../ui/TechTag'
 
-export function Projects() {
+export function Projects({ projects }: { projects: Project[] }) {
   return (
     <section className="section-block projects-section grid-field" id="work" aria-labelledby="work-title">
       <SectionHeader id="work-title" number="03" eyebrow="Selected projects" title="Work with" italic="purpose." />

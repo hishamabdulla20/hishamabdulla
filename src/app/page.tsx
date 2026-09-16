@@ -9,21 +9,26 @@ import { Projects } from '../components/sections/Projects'
 import { Services } from '../components/sections/Services'
 import { Skills } from '../components/sections/Skills'
 import { Writing } from '../components/sections/Writing'
+import { getPortfolioData } from '../lib/portfolio-data'
 
-export default function HomePage() {
+export const revalidate = 300
+
+export default async function HomePage() {
+  const data = await getPortfolioData()
+
   return (
     <div className="site-shell">
       <Navbar />
       <main>
-        <Hero />
-        <About />
-        <Skills />
-        <Projects />
+        <Hero profile={data.profile} />
+        <About profile={data.profile} />
+        <Skills skillGroups={data.skillGroups} />
+        <Projects projects={data.projects} />
         <Services />
-        <Journey />
+        <Journey journey={data.journey} currentFocus={data.currentFocus} />
         <BeyondCode />
-        <Writing />
-        <Contact />
+        <Writing articles={data.articles} />
+        <Contact socialLinks={data.socialLinks} />
       </main>
       <Footer />
     </div>

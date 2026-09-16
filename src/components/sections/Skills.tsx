@@ -1,8 +1,8 @@
-import { skillGroups } from '../../data/portfolio'
+import type { SkillGroup } from '../../types/portfolio'
 import { SectionHeader } from '../ui/SectionHeader'
 import { TechTag } from '../ui/TechTag'
 
-export function Skills() {
+export function Skills({ skillGroups }: { skillGroups: SkillGroup[] }) {
   return (
     <section className="section-block section-block--surface" id="skills" aria-labelledby="skills-title">
       <SectionHeader id="skills-title" number="02" eyebrow="Skills & technologies" title="Tools for the" italic="whole build." />

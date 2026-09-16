@@ -1,7 +1,7 @@
-import { profile } from '../../data/portfolio'
+import type { Profile } from '../../types/portfolio'
 import { SectionHeader } from '../ui/SectionHeader'
 
-export function About() {
+export function About({ profile }: { profile: Profile }) {
   return (
     <section className="section-block about-section" id="about" aria-labelledby="about-title">
       <SectionHeader id="about-title" number="01" eyebrow="About me" title="Discover. Develop." italic="Deploy." />

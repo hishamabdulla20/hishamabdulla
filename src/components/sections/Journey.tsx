@@ -1,7 +1,12 @@
-import { currentFocus, journey } from '../../data/portfolio'
+import type { FocusItem, JourneyItem } from '../../types/portfolio'
 import { SectionHeader } from '../ui/SectionHeader'
 
-export function Journey() {
+type JourneyProps = {
+  journey: JourneyItem[]
+  currentFocus: FocusItem[]
+}
+
+export function Journey({ journey, currentFocus }: JourneyProps) {
   return (
     <section className="section-block section-block--surface" id="journey" aria-labelledby="journey-title">
       <SectionHeader id="journey-title" number="05" eyebrow="My journey" title="Still learning." italic="Always moving." />

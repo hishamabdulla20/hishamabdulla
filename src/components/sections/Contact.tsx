@@ -1,19 +1,26 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
-import { socialLinks } from '../../data/portfolio'
+import type { SocialLink } from '../../types/portfolio'
 import { ExternalOrPlaceholder } from '../ui/ExternalOrPlaceholder'
 
 type FormErrors = Partial<Record<'name' | 'email' | 'subject' | 'message', string>>
 
-export function Contact() {
+export function Contact({ socialLinks }: { socialLinks: SocialLink[] }) {
   const [errors, setErrors] = useState<FormErrors>({})
   const [status, setStatus] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const startedAt = useRef(0)
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  useEffect(() => {
+    startedAt.current = Date.now()
+  }, [])
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const data = new FormData(event.currentTarget)
+    const form = event.currentTarget
+    const data = new FormData(form)
     const nextErrors: FormErrors = {}
     const name = String(data.get('name') ?? '').trim()
     const email = String(data.get('email') ?? '').trim()
@@ -27,11 +34,43 @@ export function Contact() {
     if (!message) nextErrors.message = 'Please write a message.'
 
     setErrors(nextErrors)
-    setStatus(
-      Object.keys(nextErrors).length
-        ? 'Please review the highlighted fields.'
-        : 'Your message is ready, but the contact service has not been connected yet.',
-    )
+    if (Object.keys(nextErrors).length) {
+      setStatus('Please review the highlighted fields.')
+      return
+    }
+
+    setIsSubmitting(true)
+    setStatus('Sending…')
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          email,
+          subject,
+          message,
+          company: String(data.get('company') ?? ''),
+          startedAt: startedAt.current || Date.now(),
+        }),
+      })
+      const result = await response.json() as { message?: string; fieldErrors?: FormErrors }
+
+      if (!response.ok) {
+        setErrors(result.fieldErrors ?? {})
+        setStatus(result.message ?? 'Unable to send message. Please try again.')
+        return
+      }
+
+      form.reset()
+      startedAt.current = Date.now()
+      setStatus('Thanks — your message has been sent.')
+    } catch {
+      setStatus('Unable to send message. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const field = (name: keyof FormErrors) => ({
@@ -50,6 +89,10 @@ export function Contact() {
         </div>
       </div>
       <form className="contact-form" onSubmit={handleSubmit} noValidate>
+        <div className="form-honeypot" aria-hidden="true">
+          <label htmlFor="company">Company website</label>
+          <input id="company" name="company" tabIndex={-1} autoComplete="off" />
+        </div>
         <div className="form-field">
           <label htmlFor="name">Name</label>
           <input id="name" name="name" autoComplete="name" placeholder="Your name" {...field('name')} />
@@ -71,7 +114,9 @@ export function Contact() {
           {errors.message && <span className="form-error" id="message-error">{errors.message}</span>}
         </div>
         <div className="contact-form__footer">
-          <button className="button-link" type="submit">Send message <span aria-hidden="true">→</span></button>
+          <button className="button-link" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Sending…' : 'Send message'} <span aria-hidden="true">→</span>
+          </button>
           <p className="form-status" role="status" aria-live="polite">{status}</p>
         </div>
       </form>

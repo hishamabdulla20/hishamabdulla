@@ -4,13 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev & sleep 2 && xdg-open http://localhost:3000",
     "build": "next build",
     "start": "next start",
     "lint": "oxlint",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.116.0",
     "next": "^16.3.5",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
