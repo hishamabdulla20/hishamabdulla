@@ -12,6 +12,7 @@ import { Projects } from '../components/sections/Projects'
 import { Services } from '../components/sections/Services'
 import { Skills } from '../components/sections/Skills'
 import { Writing } from '../components/sections/Writing'
+import { FluidBackground } from '../components/ui/FluidBackground'
 import { RevealController } from '../components/ui/RevealController'
 import { getPortfolioData } from '../lib/portfolio-data'
 import { siteConfig } from '../lib/site-config'
@@ -87,6 +88,7 @@ export default async function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, '\\u003c') }}
       />
+      <FluidBackground />
       <RevealController />
       <Navbar />
       <main>
