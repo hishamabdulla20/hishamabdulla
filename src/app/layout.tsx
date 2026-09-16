@@ -2,12 +2,9 @@
 
 import type { Metadata, Viewport } from 'next'
 import type { ReactNode } from 'react'
+import { siteConfig } from '../lib/site-config'
 import '../index.css'
 import '../App.css'
-
-const title = 'Hisham Abdulla — Full-Stack Developer'
-const description =
-  'Personal portfolio of Hisham Abdulla, showcasing software development projects, technical skills, learning, writing and interests.'
 
 const themeInitializer = `
 (() => {
@@ -30,19 +27,17 @@ const themeInitializer = `
 `
 
 export const metadata: Metadata = {
-  title,
-  description,
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: siteConfig.title,
+    template: `%s | ${siteConfig.name}`,
+  },
+  description: siteConfig.description,
+  applicationName: `${siteConfig.name} Portfolio`,
+  authors: [{ name: siteConfig.name, url: siteConfig.url }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
   icons: { icon: '/favicon.svg' },
-  openGraph: {
-    type: 'website',
-    title,
-    description,
-  },
-  twitter: {
-    card: 'summary',
-    title,
-    description,
-  },
 }
 
 export const viewport: Viewport = {
