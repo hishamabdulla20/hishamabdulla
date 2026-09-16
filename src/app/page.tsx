@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     url: siteConfig.url,
     siteName: siteConfig.name,
     title: siteConfig.title,
-    description: siteConfig.description,
+    description: siteConfig.openGraphDescription,
   },
   twitter: {
     card: 'summary',
@@ -62,7 +62,8 @@ export default async function HomePage() {
       {
         '@type': 'Person',
         '@id': `${siteConfig.url}#person`,
-        name: siteConfig.name,
+        name: siteConfig.fullName,
+        alternateName: siteConfig.alternateNames,
         url: siteConfig.url,
         ...(data.profile.roles[0] ? { jobTitle: data.profile.roles[0] } : {}),
         ...(knowsAbout.length ? { knowsAbout } : {}),
@@ -71,7 +72,7 @@ export default async function HomePage() {
       {
         '@type': 'WebSite',
         '@id': `${siteConfig.url}#website`,
-        name: `${siteConfig.name} Portfolio`,
+        name: siteConfig.name,
         url: siteConfig.url,
         description: siteConfig.description,
         inLanguage: 'en',

@@ -34,9 +34,9 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   applicationName: `${siteConfig.name} Portfolio`,
-  authors: [{ name: siteConfig.name, url: siteConfig.url }],
-  creator: siteConfig.name,
-  publisher: siteConfig.name,
+  authors: [{ name: siteConfig.fullName, url: siteConfig.url }],
+  creator: siteConfig.fullName,
+  publisher: siteConfig.fullName,
   icons: { icon: '/favicon.svg' },
 }
 
