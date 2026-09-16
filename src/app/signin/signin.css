@@ -1,0 +1,301 @@
+/* Sign In Page — matches the portfolio's existing design language. */
+
+.signin-page {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: clamp(2rem, 6vw, 6rem);
+  background: var(--bg);
+}
+
+.signin-container {
+  width: min(100%, 26rem);
+}
+
+.signin-back-link {
+  display: inline-block;
+  margin-bottom: 3rem;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: var(--type-meta);
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 180ms ease;
+}
+
+.signin-back-link:hover { color: var(--cream); }
+
+.signin-eyebrow {
+  margin: 0 0 1.5rem;
+  color: var(--muted);
+}
+
+.signin-eyebrow span { color: var(--sepia); }
+
+.signin-page h1 {
+  margin: 0 0 0.75rem;
+  color: var(--cream);
+  font-family: var(--serif);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.signin-subtitle {
+  margin: 0 0 2.5rem;
+  color: var(--muted);
+  font-size: var(--type-body);
+  line-height: 1.5;
+}
+
+/* Card container for the auth options */
+.signin-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: clamp(1.5rem, 3.5vw, 2.5rem);
+  border: 1px solid var(--outline);
+  background: var(--bg-elevated);
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+
+/* Google button — follows Google branding guidelines */
+.signin-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 3.25rem;
+  padding: 0.625rem 1rem;
+  border: 1px solid var(--outline);
+  border-radius: 0;
+  color: var(--cream);
+  background: transparent;
+  font-family: var(--sans);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+
+.signin-google:hover {
+  background: var(--surface-high);
+  border-color: var(--sepia);
+}
+
+.signin-google:disabled { cursor: wait; opacity: 0.65; }
+
+.signin-google__icon {
+  width: 1.125rem;
+  height: 1.125rem;
+  flex: 0 0 auto;
+}
+
+/* Divider */
+.signin-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.5rem 0;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: var(--type-meta);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.signin-divider::before,
+.signin-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--hairline);
+}
+
+/* Method buttons (Email, Phone) */
+.signin-method {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 3.25rem;
+  padding: 0.625rem 1rem;
+  border: 1px solid var(--outline);
+  border-radius: 0;
+  color: var(--cream);
+  background: transparent;
+  font-family: var(--mono);
+  font-size: var(--type-ui);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+}
+
+.signin-method:hover {
+  background: var(--surface-high);
+  border-color: var(--sepia);
+}
+
+.signin-method__arrow {
+  display: inline-block;
+  transition: transform 180ms var(--motion-ease-out);
+}
+
+.signin-method:hover .signin-method__arrow { transform: translateX(0.25rem); }
+
+/* Back button inside card */
+.signin-back {
+  display: inline-flex;
+  align-self: flex-start;
+  margin-bottom: 0.5rem;
+  padding: 0;
+  border: 0;
+  color: var(--muted);
+  background: transparent;
+  font-family: var(--mono);
+  font-size: var(--type-meta);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 180ms ease;
+}
+
+.signin-back:hover { color: var(--cream); }
+
+/* Form fields */
+.signin-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+}
+
+.signin-field label {
+  color: var(--sepia-light);
+  font-family: var(--mono);
+  font-size: var(--type-meta);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 180ms ease;
+}
+
+.signin-field:focus-within label { color: var(--cream); }
+
+.signin-field input,
+.signin-country-select {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--outline);
+  border-radius: 0;
+  padding: 0.9rem 0;
+  color: var(--cream);
+  background: transparent;
+  font: inherit;
+  outline: none;
+  transition: border-color 180ms ease;
+}
+
+.signin-field input:focus,
+.signin-country-select:focus { border-color: var(--sepia); }
+
+.signin-field input::placeholder { color: var(--color-placeholder); }
+
+/* Phone row: country code + number */
+.signin-phone-row {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: 0.75rem;
+}
+
+.signin-country-select {
+  padding: 0.9rem 0.25rem;
+  color: var(--cream);
+  background: transparent;
+  font-family: var(--mono);
+  font-size: var(--type-meta);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  appearance: auto;
+}
+
+.signin-country-select option {
+  background: var(--bg);
+  color: var(--cream);
+}
+
+/* OTP input */
+.signin-otp-input {
+  font-family: var(--mono);
+  font-size: 1.5rem;
+  letter-spacing: 0.5em;
+  text-align: center;
+}
+
+/* Submit button */
+.signin-submit {
+  width: 100%;
+  cursor: pointer;
+}
+
+.signin-submit:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+/* Resend link */
+.signin-resend {
+  display: inline-block;
+  align-self: center;
+  margin-top: 0.5rem;
+  padding: 0;
+  border: 0;
+  color: var(--muted);
+  background: transparent;
+  font-family: var(--mono);
+  font-size: var(--type-meta);
+  letter-spacing: 0.06em;
+  text-decoration: underline;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 180ms ease;
+}
+
+.signin-resend:hover { color: var(--cream); }
+.signin-resend:disabled { cursor: wait; opacity: 0.65; }
+
+/* Info text */
+.signin-info {
+  margin: 0 0 1rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.signin-info strong { color: var(--cream); }
+
+/* Status message (reuses existing form-status classes from App.css) */
+.signin-card .form-status {
+  margin-top: 0.5rem;
+}
+
+/* Transitions for theme changes */
+.signin-card,
+.signin-field input,
+.signin-country-select {
+  transition-property: background-color, color, border-color;
+  transition-duration: 200ms;
+  transition-timing-function: ease;
+}
+
+/* Responsive */
+@media (max-width: 520px) {
+  .signin-page { padding: 1.5rem; }
+  .signin-container { width: 100%; }
+  .signin-phone-row { grid-template-columns: 5.5rem 1fr; }
+}
+

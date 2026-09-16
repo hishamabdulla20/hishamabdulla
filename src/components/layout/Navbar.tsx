@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { useAuth } from '../../hooks/useAuth'
 import { navigation } from '../../data/portfolio'
 
 type Theme = 'dark' | 'light'
@@ -23,6 +24,7 @@ export function Navbar() {
   const headerRef = useRef<HTMLElement>(null)
   const toggleRef = useRef<HTMLButtonElement>(null)
   const firstLinkRef = useRef<HTMLAnchorElement>(null)
+  const { user, loading: authLoading, signOut } = useAuth()
 
   useEffect(() => {
     const root = document.documentElement
@@ -183,8 +185,23 @@ export function Navbar() {
             </svg>
           )}
         </button>
+        {!authLoading && !user && (
+          <a className="header-signin" href="/signin">
+            Sign in
+          </a>
+        )}
+        {!authLoading && user && (
+          <div className="header-user">
+            <span className="header-user__name" title={user.email ?? undefined}>
+              {user.user_metadata?.full_name || user.email?.split('@')[0] || 'Account'}
+            </span>
+            <button className="header-user__signout" type="button" onClick={signOut}>
+              Sign out
+            </button>
+          </div>
+        )}
         <a className="header-contact" href="#contact">
-          Let’s talk <span aria-hidden="true">↗</span>
+          Let's talk <span aria-hidden="true">↗</span>
         </a>
       </div>
       <button
@@ -218,6 +235,25 @@ export function Navbar() {
               </a>
             </li>
           ))}
+          {!authLoading && (
+            <li className="nav-auth-item">
+              {user ? (
+                <button
+                  type="button"
+                  className="nav-auth-button"
+                  onClick={() => { signOut(); setIsOpen(false) }}
+                >
+                  <span>—</span>
+                  Sign out
+                </button>
+              ) : (
+                <a href="/signin" onClick={() => setIsOpen(false)}>
+                  <span>—</span>
+                  Sign in
+                </a>
+              )}
+            </li>
+          )}
         </ul>
       </nav>
     </header>
