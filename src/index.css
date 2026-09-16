@@ -58,7 +58,11 @@ body {
   overflow-x: hidden;
 }
 
-body[data-menu-open='true'] { overflow: hidden; }
+html[data-menu-open='true'],
+body[data-menu-open='true'] {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
 
 button, input, textarea { font: inherit; }
 a { color: inherit; }
