@@ -61,7 +61,7 @@ export default async function HomePage() {
     '@graph': [
       {
         '@type': 'Person',
-        '@id': `${siteConfig.url}/#person`,
+        '@id': `${siteConfig.url}#person`,
         name: siteConfig.name,
         url: siteConfig.url,
         ...(data.profile.roles[0] ? { jobTitle: data.profile.roles[0] } : {}),
@@ -70,12 +70,12 @@ export default async function HomePage() {
       },
       {
         '@type': 'WebSite',
-        '@id': `${siteConfig.url}/#website`,
+        '@id': `${siteConfig.url}#website`,
         name: `${siteConfig.name} Portfolio`,
         url: siteConfig.url,
         description: siteConfig.description,
         inLanguage: 'en',
-        author: { '@id': `${siteConfig.url}/#person` },
+        author: { '@id': `${siteConfig.url}#person` },
       },
     ],
   }
