@@ -1,4 +1,4 @@
-#root { min-height: 100vh; background: var(--color-bg); }
+.site-shell { min-height: 100vh; background: var(--color-bg); }
 
 main { background: var(--bg-primary); }
 

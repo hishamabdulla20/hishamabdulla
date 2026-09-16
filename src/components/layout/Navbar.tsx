@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useRef, useState } from 'react'
 import { navigation } from '../../data/portfolio'
 
@@ -15,9 +17,8 @@ function applyTheme(theme: Theme) {
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
-  const [theme, setTheme] = useState<Theme>(() =>
-    document.documentElement.dataset.theme === 'light' ? 'light' : 'dark',
-  )
+  const [theme, setTheme] = useState<Theme>('dark')
+  const [themeReady, setThemeReady] = useState(false)
   const headerRef = useRef<HTMLElement>(null)
   const toggleRef = useRef<HTMLButtonElement>(null)
   const firstLinkRef = useRef<HTMLAnchorElement>(null)
@@ -89,8 +90,16 @@ export function Navbar() {
   }, [])
 
   useEffect(() => {
+    // The inline pre-hydration script owns the initial DOM theme; mirror it once on mount.
+    // oxlint-disable-next-line react/set-state-in-effect
+    setTheme(document.documentElement.dataset.theme === 'light' ? 'light' : 'dark')
+    setThemeReady(true)
+  }, [])
+
+  useEffect(() => {
+    if (!themeReady) return
     applyTheme(theme)
-  }, [theme])
+  }, [theme, themeReady])
 
   useEffect(() => {
     const systemTheme = window.matchMedia('(prefers-color-scheme: light)')
