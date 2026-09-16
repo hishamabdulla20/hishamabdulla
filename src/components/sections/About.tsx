@@ -4,7 +4,7 @@ import { SectionHeader } from '../ui/SectionHeader'
 export function About() {
   return (
     <section className="section-block about-section" id="about" aria-labelledby="about-title">
-      <SectionHeader id="about-title" number="01" eyebrow="About me" title="I build. I learn." italic="I create." />
+      <SectionHeader id="about-title" number="01" eyebrow="About me" title="Discover. Develop." italic="Deploy." />
       <div className="about-layout">
         <div className="about-statement">
           <p>{profile.about}</p>
