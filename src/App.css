@@ -309,6 +309,11 @@ main { background: var(--bg-primary); }
   background-size: 4rem 4rem;
 }
 
+[data-theme='light'] .grid-field,
+[data-theme='light'] .hero-portrait__frame--empty {
+  background-image: none;
+}
+
 .scroll-cue {
   position: absolute;
   bottom: 2rem;
