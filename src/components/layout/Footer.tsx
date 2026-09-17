@@ -3,7 +3,7 @@ export function Footer() {
     <footer className="site-footer">
       <p>© {new Date().getFullYear()} Hisham Abdulla</p>
       <a href="#top">Back to top <span aria-hidden="true">↑</span></a>
-      <p>Designed & built with intent.</p>
+      <p>THINK. BUILD. SHARE.</p>
     </footer>
   )
 }
