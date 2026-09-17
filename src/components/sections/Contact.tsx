@@ -66,17 +66,17 @@ export function Contact({ socialLinks }: { socialLinks: SocialLink[] }) {
       if (!response.ok) {
         setStatusTone('error')
         setErrors(result.fieldErrors ?? {})
-        setStatus(result.message ?? 'Unable to send message. Please try again.')
+        setStatus(result.message ?? 'Unable to send your message right now. Please try again later.')
         return
       }
 
       form.reset()
       startedAt.current = Date.now()
       setStatusTone('success')
-      setStatus('Thanks — your message has been sent.')
+      setStatus('Thanks! Your message has been sent successfully.')
     } catch {
       setStatusTone('error')
-      setStatus('Unable to send message. Please try again.')
+      setStatus('Unable to send your message right now. Please try again later.')
     } finally {
       submitting.current = false
       setIsSubmitting(false)

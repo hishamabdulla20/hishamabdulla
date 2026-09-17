@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
-import type { User } from '@supabase/supabase-js'
+import type { AuthChangeEvent, Session, User } from '@supabase/supabase-js'
 import { getSupabaseBrowserClient } from '@/lib/supabase/browser'
 
 type AuthState = {
@@ -20,12 +20,12 @@ export function useAuth() {
     }
 
     // Fetch the current session once on mount.
-    supabase.auth.getUser().then(({ data }) => {
+    supabase.auth.getUser().then(({ data }: { data: { user: User | null } }) => {
       setState({ user: data.user, loading: false })
     })
 
     // Subscribe to auth state changes (sign in, sign out, token refresh).
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event: AuthChangeEvent, session: Session | null) => {
       setState({ user: session?.user ?? null, loading: false })
     })
 
@@ -39,4 +39,3 @@ export function useAuth() {
 
   return { ...state, signOut }
 }
-

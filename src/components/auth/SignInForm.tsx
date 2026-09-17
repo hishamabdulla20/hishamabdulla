@@ -99,8 +99,7 @@ export function SignInForm() {
     // On success, the browser will redirect to Google.
   }, [])
 
-  const handleSendEmailOtp = async (event: FormEvent) => {
-    event.preventDefault()
+  const sendEmailOtp = async () => {
     const trimmed = email.trim().toLowerCase()
     if (!trimmed || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
       setStatusTone('error')
@@ -136,6 +135,11 @@ export function SignInForm() {
     }
   }
 
+  const handleSendEmailOtp = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    await sendEmailOtp()
+  }
+
   const handleVerifyEmailOtp = async (event: FormEvent) => {
     event.preventDefault()
     const trimmedOtp = otp.trim()
@@ -168,8 +172,8 @@ export function SignInForm() {
     }
   }
 
-  const handleSendPhoneOtp = async (event: FormEvent) => {
-    event.preventDefault()
+  const handleSendPhoneOtp = async (event?: FormEvent) => {
+    event?.preventDefault()
     const digits = phone.replace(/\D/g, '')
     if (!digits || digits.length < 6 || digits.length > 15) {
       setStatusTone('error')
@@ -341,7 +345,7 @@ export function SignInForm() {
           <button
             className="signin-resend"
             type="button"
-            onClick={handleSendEmailOtp as () => void}
+            onClick={() => void sendEmailOtp()}
             disabled={loading}
           >
             Resend code
@@ -416,7 +420,7 @@ export function SignInForm() {
           <button
             className="signin-resend"
             type="button"
-            onClick={handleSendPhoneOtp as () => void}
+            onClick={() => void handleSendPhoneOtp()}
             disabled={loading}
           >
             Resend code
@@ -432,4 +436,3 @@ export function SignInForm() {
     </div>
   )
 }
-

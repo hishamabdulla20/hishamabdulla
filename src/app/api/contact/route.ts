@@ -7,6 +7,8 @@ import { isEmail, required } from '@/lib/validation'
 const maximumBodyBytes = 64 * 1024
 const unavailableMessage = 'Unable to send your message right now. Please try again later.'
 
+export const runtime = 'nodejs'
+
 type ContactPayload = {
   name?: unknown
   email?: unknown

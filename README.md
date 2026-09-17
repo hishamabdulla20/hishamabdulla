@@ -70,7 +70,7 @@ Deploy as a Next.js application (for example, on Vercel) and configure the varia
 
 The contact endpoint previously only stored messages in `/admin/messages`; it did not send email. Its original "Contact is temporarily unavailable" response meant the Supabase client or rate-limit secret was not configured. Local `.env.local` values are not automatically copied to Vercel.
 
-The form now validates and trims input, preserves the existing three-messages-per-IP-per-15-minutes database rate limit, stores a private inbox copy, and requests email delivery from Resend. The email contains Name, Email, Subject, and Message as plain text. The configured sender is used for From; the visitor is Reply-To. Success is returned only after Resend acknowledges the email. Provider acceptance is not proof of inbox delivery: check Resend's delivery events and the recipient's spam folder.
+The form now validates and trims input, preserves the existing three-messages-per-IP-per-15-minutes database rate limit, stores a private inbox copy, and requests email delivery from Resend. Resend's HTTPS API is preferred here because Vercel recommends an email API rather than direct SMTP for serverless functions. The Hostinger mailbox remains the destination inbox; it does not need to expose its password to this application. The email contains Name, Email, Subject, and Message as plain text. `Hisham Abdulla <CONTACT_FROM_EMAIL>` is used for From; the visitor is Reply-To. Success is returned only after Resend acknowledges the email. Provider acceptance is not proof of inbox delivery: check Resend's delivery events and the recipient's spam folder.
 
 | Variable | Purpose and source | Secret? |
 | --- | --- | --- |
@@ -79,8 +79,8 @@ The form now validates and trims input, preserves the existing three-messages-pe
 | `SUPABASE_SERVICE_ROLE_KEY` | Matching project's service-role key, from Supabase API settings | Yes |
 | `CONTACT_RATE_LIMIT_SECRET` | Keep the existing private random value; generate one with `openssl rand -hex 32` only if absent | Yes |
 | `RESEND_API_KEY` | Create a sending-access key in Resend → API Keys, scoped to the sending domain | Yes |
-| `CONTACT_FROM_EMAIL` | Choose a single sender mailbox on a domain you verify in Resend | Server-only configuration |
-| `CONTACT_TO_EMAIL` | Your actual recipient inbox | Private server-only configuration |
+| `CONTACT_FROM_EMAIL` | `hisham@hishamabdulla.com`, after verifying its domain in Resend | Server-only configuration |
+| `CONTACT_TO_EMAIL` | `hisham@hishamabdulla.com`, your Hostinger inbox | Private server-only configuration |
 
 1. In [Resend → Domains](https://resend.com/domains), add a domain or sending subdomain you control. Add the exact DNS records shown by Resend at your DNS provider, and wait for verification. Do not replace the portfolio's web hosting records or existing inbox MX records. See [Resend domain setup](https://resend.com/docs/dashboard/domains/introduction).
 2. In [Resend → API Keys](https://resend.com/api-keys), create a sending-access key for that verified domain. Put it in `RESEND_API_KEY`; never paste it into browser code or Git.
