@@ -18,6 +18,18 @@ type ContactPayload = {
   startedAt?: unknown
 }
 
+class ContactOperationalError extends Error {
+  readonly code: string
+  readonly status?: number
+
+  constructor(code: string, message: string, status?: number) {
+    super(message)
+    this.name = 'ContactOperationalError'
+    this.code = code
+    this.status = status
+  }
+}
+
 function clean(value: unknown): string {
   return typeof value === 'string' ? value.trim() : ''
 }
@@ -31,6 +43,56 @@ function errorResponse(
     { message, fieldErrors },
     { status, headers: { 'Cache-Control': 'no-store' } },
   )
+}
+
+function objectString(value: unknown, property: string): string | null {
+  if (!value || typeof value !== 'object' || !(property in value)) return null
+  const candidate: unknown = Reflect.get(value, property)
+  return typeof candidate === 'string' && candidate.trim() ? candidate.trim() : null
+}
+
+function supabaseFailure(error: unknown, status: number, operation: string) {
+  const reportedCode = objectString(error, 'code')
+  const code = reportedCode && /^[A-Za-z0-9_.-]{1,64}$/.test(reportedCode)
+    ? reportedCode
+    : status > 0 ? `SUPABASE_HTTP_${status}` : 'SUPABASE_ERROR'
+  const message = objectString(error, 'message') ??
+    `Supabase ${operation} failed${status > 0 ? ` with HTTP ${status}` : ''}.`
+
+  return new ContactOperationalError(code, message, status > 0 ? status : undefined)
+}
+
+function safeOperationalMessage(error: unknown): string {
+  const message = error instanceof Error
+    ? error.message
+    : objectString(error, 'message') ?? 'Unexpected operational failure.'
+
+  return message
+    .replace(/Bearer\s+\S+/gi, 'Bearer [REDACTED]')
+    .replace(/\beyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\b/g, '[REDACTED_TOKEN]')
+    .replace(/\b(?:sb_(?:secret|publishable)|re)_[A-Za-z0-9_-]+\b/gi, '[REDACTED_TOKEN]')
+    .replace(/([?&](?:api[_-]?key|token|secret|password)=)[^&\s]+/gi, '$1[REDACTED]')
+    .replace(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi, '[REDACTED_EMAIL]')
+    .replace(/[\r\n\t]+/g, ' ')
+    .slice(0, 300)
+}
+
+function operationalErrorDetails(error: unknown) {
+  const reportedCode = error instanceof ContactOperationalError
+    ? error.code
+    : objectString(error, 'code')
+  const code = reportedCode && /^[A-Za-z0-9_.-]{1,64}$/.test(reportedCode)
+    ? reportedCode
+    : error instanceof Error && /^[A-Za-z0-9_.-]{1,64}$/.test(error.name)
+      ? error.name
+      : 'UNCLASSIFIED_ERROR'
+  const status = error instanceof ContactOperationalError ? error.status : undefined
+
+  return {
+    code,
+    message: safeOperationalMessage(error),
+    ...(status ? { status } : {}),
+  }
 }
 
 export async function POST(request: NextRequest) {
@@ -130,20 +192,21 @@ export async function POST(request: NextRequest) {
     const admin = createAdminSupabaseClient()
     if (!admin) return errorResponse(unavailableMessage, 503)
     stage = 'rate-limit'
-    const { count, error: countError } = await admin
+    const { count, error: countError, status: countStatus } = await admin
       .from('contact_messages')
-      .select('id', { count: 'exact', head: true })
+      .select('id', { count: 'exact' })
       .eq('ip_hash', ipHash)
       .gte('created_at', windowStart)
+      .limit(0)
 
-    if (countError) throw countError
+    if (countError) throw supabaseFailure(countError, countStatus, 'rate-limit query')
     if ((count ?? 0) >= 3) {
       return errorResponse('Too many messages were sent. Please try again later.', 429)
     }
 
     stage = 'database-insert'
     const userAgent = request.headers.get('user-agent')?.slice(0, 500) ?? null
-    const { error: insertError } = await admin.from('contact_messages').insert({
+    const { error: insertError, status: insertStatus } = await admin.from('contact_messages').insert({
       name,
       email,
       subject,
@@ -151,7 +214,7 @@ export async function POST(request: NextRequest) {
       ip_hash: ipHash,
       user_agent: userAgent,
     })
-    if (insertError) throw insertError
+    if (insertError) throw supabaseFailure(insertError, insertStatus, 'contact insert')
 
     // Keep the admin inbox as a durable copy if the email provider is unavailable.
     // Stable across retries of the same form submission; no personal data in the key.
@@ -169,9 +232,7 @@ export async function POST(request: NextRequest) {
       { status: 201, headers: { 'Cache-Control': 'no-store' } },
     )
   } catch (error) {
-    const code = error && typeof error === 'object' && 'code' in error &&
-      typeof error.code === 'string' && /^[A-Z0-9]{5,10}$/.test(error.code) ? error.code : 'unknown'
-    console.error('[portfolio:contact-submit]', { stage, code })
+    console.error('[portfolio:contact-submit]', { stage, ...operationalErrorDetails(error) })
     return errorResponse(unavailableMessage, 500)
   }
 }
