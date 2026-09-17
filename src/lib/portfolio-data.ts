@@ -87,7 +87,7 @@ export async function getPortfolioData(): Promise<PortfolioData> {
         lastName: profileRow.last_name,
         eyebrow: profileRow.eyebrow,
         roles: profileRow.roles,
-        introduction: profileRow.introduction,
+        introduction: fallback.profile.introduction,
         about: profileRow.about,
         details: isProfileDetails(profileRow.details)
           ? profileRow.details.map((detail: ProfileDetail) => ({ ...detail, isPlaceholder: Boolean(detail.isPlaceholder) }))
