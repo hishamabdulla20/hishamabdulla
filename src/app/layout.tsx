@@ -35,7 +35,6 @@ export const metadata: Metadata = {
   authors: [{ name: siteConfig.fullName, url: siteConfig.url }],
   creator: siteConfig.fullName,
   publisher: siteConfig.fullName,
-  icons: { icon: '/favicon.svg' },
 }
 
 export const viewport: Viewport = {

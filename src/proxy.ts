@@ -47,10 +47,10 @@ export const config = {
      * Match all request paths except:
      * - _next/static (static files)
      * - _next/image (image optimization files)
-     * - favicon.svg (favicon)
+     * - icon.png (favicon)
      * - icons.svg (icon sprite)
      * - public files with extensions (assets)
      */
-    '/((?!_next/static|_next/image|favicon\\.svg|icons\\.svg|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js|woff2?)$).*)',
+    '/((?!_next/static|_next/image|icon\\.png|icons\\.svg|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js|woff2?)$).*)',
   ],
 }
