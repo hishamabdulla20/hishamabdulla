@@ -108,13 +108,7 @@ export async function getPortfolioData(): Promise<PortfolioData> {
         imageUrl: project.image_url,
         status: project.status,
       })),
-      skillGroups: (skillsResult.data ?? []).map((group) => ({
-        id: group.id,
-        category: group.category,
-        number: group.number,
-        skills: group.skills,
-        isPlaceholder: group.is_placeholder,
-      })),
+      skillGroups: fallback.skillGroups,
       journey: journeyRows.filter((item) => item.kind !== 'focus').map((item) => ({
         id: item.id,
         period: item.period,

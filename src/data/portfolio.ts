@@ -29,11 +29,11 @@ export const profile = {
 } as const
 
 export const skillGroups = [
-  { category: 'Frontend', number: '01', skills: ['React', 'TypeScript', 'Tailwind CSS'] },
-  { category: 'Backend', number: '02', skills: ['Supabase'] },
-  { category: 'Databases', number: '03', skills: ['PostgreSQL'] },
-  { category: 'Machine Learning / Data', number: '04', skills: ['Details to be added'], isPlaceholder: true },
-  { category: 'Tools / Infrastructure', number: '05', skills: ['Details to be added'], isPlaceholder: true },
+  { category: 'Frontend', number: '01', skills: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Three.js'] },
+  { category: 'Backend', number: '02', skills: ['Node.js', 'Express.js', 'Django', 'REST API', 'Supabase'] },
+  { category: 'Databases', number: '03', skills: ['PostgreSQL', 'MongoDB'] },
+  { category: 'Machine Learning & Data Science', number: '04', skills: ['Python', 'NumPy', 'Pandas', 'Matplotlib', 'scikit-learn'] },
+  { category: 'Tools / Infrastructure', number: '05', skills: ['Git', 'GitHub', 'Docker', 'Vercel'] },
 ] as const
 
 export const projects = [
