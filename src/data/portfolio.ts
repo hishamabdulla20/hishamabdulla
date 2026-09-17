@@ -1,11 +1,11 @@
 export const navigation = [
-  { number: '01', label: 'About', href: '#about' },
-  { number: '02', label: 'Work', href: '#work' },
-  { number: '03', label: 'Skills', href: '#skills' },
-  { number: '04', label: 'Journey', href: '#journey' },
-  { number: '05', label: 'Writing', href: '#writing' },
-  { number: '06', label: 'Beyond code', href: '#beyond' },
-  { number: '07', label: 'Contact', href: '#contact' },
+  { label: 'About', href: '#about' },
+  { label: 'Work', href: '#work' },
+  { label: 'Skills', href: '#skills' },
+  { label: 'Journey', href: '#journey' },
+  { label: 'Writing', href: '#writing' },
+  { label: 'Beyond code', href: '#beyond' },
+  { label: 'Contact', href: '#contact' },
 ] as const
 
 export const profile = {

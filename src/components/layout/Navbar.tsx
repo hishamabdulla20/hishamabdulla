@@ -230,8 +230,7 @@ export function Navbar() {
                 aria-current={activeHref === item.href ? 'location' : undefined}
                 onClick={() => setIsOpen(false)}
               >
-                <span>{item.number}</span>
-                {item.label}
+                <span className="primary-nav__label">{item.label}</span>
               </a>
             </li>
           ))}
@@ -243,12 +242,10 @@ export function Navbar() {
                   className="nav-auth-button"
                   onClick={() => { signOut(); setIsOpen(false) }}
                 >
-                  <span>—</span>
                   Sign out
                 </button>
               ) : (
                 <a href="/signin" onClick={() => setIsOpen(false)}>
-                  <span>—</span>
                   Sign in
                 </a>
               )}
