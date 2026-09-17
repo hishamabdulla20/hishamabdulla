@@ -10,27 +10,37 @@ type AuthState = {
 }
 
 export function useAuth() {
-  const [state, setState] = useState<AuthState>({ user: null, loading: true })
+  const [supabase] = useState(() => getSupabaseBrowserClient())
+  const [state, setState] = useState<AuthState>(() => ({
+    user: null,
+    loading: Boolean(supabase),
+  }))
 
   useEffect(() => {
-    const supabase = getSupabaseBrowserClient()
-    if (!supabase) {
-      setState({ user: null, loading: false })
-      return
-    }
+    if (!supabase) return
+
+    let active = true
+    let authEventVersion = 0
 
     // Fetch the current session once on mount.
+    const requestVersion = authEventVersion
     supabase.auth.getUser().then(({ data }: { data: { user: User | null } }) => {
-      setState({ user: data.user, loading: false })
+      if (active && requestVersion === authEventVersion) {
+        setState({ user: data.user, loading: false })
+      }
     })
 
     // Subscribe to auth state changes (sign in, sign out, token refresh).
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event: AuthChangeEvent, session: Session | null) => {
-      setState({ user: session?.user ?? null, loading: false })
+      authEventVersion += 1
+      if (active) setState({ user: session?.user ?? null, loading: false })
     })
 
-    return () => subscription.unsubscribe()
-  }, [])
+    return () => {
+      active = false
+      subscription.unsubscribe()
+    }
+  }, [supabase])
 
   const signOut = useCallback(async () => {
     const supabase = getSupabaseBrowserClient()

@@ -1,5 +1,3 @@
-/* oxlint-disable react/only-export-components -- Next.js layouts export metadata alongside the layout component. */
-
 import type { Metadata, Viewport } from 'next'
 import type { ReactNode } from 'react'
 import { siteConfig } from '../lib/site-config'

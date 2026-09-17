@@ -1,5 +1,3 @@
-/* oxlint-disable react/only-export-components -- Next.js pages export metadata alongside the page component. */
-
 import type { Metadata } from 'next'
 import { Footer } from '../components/layout/Footer'
 import { Navbar } from '../components/layout/Navbar'

@@ -1,5 +1,3 @@
-/* oxlint-disable react/only-export-components -- Next.js pages export metadata and cache configuration. */
-
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { TechTag } from '@/components/ui/TechTag'
