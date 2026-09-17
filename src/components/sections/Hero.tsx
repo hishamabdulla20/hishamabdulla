@@ -4,9 +4,6 @@ import { ButtonLink } from '../ui/ButtonLink'
 export function Hero({ profile }: { profile: Profile }) {
   return (
     <section className="hero-section grid-field" id="top" aria-labelledby="hero-title">
-      <div className="hero-section__index technical-label" aria-hidden="true">
-        Portfolio / 2026
-      </div>
       <div className="hero-copy">
         <p className="eyebrow"><span className="eyebrow__line" />{profile.eyebrow}</p>
         <h1 id="hero-title">

@@ -282,14 +282,6 @@ main { background: transparent; }
   pointer-events: none;
 }
 
-.hero-section__index {
-  position: absolute;
-  top: 7rem;
-  right: clamp(1.5rem, 6vw, 7.5rem);
-  color: var(--sepia);
-  animation: hero-enter 560ms 40ms var(--motion-ease-out) both;
-}
-
 .hero-copy, .hero-portrait, .scroll-cue { position: relative; z-index: 1; }
 
 .eyebrow {
@@ -637,7 +629,6 @@ main { background: transparent; }
 
 @media (max-width: 520px) {
   .hero-section { padding-inline: 1.1rem; padding-bottom: 3rem; }
-  .hero-section__index { right: 1.1rem; }
   .hero-copy h1 { font-size: clamp(2.625rem, 11vw, 3.5rem); }
   .hero-roles { display: grid; }
   .hero-roles span { justify-content: space-between; }
