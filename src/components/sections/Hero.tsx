@@ -1,7 +1,11 @@
+import Image from 'next/image'
 import type { Profile } from '../../types/portfolio'
 import { ButtonLink } from '../ui/ButtonLink'
 
 export function Hero({ profile }: { profile: Profile }) {
+  const darkPortraitUrl = profile.portraitUrl || '/images/hisham-portrait-dark.webp'
+  const lightPortraitUrl = profile.portraitUrl || '/images/hisham-portrait-light.webp'
+
   return (
     <section className="hero-section grid-field" id="top" aria-labelledby="hero-title">
       <div className="hero-copy">
@@ -25,17 +29,28 @@ export function Hero({ profile }: { profile: Profile }) {
         </div>
       </div>
       <div className="hero-portrait">
-        {profile.portraitUrl ? (
-          <div className="hero-portrait__frame">
-            <img src={profile.portraitUrl} alt={`Portrait of ${profile.name}`} />
-          </div>
-        ) : (
-          <div
-            className="hero-portrait__frame hero-portrait__frame--empty"
-            role="img"
-            aria-label={`Reserved space for a future portrait of ${profile.name}`}
+        <div
+          className="hero-portrait__frame"
+          role="img"
+          aria-label={`Portrait of ${profile.name}`}
+        >
+          <Image
+            src={darkPortraitUrl}
+            alt=""
+            fill
+            sizes="(max-width: 768px) 90vw, (max-width: 1200px) 45vw, 40vw"
+            className="hero-portrait__image hero-portrait__image--dark"
+            loading="eager"
           />
-        )}
+          <Image
+            src={lightPortraitUrl}
+            alt=""
+            fill
+            sizes="(max-width: 768px) 90vw, (max-width: 1200px) 45vw, 40vw"
+            className="hero-portrait__image hero-portrait__image--light"
+            loading="eager"
+          />
+        </div>
       </div>
       <a className="scroll-cue technical-label" href="#about">
         Scroll to explore <span aria-hidden="true">↓</span>
