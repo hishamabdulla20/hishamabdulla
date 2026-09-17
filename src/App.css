@@ -1076,6 +1076,18 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
 
 .contact-heading h2 em { color: var(--sepia); font-style: normal; font-weight: 400; }
 .social-list { display: flex; flex-wrap: wrap; gap: 1.4rem; margin-top: 3.5rem; }
+.social-link { transition: color 240ms var(--motion-ease-out); }
+.social-link__icon {
+  width: 1.0625rem;
+  height: 1.0625rem;
+  flex: 0 0 auto;
+  transition: transform 240ms var(--motion-ease-out);
+}
+.social-link:hover,
+.social-link:focus-visible { color: var(--sepia); }
+.social-link:hover .social-link__icon,
+.social-link:focus-visible .social-link__icon { transform: translateX(0.18rem); }
+.social-link:focus-visible { outline: 1px solid var(--sepia); outline-offset: 0.35rem; }
 
 .contact-form {
   display: grid;

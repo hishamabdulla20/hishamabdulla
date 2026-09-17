@@ -103,8 +103,8 @@ export const articles = [
 ] as const
 
 export const socialLinks = [
-  { label: 'GitHub', url: null as string | null },
-  { label: 'LinkedIn', url: null as string | null },
-  { label: 'Email', url: null as string | null },
-  { label: 'Instagram', url: null as string | null },
+  { label: 'GitHub', url: 'https://github.com/hishamabdulla20' },
+  { label: 'LinkedIn', url: 'https://www.linkedin.com/in/hishamabdulla20' },
+  { label: 'Email', url: 'mailto:hisham@hishamabdulla.com' },
+  { label: 'Instagram', url: 'https://www.instagram.com/hisham.abdulla/' },
 ] as const

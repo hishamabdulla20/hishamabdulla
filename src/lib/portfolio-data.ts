@@ -143,7 +143,7 @@ export async function getPortfolioData(): Promise<PortfolioData> {
       socialLinks: (socialsResult.data ?? []).map((link) => ({
         id: link.id,
         label: link.label,
-        url: link.url,
+        url: fallback.socialLinks.find((fallbackLink) => fallbackLink.label === link.label)?.url ?? link.url,
       })),
     }
   } catch (error) {
