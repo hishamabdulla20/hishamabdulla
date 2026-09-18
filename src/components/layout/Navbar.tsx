@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import { useAuth } from '../../hooks/useAuth'
 import { navigation } from '../../data/portfolio'
 
@@ -17,6 +18,7 @@ function applyTheme(theme: Theme) {
 }
 
 export function Navbar() {
+  const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
   const [theme, setTheme] = useState<Theme>('dark')
   const [themeReady, setThemeReady] = useState(false)
@@ -93,8 +95,11 @@ export function Navbar() {
   }, [])
 
   useEffect(() => {
+    if (pathname !== '/') return
+
     const sections = navigation
-      .map((item) => document.querySelector<HTMLElement>(item.href))
+      .filter((item) => item.href.startsWith('/#'))
+      .map((item) => document.querySelector<HTMLElement>(item.href.slice(1)))
       .filter((section): section is HTMLElement => Boolean(section))
 
     if (!sections.length || !('IntersectionObserver' in window)) return
@@ -102,14 +107,14 @@ export function Navbar() {
     const observer = new IntersectionObserver(
       (entries) => {
         const activeEntry = entries.find((entry) => entry.isIntersecting)
-        if (activeEntry) setActiveHref(`#${activeEntry.target.id}`)
+        if (activeEntry) setActiveHref(`/#${activeEntry.target.id}`)
       },
       { rootMargin: '-20% 0px -70% 0px', threshold: 0 },
     )
 
     sections.forEach((section) => observer.observe(section))
     return () => observer.disconnect()
-  }, [])
+  }, [pathname])
 
   useEffect(() => {
     // The inline pre-hydration script owns the initial DOM theme; mirror it once on mount.
@@ -160,7 +165,7 @@ export function Navbar() {
     >
       <a
         className="wordmark"
-        href="#top"
+        href="/#top"
         aria-label="Hisham Abdulla, home"
         onClick={() => setIsOpen(false)}
       >
@@ -200,7 +205,7 @@ export function Navbar() {
             </button>
           </div>
         )}
-        <a className="header-contact" href="#contact">
+        <a className="header-contact" href="/#contact">
           Let's talk <span aria-hidden="true">↗</span>
         </a>
       </div>
@@ -227,7 +232,7 @@ export function Navbar() {
               <a
                 ref={index === 0 ? firstLinkRef : undefined}
                 href={item.href}
-                aria-current={activeHref === item.href ? 'location' : undefined}
+                aria-current={pathname === item.href ? 'page' : activeHref === item.href ? 'location' : undefined}
                 onClick={() => setIsOpen(false)}
               >
                 <span className="primary-nav__label">{item.label}</span>

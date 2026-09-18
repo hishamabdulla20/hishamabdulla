@@ -1,0 +1,113 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+import {
+  writingCategories,
+  type WritingArticleMeta,
+  type WritingCategory,
+} from '@/types/writing'
+
+type CategoryFilter = 'all' | WritingCategory
+
+const categoryLabels: Record<CategoryFilter, string> = {
+  all: 'All',
+  movies: 'Movies',
+  novels: 'Novels',
+  books: 'Books',
+  technology: 'Technology',
+  ai: 'AI',
+  personal: 'Personal',
+  essays: 'Essays',
+}
+
+function isCategoryFilter(value: string | null): value is CategoryFilter {
+  return value === 'all' || writingCategories.includes(value as WritingCategory)
+}
+
+function displayDate(date: string): string {
+  return new Intl.DateTimeFormat('en', {
+    month: 'short',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(new Date(`${date}T00:00:00Z`))
+}
+
+export function WritingIndex({
+  articles,
+  initialCategory,
+}: {
+  articles: WritingArticleMeta[]
+  initialCategory: CategoryFilter
+}) {
+  const [activeCategory, setActiveCategory] = useState<CategoryFilter>(initialCategory)
+
+  useEffect(() => {
+    const handlePopState = () => {
+      const value = new URL(window.location.href).searchParams.get('category')
+      setActiveCategory(isCategoryFilter(value) ? value : 'all')
+    }
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [])
+
+  const chooseCategory = (category: CategoryFilter) => {
+    setActiveCategory(category)
+    const url = new URL(window.location.href)
+    if (category === 'all') url.searchParams.delete('category')
+    else url.searchParams.set('category', category)
+    window.history.pushState({}, '', `${url.pathname}${url.search}${url.hash}`)
+  }
+
+  const visibleArticles = activeCategory === 'all'
+    ? articles
+    : articles.filter((article) => article.category === activeCategory)
+
+  return (
+    <>
+      <div className="writing-filters" aria-label="Filter writing by category">
+        {(['all', ...writingCategories] as const).map((category) => (
+          <button
+            type="button"
+            key={category}
+            className="writing-filter technical-label"
+            aria-pressed={activeCategory === category}
+            onClick={() => chooseCategory(category)}
+          >
+            {categoryLabels[category]}
+          </button>
+        ))}
+      </div>
+
+      <div className="writing-index" aria-live="polite">
+        {visibleArticles.length > 0 ? visibleArticles.map((article, index) => (
+          <article className="writing-entry" key={article.slug}>
+            <span className="writing-entry__number technical-label">{String(index + 1).padStart(2, '0')}</span>
+            <div className="writing-entry__body">
+              <p className="writing-entry__meta technical-label">
+                <span>{categoryLabels[article.category]}</span>
+                <span aria-hidden="true">·</span>
+                <time dateTime={article.date}>{displayDate(article.date)}</time>
+              </p>
+              <h2><a href={`/writing/${article.slug}`}>{article.title}</a></h2>
+              <p className="writing-entry__excerpt">{article.excerpt}</p>
+              <a className="writing-entry__link technical-label" href={`/writing/${article.slug}`}>
+                {article.readingTime} <span aria-hidden="true">↗</span>
+                <span className="sr-only">: Read {article.title}</span>
+              </a>
+            </div>
+            {article.image && (
+              <a className="writing-entry__image" href={`/writing/${article.slug}`} tabIndex={-1} aria-hidden="true">
+                <img src={article.image} alt="" loading="lazy" />
+              </a>
+            )}
+          </article>
+        )) : (
+          <div className="writing-empty">
+            <p className="technical-label">No entries yet</p>
+            <p>{activeCategory === 'all' ? 'The first entry is being written.' : `There are no ${categoryLabels[activeCategory].toLowerCase()} entries yet.`}</p>
+          </div>
+        )}
+      </div>
+    </>
+  )
+}

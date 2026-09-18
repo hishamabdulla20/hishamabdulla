@@ -1,11 +1,11 @@
 export const navigation = [
-  { label: 'About', href: '#about' },
-  { label: 'Work', href: '#work' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Journey', href: '#journey' },
-  { label: 'Writing', href: '#writing' },
-  { label: 'Beyond code', href: '#beyond' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'About', href: '/#about' },
+  { label: 'Work', href: '/#work' },
+  { label: 'Skills', href: '/#skills' },
+  { label: 'Journey', href: '/#journey' },
+  { label: 'Writing', href: '/writing' },
+  { label: 'Beyond code', href: '/#beyond' },
+  { label: 'Contact', href: '/#contact' },
 ] as const
 
 export const profile = {
@@ -81,6 +81,15 @@ export const interests = [
   number: String(index + 1).padStart(2, '0'),
   title,
   slug: title.toLowerCase().replaceAll(' ', '-'),
+  href: ({
+    Movies: '/writing?category=movies',
+    Novels: '/writing?category=novels',
+    Books: '/writing?category=books',
+    Technology: '/writing?category=technology',
+    AI: '/writing?category=ai',
+    Writing: '/writing',
+    'Personal Thoughts': '/writing?category=personal',
+  } as Record<string, string>)[title] ?? null,
 }))
 
 export const articles = [

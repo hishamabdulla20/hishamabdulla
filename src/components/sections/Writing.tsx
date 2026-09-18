@@ -22,6 +22,9 @@ export function Writing({ articles }: { articles: Article[] }) {
           </article>
         ))}
       </div>
+      <a className="writing-section-link text-link" href="/writing">
+        Explore all writing <span className="text-link__arrow" aria-hidden="true">↗</span>
+      </a>
     </section>
   )
 }
