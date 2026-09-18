@@ -4,8 +4,8 @@ import { SectionHeader } from '../ui/SectionHeader'
 
 export function Writing({ articles }: { articles: WritingArticleMeta[] }) {
   return (
-    <section className="section-block" id="writing" aria-labelledby="writing-title" data-reveal>
-      <SectionHeader id="writing-title" number="07" eyebrow="Writing" title="Thoughts, stories &" italic="perspectives." />
+    <section className="section-block" id="writing" aria-labelledby="writing-title">
+      <SectionHeader id="writing-title" number="07" eyebrow="Writing" title="Notes from the" italic="workbench." />
       {articles.length > 0 ? (
         <div className="article-list">
           {articles.map((article, index) => (
