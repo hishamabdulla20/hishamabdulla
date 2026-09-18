@@ -14,6 +14,7 @@ import { FluidBackground } from '../components/ui/FluidBackground'
 import { RevealController } from '../components/ui/RevealController'
 import { getPortfolioData } from '../lib/portfolio-data'
 import { siteConfig } from '../lib/site-config'
+import { getWritingArticleMeta } from '../lib/writing'
 
 export const revalidate = 300
 
@@ -49,6 +50,7 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
   const data = await getPortfolioData()
+  const recentWriting = getWritingArticleMeta().slice(0, 3)
   const sameAs = data.socialLinks
     .map((link) => link.url)
     .filter((url): url is string => Boolean(url && /^https?:\/\//.test(url)))
@@ -97,7 +99,7 @@ export default async function HomePage() {
         <Services />
         <Journey journey={data.journey} currentFocus={data.currentFocus} />
         <BeyondCode />
-        <Writing articles={data.articles} />
+        <Writing articles={recentWriting} />
         <Contact socialLinks={data.socialLinks} />
       </main>
       <Footer />
