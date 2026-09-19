@@ -15,7 +15,7 @@ export const profile = {
   eyebrow: "Hello, I'm",
   roles: ['Full-stack developer', 'Machine learning', 'Technology enthusiast'],
   introduction:
-    'I’m Hisham Abdulla, a curious person who loves learning, exploring ideas, and understanding the world around me. This is my space to share what I build, learn, experience, and think about.\n\nI’m a developer who enjoys turning ideas into useful things, but my interests go beyond technology. I love movies, books, and different perspectives on life. Here, I share my projects, opinions, experiences, and thoughts as I grow.\n\nThis website is both my portfolio and personal journal. If something here helps you, makes you think, or inspires a conversation, feel free to connect with me.',
+    'I’m Hisham Abdulla, a curious person who loves learning, exploring ideas, and building useful things.\n\nI’m a developer, but my interests go beyond technology. I enjoy movies, books, and different perspectives on life.\n\nThis website is my portfolio and personal journal—a place to share what I build, learn, experience, and think about. Feel free to connect with me.',
   about:
     'I’m interested in the full shape of a digital product: how it reads, how it feels, how the system behind it works, and what can be learned by building it well.',
   details: [
