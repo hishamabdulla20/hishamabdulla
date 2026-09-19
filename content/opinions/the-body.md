@@ -23,5 +23,8 @@ draft: false
 
 ## My Opinion
 
-Opinion coming soon.
+The Body shows how an action that seems harmless at first can sometimes lead to consequences we never imagined. In relationships, we may lie, hide things, play with someone’s emotions, or try to surprise them without fully understanding how deeply our actions can affect another person.
 
+What touched me most is how the movie shows that our actions do not simply disappear. Something we do today may stay inside another person as pain, fear, anger, or even a desire for revenge. We may forget what we did, but the person we hurt may carry it for years.
+
+For me, The Body is more than a mystery thriller. It is a dark reflection of human emotions—love, betrayal, guilt, fear, and revenge. It reminds us that sometimes one decision can change many lives, and its consequences may return when we least expect them.
