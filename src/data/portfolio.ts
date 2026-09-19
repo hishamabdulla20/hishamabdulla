@@ -14,7 +14,7 @@ export const profile = {
   firstName: 'Hisham',
   lastName: 'Abdulla',
   eyebrow: "Hello, I'm",
-  roles: ['Full-stack developer', 'Machine learning learner', 'Technology enthusiast'],
+  roles: ['Full-stack developer', 'Machine learning', 'Technology enthusiast'],
   introduction:
     'I’m Hisham Abdulla. Welcome to my space, where I build, learn, and share. I create websites and applications, explore technology, and turn ideas into working products. Beyond code, I enjoy books and films and share the perspectives they inspire. Here, you’ll find my projects, experiences, and thoughts. Have something to share? Let’s connect.',
   about:
@@ -22,9 +22,8 @@ export const profile = {
   details: [
     { label: 'Name', value: 'Hisham Abdulla', isPlaceholder: false },
     { label: 'Role', value: 'Full-stack developer', isPlaceholder: false },
-    { label: 'Education', value: 'Details to be added', isPlaceholder: true },
-    { label: 'Location', value: 'Details to be added', isPlaceholder: true },
-    { label: 'Availability', value: 'Details to be added', isPlaceholder: true },
+    { label: 'Education', value: 'BCA', isPlaceholder: false },
+    { label: 'Location', value: 'Calicut', isPlaceholder: false },
   ],
   resumeUrl: null as string | null,
 } as const

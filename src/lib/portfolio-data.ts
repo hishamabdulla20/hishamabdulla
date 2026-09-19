@@ -87,11 +87,19 @@ export const getPortfolioData = cache(async (): Promise<PortfolioData> => {
         firstName: profileRow.first_name,
         lastName: profileRow.last_name,
         eyebrow: profileRow.eyebrow,
-        roles: profileRow.roles,
+        roles: profileRow.roles.map((role: string) => (
+          role === 'Machine learning learner' ? 'Machine learning' : role
+        )),
         introduction: fallback.profile.introduction,
         about: profileRow.about,
         details: isProfileDetails(profileRow.details)
-          ? profileRow.details.map((detail: ProfileDetail) => ({ ...detail, isPlaceholder: Boolean(detail.isPlaceholder) }))
+          ? profileRow.details
+            .filter((detail: ProfileDetail) => detail.label !== 'Availability')
+            .map((detail: ProfileDetail) => ({
+              ...detail,
+              ...(detail.label === 'Education' ? { value: 'BCA', isPlaceholder: false } : {}),
+              ...(detail.label === 'Location' ? { value: 'Calicut', isPlaceholder: false } : {}),
+            }))
           : fallback.profile.details,
         resumeUrl: profileRow.resume_url,
         portraitUrl: profileRow.portrait_url,
