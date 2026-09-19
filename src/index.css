@@ -97,6 +97,13 @@
 html {
   background: var(--color-bg);
   scroll-padding-top: 5rem;
+  font-size: 90%;
+}
+
+@media (max-width: 1024px) {
+  html {
+    font-size: 100%;
+  }
 }
 
 body {
