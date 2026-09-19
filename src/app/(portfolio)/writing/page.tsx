@@ -1,11 +1,4 @@
 import type { Metadata } from 'next'
-import dynamic from 'next/dynamic'
-import { Footer } from '@/components/layout/Footer'
-import { Navbar } from '@/components/layout/Navbar'
-
-const FluidBackground = dynamic(
-  () => import('@/components/ui/FluidBackground').then((mod) => mod.FluidBackground),
-)
 import { RevealController } from '@/components/ui/RevealController'
 import { WritingIndex } from '@/components/writing/WritingIndex'
 import { absoluteUrl, siteConfig } from '@/lib/site-config'
@@ -45,10 +38,8 @@ export default async function WritingPage({ searchParams }: WritingPageProps) {
   const articles = getWritingArticleMeta()
 
   return (
-    <div className="site-shell">
-      <FluidBackground />
+    <>
       <RevealController />
-      <Navbar />
       <main className="writing-page" id="top">
         <header className="writing-hero grid-field" data-reveal>
           <p className="writing-hero__eyebrow technical-label">Thoughts</p>
@@ -59,7 +50,6 @@ export default async function WritingPage({ searchParams }: WritingPageProps) {
           <WritingIndex articles={articles} initialCategory={initialCategory} />
         </section>
       </main>
-      <Footer />
-    </div>
+    </>
   )
 }

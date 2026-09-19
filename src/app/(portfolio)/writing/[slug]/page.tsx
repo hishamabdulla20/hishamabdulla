@@ -1,14 +1,7 @@
 import type { Metadata } from 'next'
-import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { Footer } from '@/components/layout/Footer'
-import { Navbar } from '@/components/layout/Navbar'
-
-const FluidBackground = dynamic(
-  () => import('@/components/ui/FluidBackground').then((mod) => mod.FluidBackground),
-)
 import { MarkdownContent } from '@/components/writing/MarkdownContent'
 import { absoluteUrl, siteConfig } from '@/lib/site-config'
 import {
@@ -129,18 +122,17 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
   }
 
   return (
-    <div className="site-shell">
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, '\\u003c') }}
       />
-      <FluidBackground />
-      <Navbar />
       <main className="writing-article-page" id="top">
         <article>
           <Link
             className="writing-back technical-label"
             href={isOpinion ? (article.category === 'movies' ? '/opinions?category=movies' : '/opinions') : '/writing'}
+            prefetch={isMovieOpinion ? true : undefined}
           >
             {isOpinion ? '← Back to Opinions' : '← Back to Thoughts'}
           </Link>
@@ -289,7 +281,6 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
           </nav>
         </article>
       </main>
-      <Footer />
-    </div>
+    </>
   )
 }

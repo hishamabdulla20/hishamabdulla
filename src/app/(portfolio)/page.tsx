@@ -1,26 +1,21 @@
 import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
-import { Footer } from '../components/layout/Footer'
-import { Navbar } from '../components/layout/Navbar'
-import { About } from '../components/sections/About'
-import { BeyondCode } from '../components/sections/BeyondCode'
-import { Hero } from '../components/sections/Hero'
-import { Journey } from '../components/sections/Journey'
-import { Opinions } from '../components/sections/Opinions'
-import { Projects } from '../components/sections/Projects'
-import { Services } from '../components/sections/Services'
-import { Skills } from '../components/sections/Skills'
-import { Writing } from '../components/sections/Writing'
-import { RevealController } from '../components/ui/RevealController'
-import { getPortfolioData } from '../lib/portfolio-data'
-import { siteConfig } from '../lib/site-config'
-import { getWritingArticleMeta } from '../lib/writing'
+import { About } from '@/components/sections/About'
+import { BeyondCode } from '@/components/sections/BeyondCode'
+import { Hero } from '@/components/sections/Hero'
+import { Journey } from '@/components/sections/Journey'
+import { Opinions } from '@/components/sections/Opinions'
+import { Projects } from '@/components/sections/Projects'
+import { Services } from '@/components/sections/Services'
+import { Skills } from '@/components/sections/Skills'
+import { Writing } from '@/components/sections/Writing'
+import { RevealController } from '@/components/ui/RevealController'
+import { getPortfolioData } from '@/lib/portfolio-data'
+import { siteConfig } from '@/lib/site-config'
+import { getWritingArticleMeta } from '@/lib/writing'
 
-const FluidBackground = dynamic(
-  () => import('../components/ui/FluidBackground').then((mod) => mod.FluidBackground),
-)
 const Contact = dynamic(
-  () => import('../components/sections/Contact').then((mod) => mod.Contact),
+  () => import('@/components/sections/Contact').then((mod) => mod.Contact),
 )
 
 export const revalidate = 300
@@ -90,14 +85,12 @@ export default async function HomePage() {
   }
 
   return (
-    <div className="site-shell">
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, '\\u003c') }}
       />
-      <FluidBackground />
       <RevealController />
-      <Navbar />
       <main>
         <Hero profile={data.profile} />
         <About profile={data.profile} />
@@ -110,7 +103,6 @@ export default async function HomePage() {
         <BeyondCode />
         <Contact socialLinks={data.socialLinks} />
       </main>
-      <Footer />
-    </div>
+    </>
   )
 }

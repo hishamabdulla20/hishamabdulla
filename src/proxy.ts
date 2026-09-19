@@ -60,15 +60,7 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    /*
-     * Match all request paths except:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - icon.png (favicon)
-     * - icons.svg (icon sprite)
-     * - public files with extensions (assets)
-     */
-    '/((?!_next/static|_next/image|icon\\.png|icons\\.svg|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|css|js|woff2?)$).*)',
-  ],
+  // Public pages do not read the server session. Keep token validation on the
+  // protected admin boundary instead of delaying every portfolio navigation.
+  matcher: ['/admin/:path*'],
 }
