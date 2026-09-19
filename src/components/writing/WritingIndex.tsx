@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { MovieCard } from '@/components/writing/MovieCard'
 import {
   writingCategories,
   type WritingArticleMeta,
@@ -84,39 +85,54 @@ export function WritingIndex({
         ))}
       </div>
 
-      <div className="writing-index" aria-live="polite">
-        {visibleArticles.length > 0 ? visibleArticles.map((article, index) => {
-          const articleHref = article.type === 'opinion' ? `/opinions/${article.slug}` : `/writing/${article.slug}`
-          return (
-            <article className="writing-entry" key={article.slug}>
-              <span className="writing-entry__number technical-label">{String(index + 1).padStart(2, '0')}</span>
-              <div className="writing-entry__body">
-                <p className="writing-entry__meta technical-label">
-                  <span>{categoryLabels[article.category]}</span>
-                  <span aria-hidden="true">·</span>
-                  <time dateTime={article.date}>{displayDate(article.date)}</time>
-                </p>
-                <h2><a href={articleHref}>{article.title}</a></h2>
-                <p className="writing-entry__excerpt">{article.excerpt}</p>
-                <a className="writing-entry__link technical-label" href={articleHref}>
-                  {article.readingTime} <span aria-hidden="true">↗</span>
-                  <span className="sr-only">: Read {article.title}</span>
-                </a>
-              </div>
-              {article.image && (
-                <a className="writing-entry__image" href={articleHref} tabIndex={-1} aria-hidden="true">
-                  <img src={article.image} alt="" loading="lazy" />
-                </a>
-              )}
-            </article>
-          )
-        }) : (
-          <div className="writing-empty">
-            <p className="technical-label">No entries yet</p>
-            <p>{activeCategory === 'all' ? 'The first entry is being written.' : `There are no ${categoryLabels[activeCategory].toLowerCase()} entries yet.`}</p>
-          </div>
-        )}
-      </div>
+      {activeCategory === 'movies' ? (
+        <div className="movie-poster-grid" aria-live="polite">
+          {visibleArticles.length > 0 ? (
+            visibleArticles.map((article, index) => (
+              <MovieCard key={article.slug} movie={article} priority={index < 4} />
+            ))
+          ) : (
+            <div className="writing-empty">
+              <p className="technical-label">No entries yet</p>
+              <p>There are no movie opinions yet.</p>
+            </div>
+          )}
+        </div>
+      ) : (
+        <div className="writing-index" aria-live="polite">
+          {visibleArticles.length > 0 ? visibleArticles.map((article, index) => {
+            const articleHref = article.type === 'opinion' ? `/opinions/${article.slug}` : `/writing/${article.slug}`
+            return (
+              <article className="writing-entry" key={article.slug}>
+                <span className="writing-entry__number technical-label">{String(index + 1).padStart(2, '0')}</span>
+                <div className="writing-entry__body">
+                  <p className="writing-entry__meta technical-label">
+                    <span>{categoryLabels[article.category]}</span>
+                    <span aria-hidden="true">·</span>
+                    <time dateTime={article.date}>{displayDate(article.date)}</time>
+                  </p>
+                  <h2><a href={articleHref}>{article.title}</a></h2>
+                  <p className="writing-entry__excerpt">{article.excerpt}</p>
+                  <a className="writing-entry__link technical-label" href={articleHref}>
+                    {article.readingTime} <span aria-hidden="true">↗</span>
+                    <span className="sr-only">: Read {article.title}</span>
+                  </a>
+                </div>
+                {article.image && (
+                  <a className="writing-entry__image" href={articleHref} tabIndex={-1} aria-hidden="true">
+                    <img src={article.image} alt="" loading="lazy" />
+                  </a>
+                )}
+              </article>
+            )
+          }) : (
+            <div className="writing-empty">
+              <p className="technical-label">No entries yet</p>
+              <p>{activeCategory === 'all' ? 'The first entry is being written.' : `There are no ${categoryLabels[activeCategory].toLowerCase()} entries yet.`}</p>
+            </div>
+          )}
+        </div>
+      )}
     </>
   )
 }
