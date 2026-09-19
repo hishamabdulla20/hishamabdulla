@@ -1,51 +1,122 @@
-import { formatWritingCategory, formatWritingDate } from '../../lib/writing'
-import type { WritingArticleMeta } from '../../types/writing'
 import { SectionHeader } from '../ui/SectionHeader'
 
-export function Opinions({ opinions }: { opinions: WritingArticleMeta[] }) {
+function MoviesIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className="opinion-card__icon"
+    >
+      <rect width="18" height="18" x="3" y="3" rx="2" />
+      <path d="M7 3v18" />
+      <path d="M17 3v18" />
+      <path d="M3 7.5h4" />
+      <path d="M3 12h18" />
+      <path d="M3 16.5h4" />
+      <path d="M17 7.5h4" />
+      <path d="M17 16.5h4" />
+    </svg>
+  )
+}
+
+function BooksIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className="opinion-card__icon"
+    >
+      <path d="M2 4.5h6a4 4 0 0 1 4 4v12a3 3 0 0 0-3-2.5H2z" />
+      <path d="M22 4.5h-6a4 4 0 0 0-4 4v12a3 3 0 0 1 3-2.5H22z" />
+    </svg>
+  )
+}
+
+function TechnologyIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className="opinion-card__icon"
+    >
+      <rect width="18" height="18" x="3" y="3" rx="2" />
+      <polyline points="7 8 10 11 7 14" />
+      <line x1="12" y1="14" x2="16" y2="14" />
+    </svg>
+  )
+}
+
+const opinionCategories = [
+  {
+    key: 'movies',
+    title: 'Movies',
+    href: '/opinions?category=movies',
+    icon: MoviesIcon,
+  },
+  {
+    key: 'books',
+    title: 'Books',
+    href: '/opinions?category=books',
+    icon: BooksIcon,
+  },
+  {
+    key: 'technology',
+    title: 'Technology',
+    href: '/opinions?category=technology',
+    icon: TechnologyIcon,
+  },
+] as const
+
+export function Opinions() {
   return (
     <section className="section-block opinions-section grid-field" id="opinions" aria-labelledby="opinions-title" data-reveal>
       <SectionHeader id="opinions-title" number="02" eyebrow="Opinions" title="Direct takes &" italic="perspectives." />
       <p className="section-intro">Personal takes on films, books, technology, culture, and everything in between.</p>
-      {opinions.length > 0 ? (
-        <div className="opinion-grid">
-          {opinions.map((opinion) => (
-            <article className="opinion-card" key={opinion.slug}>
-              <div className="opinion-card__meta">
-                <span className="opinion-card__category technical-label">
-                  {formatWritingCategory(opinion.category)}
-                </span>
-                <time className="technical-label" dateTime={opinion.date}>
-                  {formatWritingDate(opinion.date)}
-                </time>
+      <div className="opinion-grid">
+        {opinionCategories.map((category) => {
+          const Icon = category.icon
+          return (
+            <a
+              className="opinion-card"
+              href={category.href}
+              key={category.key}
+              aria-label={`Explore ${category.title} opinions`}
+            >
+              <div className="opinion-card__icon-wrap">
+                <Icon />
               </div>
               <div className="opinion-card__body">
-                <h3>
-                  <a href={`/opinions/${opinion.slug}`}>{opinion.title}</a>
-                </h3>
-                <p>{opinion.excerpt}</p>
+                <h3 className="opinion-card__title">{category.title}</h3>
               </div>
               <div className="opinion-card__footer">
-                <a className="opinion-card__read technical-label" href={`/opinions/${opinion.slug}`}>
-                  Read opinion <span aria-hidden="true">↗</span>
-                  <span className="sr-only">: {opinion.title}</span>
-                </a>
+                <span className="opinion-card__action technical-label">
+                  Explore opinions <span className="opinion-card__arrow" aria-hidden="true">→</span>
+                </span>
               </div>
-            </article>
-          ))}
-        </div>
-      ) : (
-        <div className="homepage-opinions-empty homepage-writing-empty">
-          <p className="technical-label">First entries in progress</p>
-          <p>Soon, this space will hold personal takes and reviews on films, books, TV series, technology, AI, and culture.</p>
-        </div>
-      )}
+            </a>
+          )
+        })}
+      </div>
       <div className="opinions-section-footer writing-section-footer">
         <a className="opinions-section-link writing-section-link text-link" href="/opinions">
-          View all opinions <span className="text-link__arrow" aria-hidden="true">↗</span>
+          View all opinions <span className="text-link__arrow" aria-hidden="true">→</span>
         </a>
       </div>
     </section>
   )
 }
-

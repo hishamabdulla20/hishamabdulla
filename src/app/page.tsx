@@ -14,7 +14,7 @@ import { Writing } from '../components/sections/Writing'
 import { RevealController } from '../components/ui/RevealController'
 import { getPortfolioData } from '../lib/portfolio-data'
 import { siteConfig } from '../lib/site-config'
-import { getOpinionsMeta, getWritingArticleMeta } from '../lib/writing'
+import { getWritingArticleMeta } from '../lib/writing'
 
 const FluidBackground = dynamic(
   () => import('../components/ui/FluidBackground').then((mod) => mod.FluidBackground),
@@ -57,7 +57,6 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
   const data = await getPortfolioData()
-  const recentOpinions = getOpinionsMeta().slice(0, 3)
   const recentWriting = getWritingArticleMeta().slice(0, 3)
   const sameAs = data.socialLinks
     .map((link) => link.url)
@@ -102,7 +101,7 @@ export default async function HomePage() {
       <main>
         <Hero profile={data.profile} />
         <About profile={data.profile} />
-        <Opinions opinions={recentOpinions} />
+        <Opinions />
         <Projects projects={data.projects} />
         <Skills skillGroups={data.skillGroups} />
         <Services />
