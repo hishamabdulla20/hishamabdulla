@@ -1336,9 +1336,10 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
 
 /* Opinions Page — Compact Editorial Proportions */
 .opinions-hero {
-  padding: clamp(3.5rem, 5.5vw, 5rem) clamp(1.25rem, 7vw, 8rem) clamp(1.75rem, 2.5vw, 2.5rem);
+  padding: clamp(2.5rem, 4vw, 4rem) clamp(1.25rem, 7vw, 8rem) clamp(1.5rem, 2vw, 2.25rem);
 }
 
+.opinions-hero .writing-hero__eyebrow,
 .opinions-hero__eyebrow {
   margin: 0 0 0.75rem;
 }
@@ -1347,7 +1348,7 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
   max-width: 48rem;
   font-size: clamp(2.125rem, 4vw, 3.5rem);
   font-weight: 400;
-  line-height: 1;
+  line-height: 1.05;
   letter-spacing: -0.025em;
   text-transform: uppercase;
   text-wrap: balance;
@@ -1361,14 +1362,14 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
 
 .opinions-hero > p:last-child {
   max-width: 38rem;
-  margin: 1rem 0 0;
+  margin: 0.85rem 0 0;
   color: var(--muted);
   font-size: var(--type-body);
   line-height: 1.6;
 }
 
 .opinions-collection {
-  padding: clamp(1.5rem, 2.5vw, 2.25rem) clamp(1.25rem, 7vw, 8rem) clamp(3.5rem, 5vw, 5rem);
+  padding: clamp(1.25rem, 2vw, 2rem) clamp(1.25rem, 7vw, 8rem) clamp(3.5rem, 5vw, 5rem);
 }
 
 .opinions-page .writing-filter {
@@ -1379,9 +1380,9 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
 /* Movie Poster Grid & Card — Compact Gallery Proportions */
 .movie-poster-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
   gap: clamp(1rem, 1.8vw, 1.5rem);
-  padding: clamp(1.75rem, 3vw, 2.5rem) 0 clamp(2.5rem, 4vw, 3.5rem);
+  padding: clamp(1.5rem, 2.5vw, 2.25rem) 0 clamp(2.5rem, 4vw, 3.5rem);
   border-bottom: 1px solid var(--outline);
 }
 
@@ -2094,8 +2095,8 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
   .opinion-movie-fact--full { grid-column: auto; }
   .opinion-movie-title { font-size: clamp(2.5rem, 10vw, 3.5rem); }
   .opinion-movie-original-title { flex-wrap: wrap; gap: 0.4rem; }
-  .opinions-hero { padding-top: 4.5rem; padding-bottom: 1.5rem; }
-  .opinions-hero h1 { font-size: clamp(1.85rem, 8vw, 2.5rem); }
+  .opinions-hero { padding-top: 4rem; padding-bottom: 1.25rem; }
+  .opinions-hero h1 { font-size: clamp(2rem, 7vw, 2.5rem); }
   .movie-poster-grid { grid-template-columns: repeat(2, 1fr); gap: 0.875rem; }
   .writing-prose { font-size: 1.0625rem; line-height: 1.82; }
   .writing-prose figure { width: 100%; margin-inline: 0; transform: none; }

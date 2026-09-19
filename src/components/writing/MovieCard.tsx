@@ -20,7 +20,7 @@ export function MovieCard({
             alt={posterAlt}
             width={455}
             height={674}
-            sizes="(max-width: 480px) 100vw, (max-width: 860px) 50vw, (max-width: 1200px) 33vw, 25vw"
+            sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, (max-width: 1200px) 25vw, 240px"
             priority={priority}
             loading={priority ? 'eager' : 'lazy'}
             className="movie-card__poster"
