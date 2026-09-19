@@ -357,6 +357,7 @@ main { background: transparent; }
   color: var(--muted);
   font-size: var(--type-body);
   line-height: 1.7;
+  white-space: pre-line;
   animation: hero-enter 620ms 380ms var(--motion-ease-out) both;
 }
 
