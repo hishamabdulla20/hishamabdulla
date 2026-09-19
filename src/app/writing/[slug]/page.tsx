@@ -98,6 +98,24 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
     ? article.genres.split(',').map((g) => g.trim()).filter(Boolean)
     : []
   const movieSummary = [article.releaseYear, article.rating, article.runtime].filter(Boolean)
+  const movieFacts = [
+    { label: 'Release Year', value: article.releaseYear },
+    { label: 'IMDb Rating', value: article.imdbRating },
+    { label: 'Language', value: article.language },
+    { label: 'Director', value: article.director },
+    { label: 'Co-Director', value: article.coDirector },
+    { label: 'Writer', value: article.writer },
+    { label: 'Writers', value: article.writers },
+    { label: 'Writer / Screenplay', value: article.screenplay },
+    { label: 'Based On', value: article.basedOn },
+    { label: 'Story', value: article.story },
+    { label: 'Producer', value: article.producer },
+    { label: 'Producers', value: article.producers },
+    { label: 'Starring', value: article.starring, full: true },
+    { label: 'Cinematography', value: article.cinematography },
+    { label: 'Editing', value: article.editing },
+    { label: 'Music', value: article.music },
+  ].filter((fact) => Boolean(fact.value))
 
   const structuredData = {
     '@context': 'https://schema.org',
@@ -128,173 +146,91 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
           </Link>
 
           {isMovieOpinion ? (
-            <div className="opinion-movie-header">
-              <div className="opinion-movie-poster-col">
-                <figure className="opinion-movie-poster">
-                  <Image
-                    src={article.image!}
-                    alt={article.imageAlt || `Theatrical poster for ${article.title}`}
-                    width={455}
-                    height={674}
-                    priority
-                    sizes="(max-width: 768px) 90vw, (max-width: 1024px) 340px, 380px"
-                    className="opinion-movie-poster__img"
-                  />
-                </figure>
-              </div>
-
-              <div className="opinion-movie-info-col">
-                <p className="writing-article-header__meta technical-label">
-                  {movieSummary.length > 0 ? (
-                    movieSummary.map((item, index) => (
-                      <span key={item}>
-                        {index > 0 && <span aria-hidden="true"> · </span>}
-                        {item}
-                      </span>
-                    ))
-                  ) : (
-                    <>
-                      <span>{category}</span><span aria-hidden="true">·</span>
-                      <time dateTime={article.date}>{formatWritingDate(article.date)}</time><span aria-hidden="true">·</span>
-                      <span>{article.readingTime}</span>
-                    </>
-                  )}
-                </p>
-
-                <h1 className="opinion-movie-title">{article.title}</h1>
-                {article.originalTitle && (
-                  <p className="opinion-movie-original-title">
-                    <span className="technical-label">Original Title</span>
-                    <span className="opinion-movie-original-title__name">{article.originalTitle}</span>
-                  </p>
-                )}
-                {article.romanizedTitle && (
-                  <p className="opinion-movie-original-title">
-                    <span className="technical-label">Romanized Title</span>
-                    <span className="opinion-movie-original-title__name">{article.romanizedTitle}</span>
-                  </p>
-                )}
-                {article.language && (
-                  <p className="technical-label">{article.language}</p>
-                )}
-
-                <div className="opinion-movie-details-block">
-                  <h2 className="technical-label opinion-block-label">Movie Information</h2>
-                  <dl className="opinion-movie-facts" aria-label="Movie production details">
-                    {article.releaseYear && (
-                      <div className="opinion-movie-fact">
-                        <dt className="technical-label">Release Year</dt>
-                        <dd>{article.releaseYear}</dd>
-                      </div>
-                    )}
-                    {article.imdbRating && (
-                      <div className="opinion-movie-fact">
-                        <dt className="technical-label">IMDb Rating</dt>
-                        <dd>{article.imdbRating}</dd>
-                      </div>
-                    )}
-                    {article.director && (
-                      <div className="opinion-movie-fact">
-                        <dt className="technical-label">Director</dt>
-                        <dd>{article.director}</dd>
-                      </div>
-                    )}
-                    {article.coDirector && (
-                      <div className="opinion-movie-fact">
-                        <dt className="technical-label">Co-Director</dt>
-                        <dd>{article.coDirector}</dd>
-                      </div>
-                    )}
-                    {article.writer && (
-                      <div className="opinion-movie-fact">
-                        <dt className="technical-label">Writer</dt>
-                        <dd>{article.writer}</dd>
-                      </div>
-                    )}
-                    {article.writers && (
-                      <div className="opinion-movie-fact">
-                        <dt className="technical-label">Writers</dt>
-                        <dd>{article.writers}</dd>
-                      </div>
-                    )}
-                    {article.screenplay && (
-                      <div className="opinion-movie-fact">
-                        <dt className="technical-label">Writer / Screenplay</dt>
-                        <dd>{article.screenplay}</dd>
-                      </div>
-                    )}
-                    {article.basedOn && (
-                      <div className="opinion-movie-fact">
-                        <dt className="technical-label">Based On</dt>
-                        <dd>{article.basedOn}</dd>
-                      </div>
-                    )}
-                    {article.story && (
-                      <div className="opinion-movie-fact">
-                        <dt className="technical-label">Story</dt>
-                        <dd>{article.story}</dd>
-                      </div>
-                    )}
-                    {article.producer && (
-                      <div className="opinion-movie-fact">
-                        <dt className="technical-label">Producer</dt>
-                        <dd>{article.producer}</dd>
-                      </div>
-                    )}
-                    {article.producers && (
-                      <div className="opinion-movie-fact">
-                        <dt className="technical-label">Producers</dt>
-                        <dd>{article.producers}</dd>
-                      </div>
-                    )}
-                    {article.starring && (
-                      <div className="opinion-movie-fact opinion-movie-fact--full">
-                        <dt className="technical-label">Starring</dt>
-                        <dd>{article.starring}</dd>
-                      </div>
-                    )}
-                    {article.cinematography && (
-                      <div className="opinion-movie-fact">
-                        <dt className="technical-label">Cinematography</dt>
-                        <dd>{article.cinematography}</dd>
-                      </div>
-                    )}
-                    {article.editing && (
-                      <div className="opinion-movie-fact">
-                        <dt className="technical-label">Editing</dt>
-                        <dd>{article.editing}</dd>
-                      </div>
-                    )}
-                    {article.music && (
-                      <div className="opinion-movie-fact">
-                        <dt className="technical-label">Music</dt>
-                        <dd>{article.music}</dd>
-                      </div>
-                    )}
-                  </dl>
+            <>
+              <header className="opinion-movie-header">
+                <div className="opinion-movie-poster-col">
+                  <figure className="opinion-movie-poster">
+                    <Image
+                      src={article.image!}
+                      alt={article.imageAlt || `Theatrical poster for ${article.title}`}
+                      width={455}
+                      height={674}
+                      priority
+                      sizes="(max-width: 640px) 78vw, (max-width: 1024px) 34vw, 360px"
+                      className="opinion-movie-poster__img"
+                    />
+                  </figure>
                 </div>
 
-                {genresList.length > 0 && (
-                  <div className="opinion-movie-genres">
-                    <span className="technical-label opinion-block-label">Genres</span>
-                    <div className="opinion-movie-genres__tags">
-                      {genresList.map((genre) => (
-                        <span key={genre} className="opinion-movie-genre-tag technical-label">
-                          {genre}
+                <div className="opinion-movie-info-col">
+                  <p className="writing-article-header__meta technical-label">
+                    {movieSummary.length > 0 ? (
+                      movieSummary.map((item, index) => (
+                        <span key={item}>
+                          {index > 0 && <span aria-hidden="true"> · </span>}
+                          {item}
                         </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                      ))
+                    ) : (
+                      <>
+                        <span>{category}</span><span aria-hidden="true">·</span>
+                        <time dateTime={article.date}>{formatWritingDate(article.date)}</time><span aria-hidden="true">·</span>
+                        <span>{article.readingTime}</span>
+                      </>
+                    )}
+                  </p>
 
-                {article.synopsis && (
-                  <div className="opinion-movie-synopsis">
-                    <span className="technical-label opinion-block-label">Synopsis</span>
-                    <p className="opinion-movie-synopsis__text">{article.synopsis}</p>
+                  <h1 className="opinion-movie-title">{article.title}</h1>
+                  <div className="opinion-movie-title-details">
+                    {article.originalTitle && (
+                      <p className="opinion-movie-original-title">
+                        <span className="technical-label">Original Title</span>
+                        <span className="opinion-movie-original-title__name">{article.originalTitle}</span>
+                      </p>
+                    )}
+                    {article.romanizedTitle && (
+                      <p className="opinion-movie-original-title">
+                        <span className="technical-label">Romanized Title</span>
+                        <span className="opinion-movie-original-title__name">{article.romanizedTitle}</span>
+                      </p>
+                    )}
                   </div>
-                )}
-              </div>
-            </div>
+                  {article.language && (
+                    <p className="opinion-movie-language">
+                      <span className="technical-label">Language</span>
+                      <span>{article.language}</span>
+                    </p>
+                  )}
+                  {article.synopsis && (
+                    <div className="opinion-movie-synopsis">
+                      <span className="technical-label opinion-block-label">Synopsis</span>
+                      <p className="opinion-movie-synopsis__text">{article.synopsis}</p>
+                    </div>
+                  )}
+                </div>
+              </header>
+
+              <section className="opinion-movie-details-block" aria-labelledby="movie-information-title">
+                <h2 id="movie-information-title" className="technical-label opinion-block-label">Movie Information</h2>
+                <dl className="opinion-movie-facts" aria-label="Movie production details">
+                  {movieFacts.map((fact) => (
+                    <div className={`opinion-movie-fact${fact.full ? ' opinion-movie-fact--full' : ''}`} key={fact.label}>
+                      <dt className="technical-label">{fact.label}</dt>
+                      <dd>{fact.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </section>
+
+              {genresList.length > 0 && (
+                <section className="opinion-movie-genres" aria-labelledby="movie-genres-title">
+                  <h2 id="movie-genres-title" className="technical-label opinion-block-label">Genres</h2>
+                  <div className="opinion-movie-genres__tags">
+                    {genresList.map((genre) => <span key={genre} className="opinion-movie-genre-tag technical-label">{genre}</span>)}
+                  </div>
+                </section>
+              )}
+            </>
           ) : (
             <>
               <header className="writing-article-header">
@@ -329,9 +265,15 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
             </div>
           )}
 
-          <MarkdownContent source={article.body} />
+          {isMovieOpinion ? (
+            <div className="opinion-movie-perspective">
+              <MarkdownContent source={article.body} />
+            </div>
+          ) : (
+            <MarkdownContent source={article.body} />
+          )}
 
-          <nav className="writing-article-nav" aria-label={isOpinion ? 'More opinions' : 'More thoughts'}>
+          <nav className={`writing-article-nav${isMovieOpinion ? ' opinion-movie-nav' : ''}`} aria-label={isOpinion ? 'More opinions' : 'More thoughts'}>
             {newerArticle ? (
               <Link href={`${basePath}/${newerArticle.slug}`}>
                 <span className="technical-label">← Newer</span>
