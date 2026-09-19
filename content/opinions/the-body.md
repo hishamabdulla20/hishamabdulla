@@ -10,6 +10,8 @@ imageAlt: "Theatrical poster for The Body (El cuerpo)"
 originalTitle: "El cuerpo"
 releaseYear: 2012
 imdbRating: 7.6/10
+rating: R
+runtime: 1h 48m
 director: "Oriol Paulo"
 writer: "Oriol Paulo, Lara Sendim"
 producers: "Joaquín Padró, Mar Targarona, Mercedes Gamero, Mikel Lejarza"

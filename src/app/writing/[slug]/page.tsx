@@ -97,7 +97,7 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
   const genresList = article.genres
     ? article.genres.split(',').map((g) => g.trim()).filter(Boolean)
     : []
-  const movieSummary = [article.movieYear, article.rating, article.runtime].filter(Boolean)
+  const movieSummary = [article.releaseYear, article.rating, article.runtime].filter(Boolean)
 
   const structuredData = {
     '@context': 'https://schema.org',

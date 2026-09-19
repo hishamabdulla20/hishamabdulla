@@ -11,6 +11,7 @@ originalTitle: "El hoyo"
 movieYear: 2019
 releaseYear: 2019
 imdbRating: 7.0/10
+rating: R
 runtime: 1h 34m
 language: Spanish
 director: "Galder Gaztelu-Urrutia"

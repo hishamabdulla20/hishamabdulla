@@ -10,6 +10,8 @@ imageAlt: "Theatrical poster for The Best Offer"
 originalTitle: "La migliore offerta"
 releaseYear: 2013
 imdbRating: 7.7/10
+rating: R
+runtime: 2h 11m
 director: "Giuseppe Tornatore"
 writer: "Giuseppe Tornatore"
 producers: "Isabella Cocuzza, Arturo Paglia"
