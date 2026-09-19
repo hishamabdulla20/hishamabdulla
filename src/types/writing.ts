@@ -32,6 +32,7 @@ export type WritingArticleMeta = {
   mediaCreator?: string
   mediaYear?: string
   originalTitle?: string
+  romanizedTitle?: string
   movieYear?: string
   releaseYear?: string
   imdbRating?: string
@@ -39,6 +40,7 @@ export type WritingArticleMeta = {
   runtime?: string
   language?: string
   director?: string
+  coDirector?: string
   writer?: string
   writers?: string
   screenplay?: string

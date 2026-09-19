@@ -168,6 +168,12 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
                     <span className="opinion-movie-original-title__name">{article.originalTitle}</span>
                   </p>
                 )}
+                {article.romanizedTitle && (
+                  <p className="opinion-movie-original-title">
+                    <span className="technical-label">Romanized Title</span>
+                    <span className="opinion-movie-original-title__name">{article.romanizedTitle}</span>
+                  </p>
+                )}
                 {article.language && (
                   <p className="technical-label">{article.language}</p>
                 )}
@@ -191,6 +197,12 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
                       <div className="opinion-movie-fact">
                         <dt className="technical-label">Director</dt>
                         <dd>{article.director}</dd>
+                      </div>
+                    )}
+                    {article.coDirector && (
+                      <div className="opinion-movie-fact">
+                        <dt className="technical-label">Co-Director</dt>
+                        <dd>{article.coDirector}</dd>
                       </div>
                     )}
                     {article.writer && (
