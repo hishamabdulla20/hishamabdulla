@@ -12,6 +12,7 @@ import { absoluteUrl, siteConfig } from '@/lib/site-config'
 import {
   formatWritingCategory,
   formatWritingDate,
+  getOpinions,
   getWritingArticle,
   getWritingArticles,
 } from '@/lib/writing'
@@ -20,17 +21,20 @@ type WritingArticlePageProps = { params: Promise<{ slug: string }> }
 
 // oxlint-disable-next-line react/only-export-components -- Next.js route files require this named export.
 export function generateStaticParams() {
-  return getWritingArticles().map((article) => ({ slug: article.slug }))
+  const writings = getWritingArticles().map((article) => ({ slug: article.slug }))
+  const opinions = getOpinions().map((article) => ({ slug: article.slug }))
+  return [...writings, ...opinions]
 }
 
 export async function generateMetadata({ params }: WritingArticlePageProps): Promise<Metadata> {
   const { slug } = await params
   const article = getWritingArticle(slug)
-  const canonical = absoluteUrl(`/writing/${slug}`)
+  const canonicalPath = article?.type === 'opinion' ? `/opinions/${slug}` : `/writing/${slug}`
+  const canonical = absoluteUrl(canonicalPath)
 
   if (!article) {
     return {
-      title: 'Writing not found',
+      title: 'Not found',
       alternates: { canonical },
       robots: { index: false, follow: false },
     }
@@ -69,11 +73,13 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
   const article = getWritingArticle(slug)
   if (!article) notFound()
 
-  const articles = getWritingArticles()
+  const isOpinion = article.type === 'opinion'
+  const articles = isOpinion ? getOpinions() : getWritingArticles()
   const articleIndex = articles.findIndex((candidate) => candidate.slug === slug)
   const newerArticle = articleIndex > 0 ? articles[articleIndex - 1] : null
   const olderArticle = articleIndex < articles.length - 1 ? articles[articleIndex + 1] : null
   const category = formatWritingCategory(article.category)
+  const basePath = isOpinion ? '/opinions' : '/writing'
 
   const structuredData = {
     '@context': 'https://schema.org',
@@ -81,7 +87,7 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
     headline: article.title,
     description: article.excerpt,
     datePublished: article.date,
-    mainEntityOfPage: absoluteUrl(`/writing/${article.slug}`),
+    mainEntityOfPage: absoluteUrl(`${basePath}/${article.slug}`),
     author: { '@type': 'Person', name: siteConfig.fullName, url: siteConfig.url },
     ...(article.image ? { image: absoluteUrl(article.image) } : {}),
   }
@@ -96,7 +102,9 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
       <Navbar />
       <main className="writing-article-page" id="top">
         <article>
-          <a className="writing-back technical-label" href="/writing">← Back to Thoughts</a>
+          <a className="writing-back technical-label" href={isOpinion ? '/opinions' : '/writing'}>
+            {isOpinion ? '← Back to Opinions' : '← Back to Thoughts'}
+          </a>
           <header className="writing-article-header">
             <p className="writing-article-header__meta technical-label">
               <span>{category}</span><span aria-hidden="true">·</span>
@@ -123,15 +131,15 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
 
           <MarkdownContent source={article.body} />
 
-          <nav className="writing-article-nav" aria-label="More thoughts">
+          <nav className="writing-article-nav" aria-label={isOpinion ? 'More opinions' : 'More thoughts'}>
             {newerArticle ? (
-              <a href={`/writing/${newerArticle.slug}`}>
+              <a href={`${basePath}/${newerArticle.slug}`}>
                 <span className="technical-label">← Newer</span>
                 <strong>{newerArticle.title}</strong>
               </a>
             ) : <span />}
             {olderArticle ? (
-              <a href={`/writing/${olderArticle.slug}`}>
+              <a href={`${basePath}/${olderArticle.slug}`}>
                 <span className="technical-label">Older →</span>
                 <strong>{olderArticle.title}</strong>
               </a>

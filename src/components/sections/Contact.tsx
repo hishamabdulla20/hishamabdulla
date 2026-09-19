@@ -128,7 +128,7 @@ export function Contact({ socialLinks }: { socialLinks: SocialLink[] }) {
   return (
     <section className="contact-section grid-field" id="contact" aria-labelledby="contact-title" data-reveal>
       <div className="contact-heading">
-        <p className="section-header__eyebrow technical-label"><span>08</span> — Contact</p>
+        <p className="section-header__eyebrow technical-label"><span>09</span> — Contact</p>
         <p className="contact-kicker">Have an idea?</p>
         <h2 id="contact-title">Let’s build<br />something<br /><em>together.</em></h2>
         <div className="social-list">

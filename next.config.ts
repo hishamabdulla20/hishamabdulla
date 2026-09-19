@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
     return [
       { source: '/thoughts', destination: '/writing' },
       { source: '/thoughts/:slug', destination: '/writing/:slug' },
+      { source: '/opinions/:slug', destination: '/writing/:slug' },
     ]
   },
 }

@@ -6,7 +6,7 @@ export function Writing({ articles }: { articles: WritingArticleMeta[] }) {
   return (
     <section className="section-block" id="thoughts" aria-labelledby="thoughts-title" data-reveal>
       <span id="writing" className="sr-only" aria-hidden="true" />
-      <SectionHeader id="thoughts-title" number="06" eyebrow="Thoughts" title="Perspectives &" italic="reflections." />
+      <SectionHeader id="thoughts-title" number="07" eyebrow="Thoughts" title="Perspectives &" italic="reflections." />
       {articles.length > 0 ? (
         <div className="article-list">
           {articles.map((article, index) => (

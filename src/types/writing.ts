@@ -1,6 +1,7 @@
 export const writingCategories = [
   'movies',
   'books',
+  'tv-series',
   'novels',
   'technology',
   'development',
@@ -10,6 +11,7 @@ export const writingCategories = [
   'culture',
   'personal',
   'essays',
+  'other',
 ] as const
 
 export type WritingCategory = (typeof writingCategories)[number]
@@ -21,6 +23,8 @@ export type WritingArticleMeta = {
   date: string
   excerpt: string
   readingTime: string
+  type?: 'opinion' | 'thought'
+  isPlaceholder?: boolean
   subtitle?: string
   image?: string
   imageAlt?: string

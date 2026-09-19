@@ -1,7 +1,7 @@
 import 'server-only'
 
 import { cache } from 'react'
-import { readFileSync, readdirSync } from 'node:fs'
+import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
 import {
   writingCategories,
@@ -12,6 +12,7 @@ import {
 } from '@/types/writing'
 
 const writingDirectory = join(process.cwd(), 'content', 'writing')
+const opinionsDirectory = join(process.cwd(), 'content', 'opinions')
 const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 const datePattern = /^\d{4}-\d{2}-\d{2}$/
 
@@ -77,8 +78,12 @@ function estimateReadingTime(body: string): string {
   return `${Math.max(1, Math.ceil(wordCount / 220))} min read`
 }
 
-function parseArticle(filename: string): WritingArticle | null {
-  const source = readFileSync(join(writingDirectory, filename), 'utf8')
+function parseArticle(
+  filename: string,
+  directory: string,
+  defaultType: 'opinion' | 'thought',
+): WritingArticle | null {
+  const source = readFileSync(join(directory, filename), 'utf8')
   const { data, body } = parseDocument(source, filename)
   if (data.draft?.toLowerCase() === 'true') return null
 
@@ -106,6 +111,10 @@ function parseArticle(filename: string): WritingArticle | null {
   }
   if (!body) throw new Error(`[writing] ${filename} has no article body.`)
 
+  const articleType: 'opinion' | 'thought' = data.type === 'opinion' || data.type === 'thought'
+    ? data.type
+    : defaultType
+
   return {
     title,
     slug,
@@ -113,6 +122,8 @@ function parseArticle(filename: string): WritingArticle | null {
     date,
     excerpt,
     readingTime: data.readingTime || estimateReadingTime(body),
+    type: articleType,
+    ...(data.isPlaceholder?.toLowerCase() === 'true' ? { isPlaceholder: true } : {}),
     ...(data.subtitle ? { subtitle: data.subtitle } : {}),
     ...(data.image ? { image: data.image, imageAlt: data.imageAlt } : {}),
     ...(data.mediaTitle ? { mediaTitle: data.mediaTitle } : {}),
@@ -123,23 +134,42 @@ function parseArticle(filename: string): WritingArticle | null {
 }
 
 export const getWritingArticles = cache((): WritingArticle[] => {
+  if (!existsSync(writingDirectory)) return []
   const filenames = readdirSync(writingDirectory)
     .filter((filename) => filename.endsWith('.md') && !filename.startsWith('_'))
     .sort()
 
   return filenames
-    .map(parseArticle)
+    .map((filename) => parseArticle(filename, writingDirectory, 'thought'))
+    .filter((article): article is WritingArticle => Boolean(article))
+    .sort((a, b) => b.date.localeCompare(a.date))
+})
+
+export const getOpinions = cache((): WritingArticle[] => {
+  if (!existsSync(opinionsDirectory)) return []
+  const filenames = readdirSync(opinionsDirectory)
+    .filter((filename) => filename.endsWith('.md') && !filename.startsWith('_'))
+    .sort()
+
+  return filenames
+    .map((filename) => parseArticle(filename, opinionsDirectory, 'opinion'))
     .filter((article): article is WritingArticle => Boolean(article))
     .sort((a, b) => b.date.localeCompare(a.date))
 })
 
 export function getWritingArticle(slug: string): WritingArticle | null {
   if (!slugPattern.test(slug)) return null
+  const opinion = getOpinions().find((article) => article.slug === slug)
+  if (opinion) return opinion
   return getWritingArticles().find((article) => article.slug === slug) ?? null
 }
 
 export function getWritingArticleMeta(): WritingArticleMeta[] {
   return getWritingArticles().map(({ body: _body, ...article }) => article)
+}
+
+export function getOpinionsMeta(): WritingArticleMeta[] {
+  return getOpinions().map(({ body: _body, ...article }) => article)
 }
 
 export function formatWritingDate(date: string): string {
@@ -152,7 +182,10 @@ export function formatWritingDate(date: string): string {
 }
 
 export function formatWritingCategory(category: WritingCategory): string {
-  return category === 'ai' ? 'AI' : `${category.charAt(0).toUpperCase()}${category.slice(1)}`
+  if (category === 'ai') return 'AI'
+  if (category === 'tv-series') return 'TV & Series'
+  if (category === 'other') return 'Other'
+  return `${category.charAt(0).toUpperCase()}${category.slice(1)}`
 }
 
 function startsBlock(line: string): boolean {

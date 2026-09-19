@@ -6,6 +6,7 @@ import { About } from '../components/sections/About'
 import { BeyondCode } from '../components/sections/BeyondCode'
 import { Hero } from '../components/sections/Hero'
 import { Journey } from '../components/sections/Journey'
+import { Opinions } from '../components/sections/Opinions'
 import { Projects } from '../components/sections/Projects'
 import { Services } from '../components/sections/Services'
 import { Skills } from '../components/sections/Skills'
@@ -13,7 +14,7 @@ import { Writing } from '../components/sections/Writing'
 import { RevealController } from '../components/ui/RevealController'
 import { getPortfolioData } from '../lib/portfolio-data'
 import { siteConfig } from '../lib/site-config'
-import { getWritingArticleMeta } from '../lib/writing'
+import { getOpinionsMeta, getWritingArticleMeta } from '../lib/writing'
 
 const FluidBackground = dynamic(
   () => import('../components/ui/FluidBackground').then((mod) => mod.FluidBackground),
@@ -56,6 +57,7 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
   const data = await getPortfolioData()
+  const recentOpinions = getOpinionsMeta().slice(0, 3)
   const recentWriting = getWritingArticleMeta().slice(0, 3)
   const sameAs = data.socialLinks
     .map((link) => link.url)
@@ -100,8 +102,9 @@ export default async function HomePage() {
       <main>
         <Hero profile={data.profile} />
         <About profile={data.profile} />
-        <Skills skillGroups={data.skillGroups} />
+        <Opinions opinions={recentOpinions} />
         <Projects projects={data.projects} />
+        <Skills skillGroups={data.skillGroups} />
         <Services />
         <Journey journey={data.journey} currentFocus={data.currentFocus} />
         <Writing articles={recentWriting} />

@@ -13,6 +13,7 @@ const categoryLabels: Record<CategoryFilter, string> = {
   all: 'All',
   movies: 'Movies',
   books: 'Books',
+  'tv-series': 'TV & Series',
   novels: 'Novels',
   technology: 'Technology',
   development: 'Development',
@@ -22,6 +23,7 @@ const categoryLabels: Record<CategoryFilter, string> = {
   culture: 'Culture',
   personal: 'Personal',
   essays: 'Essays',
+  other: 'Other',
 }
 
 function isCategoryFilter(value: string | null): value is CategoryFilter {
