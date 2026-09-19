@@ -40,7 +40,9 @@ export type WritingArticleMeta = {
   language?: string
   director?: string
   writer?: string
+  writers?: string
   screenplay?: string
+  basedOn?: string
   story?: string
   producer?: string
   producers?: string

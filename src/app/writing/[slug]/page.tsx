@@ -199,10 +199,22 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
                         <dd>{article.writer}</dd>
                       </div>
                     )}
+                    {article.writers && (
+                      <div className="opinion-movie-fact">
+                        <dt className="technical-label">Writers</dt>
+                        <dd>{article.writers}</dd>
+                      </div>
+                    )}
                     {article.screenplay && (
                       <div className="opinion-movie-fact">
                         <dt className="technical-label">Writer / Screenplay</dt>
                         <dd>{article.screenplay}</dd>
+                      </div>
+                    )}
+                    {article.basedOn && (
+                      <div className="opinion-movie-fact">
+                        <dt className="technical-label">Based On</dt>
+                        <dd>{article.basedOn}</dd>
                       </div>
                     )}
                     {article.story && (
