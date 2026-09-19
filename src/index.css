@@ -77,7 +77,7 @@
   --type-role: clamp(0.75rem, 0.71rem + 0.18vw, 0.875rem);
   --type-body: clamp(1rem, 0.96rem + 0.18vw, 1.125rem);
   --type-section: clamp(2.375rem, 4vw, 4rem);
-  --type-hero: clamp(4rem, 7vw, 6rem);
+  --type-hero: clamp(3.25rem, 5.5vw, 4.75rem);
   --motion-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   color: var(--text);
   background: var(--bg);

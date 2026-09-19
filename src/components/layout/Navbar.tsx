@@ -205,8 +205,8 @@ export function Navbar() {
     >
       <Link
         className="wordmark"
-        href="/#top"
-        aria-label="Hisham Abdulla, home"
+        href="/"
+        aria-label="Go to homepage"
         onClick={() => setIsOpen(false)}
       >
         HA<span className="wordmark__dot">.</span>
