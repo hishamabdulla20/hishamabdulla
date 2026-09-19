@@ -28,4 +28,8 @@ draft: false
 
 ## My Opinion
 
-Opinion coming soon.
+Flightplan made me think about how difficult moments in life can change us. Sometimes we know something is true, but when everyone around us starts questioning us, we may even begin to question ourselves.
+
+What touched me most was the feeling of being alone when nobody believes you. It shows how important it is to trust yourself, even when the people around you don't.
+
+I don't want to say much more because this is a movie you should experience without spoilers. The tension and mystery keep you connected until the end. For me, Flightplan is a must-watch for anyone who loves thrillers.
