@@ -8,6 +8,8 @@ readingTime: 1 min read
 image: /images/opinions/the-body.jpg
 imageAlt: "Theatrical poster for The Body (El cuerpo)"
 originalTitle: "El cuerpo"
+releaseYear: 2012
+imdbRating: 7.6/10
 director: "Oriol Paulo"
 writer: "Oriol Paulo, Lara Sendim"
 producers: "Joaquín Padró, Mar Targarona, Mercedes Gamero, Mikel Lejarza"

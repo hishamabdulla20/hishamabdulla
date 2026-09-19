@@ -8,6 +8,8 @@ readingTime: 2 min read
 image: /images/opinions/the-best-offer.jpeg
 imageAlt: "Theatrical poster for The Best Offer"
 originalTitle: "La migliore offerta"
+releaseYear: 2013
+imdbRating: 7.7/10
 director: "Giuseppe Tornatore"
 writer: "Giuseppe Tornatore"
 producers: "Isabella Cocuzza, Arturo Paglia"

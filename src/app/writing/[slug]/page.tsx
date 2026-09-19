@@ -172,6 +172,18 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
                 <div className="opinion-movie-details-block">
                   <h2 className="technical-label opinion-block-label">Movie Information</h2>
                   <dl className="opinion-movie-facts" aria-label="Movie production details">
+                    {article.releaseYear && (
+                      <div className="opinion-movie-fact">
+                        <dt className="technical-label">Release Year</dt>
+                        <dd>{article.releaseYear}</dd>
+                      </div>
+                    )}
+                    {article.imdbRating && (
+                      <div className="opinion-movie-fact">
+                        <dt className="technical-label">IMDb Rating</dt>
+                        <dd>{article.imdbRating}</dd>
+                      </div>
+                    )}
                     {article.director && (
                       <div className="opinion-movie-fact">
                         <dt className="technical-label">Director</dt>

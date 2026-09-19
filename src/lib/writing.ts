@@ -137,6 +137,8 @@ function parseArticle(
     ...(data.mediaYear ? { mediaYear: data.mediaYear } : {}),
     ...(data.originalTitle ? { originalTitle: data.originalTitle } : {}),
     ...(data.movieYear ? { movieYear: data.movieYear } : {}),
+    ...(data.releaseYear ? { releaseYear: data.releaseYear } : {}),
+    ...(data.imdbRating ? { imdbRating: data.imdbRating } : {}),
     ...(data.rating ? { rating: data.rating } : {}),
     ...(data.runtime ? { runtime: data.runtime } : {}),
     ...(data.language ? { language: data.language } : {}),

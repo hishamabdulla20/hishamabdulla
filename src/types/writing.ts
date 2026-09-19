@@ -33,6 +33,8 @@ export type WritingArticleMeta = {
   mediaYear?: string
   originalTitle?: string
   movieYear?: string
+  releaseYear?: string
+  imdbRating?: string
   rating?: string
   runtime?: string
   language?: string

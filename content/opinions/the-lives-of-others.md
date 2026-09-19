@@ -9,6 +9,8 @@ image: /images/opinions/the-lives-of-others.jpg
 imageAlt: "Theatrical poster for The Lives of Others (Das Leben der Anderen)"
 originalTitle: "Das Leben der Anderen"
 movieYear: 2006
+releaseYear: 2006
+imdbRating: 8.4/10
 rating: R
 runtime: 2h 17m
 language: German
