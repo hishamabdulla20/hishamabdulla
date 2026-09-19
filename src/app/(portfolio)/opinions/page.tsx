@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { RevealController } from '@/components/ui/RevealController'
-import { MovieCard } from '@/components/writing/MovieCard'
+import { MovieGridWithSort } from '@/components/opinions/MovieGridWithSort'
 import { absoluteUrl, siteConfig } from '@/lib/site-config'
 import { getOpinionsMeta } from '@/lib/writing'
 
@@ -37,9 +37,7 @@ export default function OpinionsPage() {
           <p>My personal opinions about movies.</p>
         </header>
         <section className="writing-collection opinions-collection" aria-label="Published opinions" data-reveal>
-          <div className="movie-poster-grid">
-            {movies.map((movie) => <MovieCard movie={movie} key={movie.slug} />)}
-          </div>
+          <MovieGridWithSort movies={movies} />
         </section>
       </main>
     </>

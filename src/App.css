@@ -1372,6 +1372,57 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
 }
 
 /* Movie Poster Grid & Card — Compact Gallery Proportions */
+.movie-sort-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1.5rem;
+}
+
+.movie-sort-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.movie-sort-select {
+  appearance: none;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  padding: 0.25rem 1.25rem 0.25rem 0;
+  cursor: pointer;
+  outline: none;
+  transition: color 180ms ease;
+}
+
+.movie-sort-select:hover,
+.movie-sort-select:focus-visible {
+  color: var(--sepia-light);
+}
+
+.movie-sort-select option {
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--sans);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.movie-sort-caret {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--sepia);
+  pointer-events: none;
+  font-size: 0.8rem;
+  transition: transform 180ms ease;
+}
+
+.movie-sort-select:focus-visible + .movie-sort-caret {
+  color: var(--sepia-light);
+}
+
 .movie-poster-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
