@@ -33,8 +33,8 @@ export default function OpinionsPage() {
       <main className="writing-page opinions-page" id="top">
         <header className="writing-hero opinions-hero grid-field" data-reveal>
           <p className="writing-hero__eyebrow technical-label">Opinions</p>
-          <h1>Direct takes <span>&amp; perspectives.</span></h1>
-          <p>Personal opinions and reviews on films, books, technology, AI, and culture.</p>
+          <h1>Movies</h1>
+          <p>My personal opinions about movies.</p>
         </header>
         <section className="writing-collection opinions-collection" aria-label="Published opinions" data-reveal>
           <div className="movie-poster-grid">
