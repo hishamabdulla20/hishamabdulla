@@ -1334,12 +1334,54 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
 .writing-empty .technical-label { margin: 0 0 0.75rem; color: var(--sepia); }
 .writing-empty p:last-child { margin: 0; color: var(--muted); }
 
-/* Movie Poster Grid & Card */
+/* Opinions Page — Compact Editorial Proportions */
+.opinions-hero {
+  padding: clamp(3.5rem, 5.5vw, 5rem) clamp(1.25rem, 7vw, 8rem) clamp(1.75rem, 2.5vw, 2.5rem);
+}
+
+.opinions-hero__eyebrow {
+  margin: 0 0 0.75rem;
+}
+
+.opinions-hero h1 {
+  max-width: 48rem;
+  font-size: clamp(2.125rem, 4vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.opinions-hero h1 span {
+  display: inline-block;
+  margin-left: 0.25em;
+  color: var(--sepia);
+}
+
+.opinions-hero > p:last-child {
+  max-width: 38rem;
+  margin: 1rem 0 0;
+  color: var(--muted);
+  font-size: var(--type-body);
+  line-height: 1.6;
+}
+
+.opinions-collection {
+  padding: clamp(1.5rem, 2.5vw, 2.25rem) clamp(1.25rem, 7vw, 8rem) clamp(3.5rem, 5vw, 5rem);
+}
+
+.opinions-page .writing-filter {
+  min-height: 2.75rem;
+  padding: 0.65rem clamp(0.75rem, 1.2vw, 1.15rem);
+}
+
+/* Movie Poster Grid & Card — Compact Gallery Proportions */
 .movie-poster-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: clamp(1.5rem, 2.5vw, 2.5rem);
-  padding: clamp(3rem, 5vw, 4.5rem) 0 clamp(4rem, 6vw, 6rem);
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: clamp(1rem, 1.8vw, 1.5rem);
+  padding: clamp(1.75rem, 3vw, 2.5rem) 0 clamp(2.5rem, 4vw, 3.5rem);
   border-bottom: 1px solid var(--outline);
 }
 
@@ -1351,6 +1393,8 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
   color: inherit;
   border-radius: 4px;
   outline: none;
+  max-width: 240px;
+  width: 100%;
   transition: transform 240ms var(--motion-ease-out);
 }
 
@@ -1367,7 +1411,7 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
   border-radius: 3px;
   border: 1px solid var(--outline);
   background: var(--surface-low);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
   transition:
     border-color 240ms ease,
     box-shadow 240ms ease;
@@ -1387,7 +1431,7 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
+  padding: 1.25rem;
   text-align: center;
   background: var(--surface-low);
   color: var(--muted);
@@ -1396,7 +1440,7 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
 .movie-card:hover .movie-card__poster-wrap,
 .movie-card:focus-visible .movie-card__poster-wrap {
   border-color: var(--sepia);
-  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 .movie-card:hover .movie-card__poster {
@@ -1406,18 +1450,18 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
 .movie-card__body {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  margin-top: 1rem;
+  gap: 0.35rem;
+  margin-top: 0.75rem;
 }
 
 .movie-card__title {
   margin: 0;
   color: var(--cream);
   font-family: var(--serif);
-  font-size: clamp(1.2rem, 1.4vw, 1.45rem);
+  font-size: clamp(0.95rem, 1.15vw, 1.15rem);
   font-weight: 400;
-  letter-spacing: -0.02em;
-  line-height: 1.18;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
   text-wrap: balance;
   transition: color 200ms ease;
 }
@@ -1430,10 +1474,10 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
 .movie-card__meta {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.3rem;
   color: var(--muted);
   font-family: var(--mono);
-  font-size: var(--type-meta);
+  font-size: 0.6875rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   transition: color 200ms ease;
@@ -1971,10 +2015,6 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
   .writing-back:hover { color: var(--cream); transform: translateX(-0.15rem); }
 }
 
-@media (max-width: 1200px) {
-  .movie-poster-grid { grid-template-columns: repeat(3, 1fr); gap: 1.75rem; }
-}
-
 @media (max-width: 1280px) and (min-width: 901px) {
   .about-layout { margin-left: 0; }
 }
@@ -1991,7 +2031,7 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
   .journey-layout, .contact-section { grid-template-columns: 1fr; }
   .interest-grid { grid-template-columns: repeat(2, 1fr); }
   .opinion-grid { grid-template-columns: repeat(2, 1fr); }
-  .movie-poster-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+  .movie-poster-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 1.25rem; }
   .writing-entry { grid-template-columns: 3rem minmax(0, 1fr); }
   .writing-entry__image { grid-column: 2; width: min(100%, 24rem); }
 }
@@ -2054,17 +2094,19 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
   .opinion-movie-fact--full { grid-column: auto; }
   .opinion-movie-title { font-size: clamp(2.5rem, 10vw, 3.5rem); }
   .opinion-movie-original-title { flex-wrap: wrap; gap: 0.4rem; }
-  .movie-poster-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+  .opinions-hero { padding-top: 4.5rem; padding-bottom: 1.5rem; }
+  .opinions-hero h1 { font-size: clamp(1.85rem, 8vw, 2.5rem); }
+  .movie-poster-grid { grid-template-columns: repeat(2, 1fr); gap: 0.875rem; }
   .writing-prose { font-size: 1.0625rem; line-height: 1.82; }
   .writing-prose figure { width: 100%; margin-inline: 0; transform: none; }
   .writing-article-nav { grid-template-columns: 1fr; }
   .writing-article-nav a:last-of-type { border-top: 1px solid var(--hairline); border-left: 0; }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 340px) {
   .movie-poster-grid {
     grid-template-columns: 1fr;
-    max-width: 300px;
+    max-width: 220px;
     margin-inline: auto;
   }
 }
