@@ -104,8 +104,8 @@ export default async function HomePage() {
         <Projects projects={data.projects} />
         <Services />
         <Journey journey={data.journey} currentFocus={data.currentFocus} />
-        <BeyondCode />
         <Writing articles={recentWriting} />
+        <BeyondCode />
         <Contact socialLinks={data.socialLinks} />
       </main>
       <Footer />
