@@ -43,20 +43,27 @@ function displayDate(date: string): string {
 export function WritingIndex({
   articles,
   initialCategory,
+  showAllCategory = true,
 }: {
   articles: WritingArticleMeta[]
   initialCategory: CategoryFilter
+  showAllCategory?: boolean
 }) {
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>(initialCategory)
+  const fallbackCategory: CategoryFilter = showAllCategory ? 'all' : 'movies'
 
   useEffect(() => {
     const handlePopState = () => {
       const value = new URL(window.location.href).searchParams.get('category')
-      setActiveCategory(isCategoryFilter(value) ? value : 'all')
+      setActiveCategory(
+        isCategoryFilter(value) && (showAllCategory || value !== 'all')
+          ? value
+          : fallbackCategory,
+      )
     }
     window.addEventListener('popstate', handlePopState)
     return () => window.removeEventListener('popstate', handlePopState)
-  }, [])
+  }, [fallbackCategory, showAllCategory])
 
   const chooseCategory = (category: CategoryFilter) => {
     setActiveCategory(category)
@@ -69,11 +76,14 @@ export function WritingIndex({
   const visibleArticles = activeCategory === 'all'
     ? articles
     : articles.filter((article) => article.category === activeCategory)
+  const visibleCategories: readonly CategoryFilter[] = showAllCategory
+    ? ['all', ...writingCategories]
+    : writingCategories
 
   return (
     <>
       <div className="writing-filters" aria-label="Filter thoughts by category">
-        {(['all', ...writingCategories] as const).map((category) => (
+        {visibleCategories.map((category) => (
           <button
             type="button"
             key={category}

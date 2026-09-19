@@ -39,9 +39,9 @@ type OpinionsPageProps = {
 export default async function OpinionsPage({ searchParams }: OpinionsPageProps) {
   const { category: categoryValue } = await searchParams
   const requestedCategory = Array.isArray(categoryValue) ? categoryValue[0] : categoryValue
-  const initialCategory: 'all' | WritingCategory = writingCategories.includes(requestedCategory as WritingCategory)
+  const initialCategory: WritingCategory = writingCategories.includes(requestedCategory as WritingCategory)
     ? requestedCategory as WritingCategory
-    : 'all'
+    : 'movies'
   const opinions = getOpinionsMeta()
 
   return (
@@ -56,11 +56,10 @@ export default async function OpinionsPage({ searchParams }: OpinionsPageProps) 
           <p>Personal opinions and reviews on films, books, technology, AI, and culture.</p>
         </header>
         <section className="writing-collection opinions-collection" aria-label="Published opinions" data-reveal>
-          <WritingIndex articles={opinions} initialCategory={initialCategory} />
+          <WritingIndex articles={opinions} initialCategory={initialCategory} showAllCategory={false} />
         </section>
       </main>
       <Footer />
     </div>
   )
 }
-
