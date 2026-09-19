@@ -1,18 +1,17 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import type { WritingArticleMeta } from '@/types/writing'
 
 export function MovieCard({
   movie,
-  priority = false,
 }: {
   movie: WritingArticleMeta
-  priority?: boolean
 }) {
   const href = movie.type === 'opinion' ? `/opinions/${movie.slug}` : `/writing/${movie.slug}`
   const posterAlt = movie.imageAlt || `${movie.title} movie poster`
 
   return (
-    <a className="movie-card" href={href} aria-label={`Read opinion on ${movie.title}`}>
+    <Link className="movie-card" href={href} aria-label={`Read opinion on ${movie.title}`}>
       <div className="movie-card__poster-wrap">
         {movie.image ? (
           <Image
@@ -21,8 +20,7 @@ export function MovieCard({
             width={455}
             height={674}
             sizes="(max-width: 640px) 50vw, (max-width: 900px) 33vw, (max-width: 1200px) 25vw, 240px"
-            priority={priority}
-            loading={priority ? 'eager' : 'lazy'}
+            loading="lazy"
             className="movie-card__poster"
           />
         ) : (
@@ -39,7 +37,6 @@ export function MovieCard({
           </span>
         )}
       </div>
-    </a>
+    </Link>
   )
 }
-

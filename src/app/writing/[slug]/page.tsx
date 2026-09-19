@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Footer } from '@/components/layout/Footer'
 import { Navbar } from '@/components/layout/Navbar'
@@ -116,12 +117,12 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
       <Navbar />
       <main className="writing-article-page" id="top">
         <article>
-          <a
+          <Link
             className="writing-back technical-label"
             href={isOpinion ? (article.category === 'movies' ? '/opinions?category=movies' : '/opinions') : '/writing'}
           >
             {isOpinion ? '← Back to Opinions' : '← Back to Thoughts'}
-          </a>
+          </Link>
 
           {isMovieOpinion ? (
             <div className="opinion-movie-header">
@@ -275,16 +276,16 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
 
           <nav className="writing-article-nav" aria-label={isOpinion ? 'More opinions' : 'More thoughts'}>
             {newerArticle ? (
-              <a href={`${basePath}/${newerArticle.slug}`}>
+              <Link href={`${basePath}/${newerArticle.slug}`}>
                 <span className="technical-label">← Newer</span>
                 <strong>{newerArticle.title}</strong>
-              </a>
+              </Link>
             ) : <span />}
             {olderArticle ? (
-              <a href={`${basePath}/${olderArticle.slug}`}>
+              <Link href={`${basePath}/${olderArticle.slug}`}>
                 <span className="technical-label">Older →</span>
                 <strong>{olderArticle.title}</strong>
-              </a>
+              </Link>
             ) : <span />}
           </nav>
         </article>

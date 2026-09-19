@@ -3,8 +3,10 @@
 import { useEffect, useRef } from 'react'
 
 const vertexShader = /* glsl */ `
+  attribute vec2 position;
+
   void main() {
-    gl_Position = vec4(position, 1.0);
+    gl_Position = vec4(position, 0.0, 1.0);
   }
 `
 
@@ -81,230 +83,245 @@ export function FluidBackground() {
     const canvas = canvasRef.current
     if (!canvas) return
 
-    let cancelled = false
+    let disposed = false
     let dispose = () => {}
 
     const start = () => {
-      if (cancelled) return
+      if (disposed) return
 
-      try {
-        const gl = canvas.getContext('webgl2', { powerPreference: 'low-power' }) ||
-                   canvas.getContext('webgl', { powerPreference: 'low-power' })
-        if (!gl) return
-      } catch {
+      const gl = canvas.getContext('webgl', {
+        alpha: false,
+        antialias: false,
+        depth: false,
+        powerPreference: 'low-power',
+        stencil: false,
+      })
+      if (!gl) return
+
+      const compileShader = (type: number, source: string) => {
+        const shader = gl.createShader(type)
+        if (!shader) return null
+        gl.shaderSource(shader, source)
+        gl.compileShader(shader)
+        if (gl.getShaderParameter(shader, gl.COMPILE_STATUS)) return shader
+        gl.deleteShader(shader)
+        return null
+      }
+
+      const compiledVertexShader = compileShader(gl.VERTEX_SHADER, vertexShader)
+      const compiledFragmentShader = compileShader(gl.FRAGMENT_SHADER, fragmentShader)
+      if (!compiledVertexShader || !compiledFragmentShader) return
+
+      const program = gl.createProgram()
+      if (!program) return
+      gl.attachShader(program, compiledVertexShader)
+      gl.attachShader(program, compiledFragmentShader)
+      gl.linkProgram(program)
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        gl.deleteProgram(program)
+        gl.deleteShader(compiledVertexShader)
+        gl.deleteShader(compiledFragmentShader)
         return
       }
 
-      void Promise.all([
-        import('three/src/renderers/WebGLRenderer.js'),
-        import('three/src/scenes/Scene.js'),
-        import('three/src/cameras/OrthographicCamera.js'),
-        import('three/src/math/Vector2.js'),
-        import('three/src/math/Color.js'),
-        import('three/src/geometries/PlaneGeometry.js'),
-        import('three/src/materials/ShaderMaterial.js'),
-        import('three/src/objects/Mesh.js'),
-        import('three/src/constants.js'),
-      ])
-        .then(([
-          { WebGLRenderer },
-          { Scene },
-          { OrthographicCamera },
-          { Vector2 },
-          { Color },
-          { PlaneGeometry },
-          { ShaderMaterial },
-          { Mesh },
-          { SRGBColorSpace },
-        ]) => {
-          if (cancelled) return
+      const buffer = gl.createBuffer()
+      if (!buffer) return
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
+      gl.bufferData(
+        gl.ARRAY_BUFFER,
+        new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]),
+        gl.STATIC_DRAW,
+      )
 
-        let renderer: InstanceType<typeof WebGLRenderer>
-        try {
-          renderer = new WebGLRenderer({
-            canvas,
-            alpha: false,
-            antialias: false,
-            depth: false,
-            powerPreference: 'low-power',
-            stencil: false,
-          })
-        } catch {
+      gl.useProgram(program)
+      const position = gl.getAttribLocation(program, 'position')
+      gl.enableVertexAttribArray(position)
+      gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0)
+
+      const timeUniform = gl.getUniformLocation(program, 'uTime')
+      const velocityUniform = gl.getUniformLocation(program, 'uVelocity')
+      const resolutionUniform = gl.getUniformLocation(program, 'uResolution')
+      const baseUniform = gl.getUniformLocation(program, 'uBase')
+      const accentUniform = gl.getUniformLocation(program, 'uAccent')
+      const highlightUniform = gl.getUniformLocation(program, 'uHighlight')
+
+      type Rgb = [number, number, number]
+      const parseColor = (value: string, fallback: string): Rgb => {
+        const color = /^#([\da-f]{6})$/i.exec(value.trim()) ?? /^#([\da-f]{6})$/i.exec(fallback)
+        const hex = color?.[1] ?? '000000'
+        return [
+          Number.parseInt(hex.slice(0, 2), 16) / 255,
+          Number.parseInt(hex.slice(2, 4), 16) / 255,
+          Number.parseInt(hex.slice(4, 6), 16) / 255,
+        ]
+      }
+      const copyColor = (target: Rgb, source: Rgb) => {
+        target[0] = source[0]
+        target[1] = source[1]
+        target[2] = source[2]
+      }
+      const lerpColor = (current: Rgb, target: Rgb, amount: number) => {
+        current[0] += (target[0] - current[0]) * amount
+        current[1] += (target[1] - current[1]) * amount
+        current[2] += (target[2] - current[2]) * amount
+      }
+
+      const currentBase: Rgb = [0, 0, 0]
+      const currentAccent: Rgb = [0, 0, 0]
+      const currentHighlight: Rgb = [0, 0, 0]
+      let targetBase: Rgb = [0, 0, 0]
+      let targetAccent: Rgb = [0, 0, 0]
+      let targetHighlight: Rgb = [0, 0, 0]
+      let elapsedTime = 0
+      let velocity = 0
+
+      const clamp = (value: number, minimum: number, maximum: number) => (
+        Math.max(minimum, Math.min(maximum, value))
+      )
+
+      const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+      const mobileQuery = window.matchMedia('(max-width: 768px), (pointer: coarse)')
+      let prefersReducedMotion = reducedMotionQuery.matches
+      let animationFrame = 0
+      let resizeFrame = 0
+      let isRunning = false
+      let lastFrameTime = performance.now()
+      let previousScrollY = window.scrollY
+
+      const readThemeColors = () => {
+        const styles = getComputedStyle(document.documentElement)
+        targetBase = parseColor(styles.getPropertyValue('--color-bg'), '#000000')
+        targetAccent = parseColor(styles.getPropertyValue('--color-accent'), '#b89b72')
+        targetHighlight = parseColor(
+          styles.getPropertyValue('--color-accent-highlight'),
+          '#e1c296',
+        )
+      }
+
+      const render = () => {
+        gl.uniform1f(timeUniform, elapsedTime)
+        gl.uniform1f(velocityUniform, velocity)
+        gl.uniform2f(resolutionUniform, canvas.width, canvas.height)
+        gl.uniform3fv(baseUniform, currentBase)
+        gl.uniform3fv(accentUniform, currentAccent)
+        gl.uniform3fv(highlightUniform, currentHighlight)
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
+      }
+
+      const renderStaticFrame = () => {
+        copyColor(currentBase, targetBase)
+        copyColor(currentAccent, targetAccent)
+        copyColor(currentHighlight, targetHighlight)
+        velocity = 0
+        render()
+      }
+
+      const resize = () => {
+        const pixelRatio = Math.min(window.devicePixelRatio || 1, mobileQuery.matches ? 1 : 1.5)
+        canvas.width = Math.max(1, Math.floor(window.innerWidth * pixelRatio))
+        canvas.height = Math.max(1, Math.floor(window.innerHeight * pixelRatio))
+        gl.viewport(0, 0, canvas.width, canvas.height)
+        if (prefersReducedMotion) renderStaticFrame()
+      }
+
+      const scheduleResize = () => {
+        if (resizeFrame) return
+        resizeFrame = window.requestAnimationFrame(() => {
+          resizeFrame = 0
+          resize()
+        })
+      }
+
+      const renderFrame = (now: number) => {
+        if (!isRunning) return
+
+        const minimumFrameTime = mobileQuery.matches ? 1000 / 20 : 1000 / 30
+        const elapsed = now - lastFrameTime
+        if (elapsed < minimumFrameTime) {
+          animationFrame = window.requestAnimationFrame(renderFrame)
           return
         }
 
-        renderer.outputColorSpace = SRGBColorSpace
+        const deltaTime = Math.min(elapsed / 1000, 0.05)
+        lastFrameTime = now
+        const currentScrollY = window.scrollY
+        const scrollDelta = currentScrollY - previousScrollY
+        previousScrollY = currentScrollY
+        const rawVelocity = clamp(scrollDelta / Math.max(elapsed, 16) * 0.55, -1, 1)
+        const velocityDamping = 1 - Math.exp(-deltaTime * 9)
+        const colorDamping = 1 - Math.exp(-deltaTime * 5)
 
-        const scene = new Scene()
-        const camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1)
-        const resolution = new Vector2(1, 1)
-        const currentBase = new Color()
-        const currentAccent = new Color()
-        const currentHighlight = new Color()
-        const targetBase = new Color()
-        const targetAccent = new Color()
-        const targetHighlight = new Color()
-        const uniforms = {
-          uTime: { value: 0 },
-          uVelocity: { value: 0 },
-          uResolution: { value: resolution },
-          uBase: { value: currentBase },
-          uAccent: { value: currentAccent },
-          uHighlight: { value: currentHighlight },
+        velocity += (rawVelocity - velocity) * velocityDamping
+        lerpColor(currentBase, targetBase, colorDamping)
+        lerpColor(currentAccent, targetAccent, colorDamping)
+        lerpColor(currentHighlight, targetHighlight, colorDamping)
+        elapsedTime += deltaTime
+        render()
+
+        animationFrame = window.requestAnimationFrame(renderFrame)
+      }
+
+      const stopAnimation = () => {
+        isRunning = false
+        window.cancelAnimationFrame(animationFrame)
+      }
+
+      const startAnimation = () => {
+        if (isRunning || prefersReducedMotion || document.hidden) return
+        isRunning = true
+        lastFrameTime = performance.now()
+        previousScrollY = window.scrollY
+        animationFrame = window.requestAnimationFrame(renderFrame)
+      }
+
+      const handleMotionPreference = (event: MediaQueryListEvent) => {
+        prefersReducedMotion = event.matches
+        if (prefersReducedMotion) {
+          stopAnimation()
+          renderStaticFrame()
+        } else {
+          startAnimation()
         }
-        const geometry = new PlaneGeometry(2, 2)
-        const material = new ShaderMaterial({
-          uniforms,
-          vertexShader,
-          fragmentShader,
-          depthTest: false,
-          depthWrite: false,
-        })
-        const plane = new Mesh(geometry, material)
-        scene.add(plane)
+      }
 
-        const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v))
+      const handleVisibility = () => {
+        if (document.hidden) stopAnimation()
+        else if (prefersReducedMotion) renderStaticFrame()
+        else startAnimation()
+      }
 
-        const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
-        const mobileQuery = window.matchMedia('(max-width: 768px), (pointer: coarse)')
-        let prefersReducedMotion = reducedMotionQuery.matches
-        let animationFrame = 0
-        let resizeFrame = 0
-        let isRunning = false
-        let lastFrameTime = performance.now()
-        let previousScrollY = window.scrollY
-        let smoothedVelocity = 0
-
-        const readThemeColors = () => {
-          const styles = getComputedStyle(document.documentElement)
-          targetBase.setStyle(styles.getPropertyValue('--color-bg').trim() || '#000000')
-          targetAccent.setStyle(styles.getPropertyValue('--color-accent').trim() || '#b89b72')
-          targetHighlight.setStyle(
-            styles.getPropertyValue('--color-accent-highlight').trim() || '#e1c296',
-          )
-        }
-
-        const renderStaticFrame = () => {
-          currentBase.copy(targetBase)
-          currentAccent.copy(targetAccent)
-          currentHighlight.copy(targetHighlight)
-          uniforms.uVelocity.value = 0
-          renderer.render(scene, camera)
-        }
-
-        const resize = () => {
-          const isMobile = mobileQuery.matches
-          renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isMobile ? 1 : 1.5))
-          renderer.setSize(window.innerWidth, window.innerHeight, false)
-          renderer.getDrawingBufferSize(resolution)
-          if (prefersReducedMotion) renderStaticFrame()
-        }
-
-        const scheduleResize = () => {
-          if (resizeFrame) return
-          resizeFrame = window.requestAnimationFrame(() => {
-            resizeFrame = 0
-            resize()
-          })
-        }
-
-        const renderFrame = (now: number) => {
-          if (!isRunning) return
-
-          const minimumFrameTime = mobileQuery.matches ? 1000 / 30 : 1000 / 60
-          const elapsed = now - lastFrameTime
-          if (elapsed < minimumFrameTime) {
-            animationFrame = window.requestAnimationFrame(renderFrame)
-            return
-          }
-
-          const deltaTime = Math.min(elapsed / 1000, 0.05)
-          lastFrameTime = now
-          const currentScrollY = window.scrollY
-          const scrollDelta = currentScrollY - previousScrollY
-          previousScrollY = currentScrollY
-          const rawVelocity = clamp(scrollDelta / Math.max(elapsed, 16) * 0.55, -1, 1)
-          const velocityDamping = 1 - Math.exp(-deltaTime * 9)
-          const colorDamping = 1 - Math.exp(-deltaTime * 5)
-
-          smoothedVelocity += (rawVelocity - smoothedVelocity) * velocityDamping
-          currentBase.lerp(targetBase, colorDamping)
-          currentAccent.lerp(targetAccent, colorDamping)
-          currentHighlight.lerp(targetHighlight, colorDamping)
-          uniforms.uTime.value += deltaTime
-          uniforms.uVelocity.value = smoothedVelocity
-          renderer.render(scene, camera)
-
-          animationFrame = window.requestAnimationFrame(renderFrame)
-        }
-
-        const stopAnimation = () => {
-          isRunning = false
-          window.cancelAnimationFrame(animationFrame)
-        }
-
-        const startAnimation = () => {
-          if (isRunning || prefersReducedMotion || document.hidden) return
-          isRunning = true
-          lastFrameTime = performance.now()
-          previousScrollY = window.scrollY
-          animationFrame = window.requestAnimationFrame(renderFrame)
-        }
-
-        const handleMotionPreference = (event: MediaQueryListEvent) => {
-          prefersReducedMotion = event.matches
-          if (prefersReducedMotion) {
-            stopAnimation()
-            renderStaticFrame()
-          } else {
-            startAnimation()
-          }
-        }
-
-        const handleVisibility = () => {
-          if (document.hidden) stopAnimation()
-          else if (prefersReducedMotion) renderStaticFrame()
-          else startAnimation()
-        }
-
-        const themeObserver = new MutationObserver(() => {
-          readThemeColors()
-          if (prefersReducedMotion) renderStaticFrame()
-        })
-
+      const themeObserver = new MutationObserver(() => {
         readThemeColors()
-        currentBase.copy(targetBase)
-        currentAccent.copy(targetAccent)
-        currentHighlight.copy(targetHighlight)
-        resize()
-        renderStaticFrame()
-        startAnimation()
+        if (prefersReducedMotion) renderStaticFrame()
+      })
 
-        themeObserver.observe(document.documentElement, {
-          attributes: true,
-          attributeFilter: ['data-theme'],
-        })
-        window.addEventListener('resize', scheduleResize, { passive: true })
-        document.addEventListener('visibilitychange', handleVisibility)
-        reducedMotionQuery.addEventListener('change', handleMotionPreference)
-        mobileQuery.addEventListener('change', scheduleResize)
+      readThemeColors()
+      renderStaticFrame()
+      resize()
+      startAnimation()
 
-          dispose = () => {
-            stopAnimation()
-            window.cancelAnimationFrame(resizeFrame)
-            themeObserver.disconnect()
-            window.removeEventListener('resize', scheduleResize)
-            document.removeEventListener('visibilitychange', handleVisibility)
-            reducedMotionQuery.removeEventListener('change', handleMotionPreference)
-            mobileQuery.removeEventListener('change', scheduleResize)
-            geometry.dispose()
-            material.dispose()
-            renderer.dispose()
-          }
-        })
-        .catch(() => {
-          // The existing CSS background remains the graceful fallback.
-        })
+      themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['data-theme'],
+      })
+      window.addEventListener('resize', scheduleResize, { passive: true })
+      document.addEventListener('visibilitychange', handleVisibility)
+      reducedMotionQuery.addEventListener('change', handleMotionPreference)
+      mobileQuery.addEventListener('change', scheduleResize)
+
+      dispose = () => {
+        stopAnimation()
+        window.cancelAnimationFrame(resizeFrame)
+        themeObserver.disconnect()
+        window.removeEventListener('resize', scheduleResize)
+        document.removeEventListener('visibilitychange', handleVisibility)
+        reducedMotionQuery.removeEventListener('change', handleMotionPreference)
+        mobileQuery.removeEventListener('change', scheduleResize)
+        gl.deleteBuffer(buffer)
+        gl.deleteProgram(program)
+        gl.deleteShader(compiledVertexShader)
+        gl.deleteShader(compiledFragmentShader)
+      }
     }
 
     const idleId = typeof window !== 'undefined' && 'requestIdleCallback' in window
@@ -312,7 +329,7 @@ export function FluidBackground() {
       : setTimeout(start, 100)
 
     return () => {
-      cancelled = true
+      disposed = true
       if (typeof window !== 'undefined' && 'cancelIdleCallback' in window && typeof idleId === 'number') {
         (window as unknown as { cancelIdleCallback: (id: number) => void }).cancelIdleCallback(idleId)
       } else {

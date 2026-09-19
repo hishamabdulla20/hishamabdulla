@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { interests } from '../../data/portfolio'
 import { SectionHeader } from '../ui/SectionHeader'
 
@@ -8,12 +9,12 @@ export function BeyondCode() {
       <p className="section-intro">A growing index of the ideas, images, places and stories that shape how I see the world.</p>
       <div className="interest-grid">
         {interests.map((interest) => interest.href ? (
-          <a className="interest-item" href={interest.href} key={interest.slug}>
+          <Link className="interest-item" href={interest.href} key={interest.slug}>
             <span className="technical-label">{interest.number}</span>
             <h3>{interest.title}</h3>
             <span className="interest-item__status technical-label">Explore thoughts</span>
             <span aria-hidden="true">↗</span>
-          </a>
+          </Link>
         ) : (
           <article className="interest-item" key={interest.slug}>
             <span className="technical-label">{interest.number}</span>

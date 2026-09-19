@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { SectionHeader } from '../ui/SectionHeader'
 
 function MoviesIcon() {
@@ -91,7 +92,7 @@ export function Opinions() {
         {opinionCategories.map((category) => {
           const Icon = category.icon
           return (
-            <a
+            <Link
               className="opinion-card"
               href={category.href}
               key={category.key}
@@ -108,14 +109,14 @@ export function Opinions() {
                   Explore opinions <span className="opinion-card__arrow" aria-hidden="true">→</span>
                 </span>
               </div>
-            </a>
+            </Link>
           )
         })}
       </div>
       <div className="opinions-section-footer writing-section-footer">
-        <a className="opinions-section-link writing-section-link text-link" href="/opinions">
+        <Link className="opinions-section-link writing-section-link text-link" href="/opinions">
           View all opinions <span className="text-link__arrow" aria-hidden="true">→</span>
-        </a>
+        </Link>
       </div>
     </section>
   )

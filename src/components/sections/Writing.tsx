@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { formatWritingCategory, formatWritingDate } from '../../lib/writing'
 import type { WritingArticleMeta } from '../../types/writing'
 import { SectionHeader } from '../ui/SectionHeader'
@@ -18,13 +19,13 @@ export function Writing({ articles }: { articles: WritingArticleMeta[] }) {
                   <span aria-hidden="true">·</span>
                   <time dateTime={article.date}>{formatWritingDate(article.date)}</time>
                 </p>
-                <h3><a href={`/writing/${article.slug}`}>{article.title}</a></h3>
+                <h3><Link href={`/writing/${article.slug}`}>{article.title}</Link></h3>
                 <p>{article.excerpt}</p>
               </div>
-              <a className="article-row__read technical-label" href={`/writing/${article.slug}`}>
+              <Link className="article-row__read technical-label" href={`/writing/${article.slug}`}>
                 {article.readingTime} <span aria-hidden="true">↗</span>
                 <span className="sr-only">: Read {article.title}</span>
-              </a>
+              </Link>
             </article>
           ))}
         </div>
@@ -35,9 +36,9 @@ export function Writing({ articles }: { articles: WritingArticleMeta[] }) {
         </div>
       )}
       <div className="writing-section-footer">
-        <a className="writing-section-link text-link" href="/writing">
+        <Link className="writing-section-link text-link" href="/writing">
           View all thoughts <span className="text-link__arrow" aria-hidden="true">↗</span>
-        </a>
+        </Link>
       </div>
     </section>
   )

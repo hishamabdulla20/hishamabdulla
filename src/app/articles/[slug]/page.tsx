@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { TechTag } from '@/components/ui/TechTag'
 import { getPublishedArticle } from '@/lib/portfolio-data'
@@ -54,7 +55,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <main className="article-page">
-      <a className="article-page__back" href="/#thoughts">← Back to thoughts</a>
+      <Link className="article-page__back" href="/#thoughts">← Back to thoughts</Link>
       <article>
         <header>
           <p className="technical-label">{article.date} — {article.category}</p>

@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { MovieCard } from '@/components/writing/MovieCard'
 import {
   writingCategories,
@@ -88,8 +89,8 @@ export function WritingIndex({
       {activeCategory === 'movies' ? (
         <div className="movie-poster-grid" aria-live="polite">
           {visibleArticles.length > 0 ? (
-            visibleArticles.map((article, index) => (
-              <MovieCard key={article.slug} movie={article} priority={index < 4} />
+            visibleArticles.map((article) => (
+              <MovieCard key={article.slug} movie={article} />
             ))
           ) : (
             <div className="writing-empty">
@@ -111,17 +112,17 @@ export function WritingIndex({
                     <span aria-hidden="true">·</span>
                     <time dateTime={article.date}>{displayDate(article.date)}</time>
                   </p>
-                  <h2><a href={articleHref}>{article.title}</a></h2>
+                  <h2><Link href={articleHref}>{article.title}</Link></h2>
                   <p className="writing-entry__excerpt">{article.excerpt}</p>
-                  <a className="writing-entry__link technical-label" href={articleHref}>
+                  <Link className="writing-entry__link technical-label" href={articleHref}>
                     {article.readingTime} <span aria-hidden="true">↗</span>
                     <span className="sr-only">: Read {article.title}</span>
-                  </a>
+                  </Link>
                 </div>
                 {article.image && (
-                  <a className="writing-entry__image" href={articleHref} tabIndex={-1} aria-hidden="true">
+                  <Link className="writing-entry__image" href={articleHref} tabIndex={-1} aria-hidden="true">
                     <img src={article.image} alt="" loading="lazy" />
-                  </a>
+                  </Link>
                 )}
               </article>
             )

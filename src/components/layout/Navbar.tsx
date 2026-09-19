@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { navigation } from '../../data/portfolio'
 
@@ -34,15 +35,31 @@ export function Navbar() {
   useEffect(() => {
     let active = true
     let cleanup: (() => void) | void
-    void import('../../hooks/useAuthLazy').then(({ initAuth }) => {
-      if (!active) return
-      cleanup = initAuth(
-        (state) => { if (active) setAuth(state) },
-        (fn) => { signOutRef.current = fn },
-      )
-    })
+    const loadAuth = () => {
+      void import('../../hooks/useAuthLazy').then(({ initAuth }) => {
+        if (!active) return
+        cleanup = initAuth(
+          (state) => { if (active) setAuth(state) },
+          (fn) => { signOutRef.current = fn },
+        )
+      })
+    }
+    const idleWindow = window as unknown as {
+      requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number
+      cancelIdleCallback?: (id: number) => void
+    }
+    const usesIdleCallback = typeof idleWindow.requestIdleCallback === 'function'
+    const idleId = idleWindow.requestIdleCallback
+      ? idleWindow.requestIdleCallback(loadAuth, { timeout: 1500 })
+      : window.setTimeout(loadAuth, 500)
+
     return () => {
       active = false
+      if (usesIdleCallback) {
+        idleWindow.cancelIdleCallback?.(idleId)
+      } else {
+        window.clearTimeout(idleId)
+      }
       cleanup?.()
     }
   }, [])
@@ -186,14 +203,14 @@ export function Navbar() {
       ref={headerRef}
       className={`site-header${isOpen ? ' site-header--menu-open' : ''}`}
     >
-      <a
+      <Link
         className="wordmark"
         href="/#top"
         aria-label="Hisham Abdulla, home"
         onClick={() => setIsOpen(false)}
       >
         HA<span className="wordmark__dot">.</span>
-      </a>
+      </Link>
       <div className="header-actions">
         <button
           className="theme-toggle"
@@ -214,9 +231,9 @@ export function Navbar() {
           )}
         </button>
         {!authLoading && !user && (
-          <a className="header-signin" href="/signin">
+          <Link className="header-signin" href="/signin">
             Sign in
-          </a>
+          </Link>
         )}
         {!authLoading && user && (
           <div className="header-user">
@@ -228,9 +245,9 @@ export function Navbar() {
             </button>
           </div>
         )}
-        <a className="header-contact" href="/#contact">
+        <Link className="header-contact" href="/#contact">
           Let's talk <span aria-hidden="true">↗</span>
-        </a>
+        </Link>
       </div>
       <button
         ref={toggleRef}
@@ -252,14 +269,14 @@ export function Navbar() {
         <ul>
           {navigation.map((item, index) => (
             <li key={item.href}>
-              <a
+              <Link
                 ref={index === 0 ? firstLinkRef : undefined}
                 href={item.href}
                 aria-current={pathname === item.href ? 'page' : activeHref === item.href ? 'location' : undefined}
                 onClick={() => setIsOpen(false)}
               >
                 <span className="primary-nav__label">{item.label}</span>
-              </a>
+              </Link>
             </li>
           ))}
           {!authLoading && (
@@ -273,9 +290,9 @@ export function Navbar() {
                   Sign out
                 </button>
               ) : (
-                <a href="/signin" onClick={() => setIsOpen(false)}>
+                <Link href="/signin" onClick={() => setIsOpen(false)}>
                   Sign in
-                </a>
+                </Link>
               )}
             </li>
           )}

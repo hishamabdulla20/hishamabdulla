@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { SignInForm } from '@/components/auth/SignInForm'
 import { createServerSupabaseClient } from '@/lib/supabase/server'
@@ -20,9 +21,9 @@ export default async function SignInPage() {
   return (
     <main className="signin-page">
       <div className="signin-container">
-        <a href="/" className="signin-back-link">
+        <Link href="/" className="signin-back-link">
           ← Back to portfolio
-        </a>
+        </Link>
         <p className="signin-eyebrow technical-label">
           <span>HA</span> — Account
         </p>
@@ -35,4 +36,3 @@ export default async function SignInPage() {
     </main>
   )
 }
-
