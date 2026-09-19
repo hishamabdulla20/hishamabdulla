@@ -96,7 +96,7 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
       <Navbar />
       <main className="writing-article-page" id="top">
         <article>
-          <a className="writing-back technical-label" href="/writing">← Back to Writing</a>
+          <a className="writing-back technical-label" href="/writing">← Back to Thoughts</a>
           <header className="writing-article-header">
             <p className="writing-article-header__meta technical-label">
               <span>{category}</span><span aria-hidden="true">·</span>
@@ -123,7 +123,7 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
 
           <MarkdownContent source={article.body} />
 
-          <nav className="writing-article-nav" aria-label="More writing">
+          <nav className="writing-article-nav" aria-label="More thoughts">
             {newerArticle ? (
               <a href={`/writing/${newerArticle.slug}`}>
                 <span className="technical-label">← Newer</span>

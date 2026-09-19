@@ -11,7 +11,7 @@ export function BeyondCode() {
           <a className="interest-item" href={interest.href} key={interest.slug}>
             <span className="technical-label">{interest.number}</span>
             <h3>{interest.title}</h3>
-            <span className="interest-item__status technical-label">Explore writing</span>
+            <span className="interest-item__status technical-label">Explore thoughts</span>
             <span aria-hidden="true">↗</span>
           </a>
         ) : (

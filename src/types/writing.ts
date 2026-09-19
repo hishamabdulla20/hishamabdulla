@@ -1,9 +1,13 @@
 export const writingCategories = [
   'movies',
-  'novels',
   'books',
+  'novels',
   'technology',
+  'development',
   'ai',
+  'ideas',
+  'experiences',
+  'culture',
   'personal',
   'essays',
 ] as const

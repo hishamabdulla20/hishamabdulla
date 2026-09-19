@@ -9,6 +9,12 @@ const nextConfig: NextConfig = {
     useTypeScriptCli: false,
     optimizePackageImports: ['@supabase/supabase-js', '@supabase/ssr'],
   },
+  async rewrites() {
+    return [
+      { source: '/thoughts', destination: '/writing' },
+      { source: '/thoughts/:slug', destination: '/writing/:slug' },
+    ]
+  },
 }
 
 export default nextConfig

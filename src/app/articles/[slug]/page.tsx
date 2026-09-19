@@ -54,7 +54,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <main className="article-page">
-      <a className="article-page__back" href="/#writing">← Back to writing</a>
+      <a className="article-page__back" href="/#thoughts">← Back to thoughts</a>
       <article>
         <header>
           <p className="technical-label">{article.date} — {article.category}</p>

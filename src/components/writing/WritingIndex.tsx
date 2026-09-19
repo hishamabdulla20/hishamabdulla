@@ -12,10 +12,14 @@ type CategoryFilter = 'all' | WritingCategory
 const categoryLabels: Record<CategoryFilter, string> = {
   all: 'All',
   movies: 'Movies',
-  novels: 'Novels',
   books: 'Books',
+  novels: 'Novels',
   technology: 'Technology',
+  development: 'Development',
   ai: 'AI',
+  ideas: 'Ideas',
+  experiences: 'Experiences',
+  culture: 'Culture',
   personal: 'Personal',
   essays: 'Essays',
 }
@@ -64,7 +68,7 @@ export function WritingIndex({
 
   return (
     <>
-      <div className="writing-filters" aria-label="Filter writing by category">
+      <div className="writing-filters" aria-label="Filter thoughts by category">
         {(['all', ...writingCategories] as const).map((category) => (
           <button
             type="button"

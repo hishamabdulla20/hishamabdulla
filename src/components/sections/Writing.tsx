@@ -4,8 +4,9 @@ import { SectionHeader } from '../ui/SectionHeader'
 
 export function Writing({ articles }: { articles: WritingArticleMeta[] }) {
   return (
-    <section className="section-block" id="writing" aria-labelledby="writing-title" data-reveal>
-      <SectionHeader id="writing-title" number="06" eyebrow="Writing" title="Notes from the" italic="workbench." />
+    <section className="section-block" id="thoughts" aria-labelledby="thoughts-title" data-reveal>
+      <span id="writing" className="sr-only" aria-hidden="true" />
+      <SectionHeader id="thoughts-title" number="06" eyebrow="Thoughts" title="Perspectives &" italic="reflections." />
       {articles.length > 0 ? (
         <div className="article-list">
           {articles.map((article, index) => (
@@ -30,12 +31,12 @@ export function Writing({ articles }: { articles: WritingArticleMeta[] }) {
       ) : (
         <div className="homepage-writing-empty">
           <p className="technical-label">The first entry is in progress</p>
-          <p>Soon, this space will hold notes on films, books, technology and the questions worth thinking through.</p>
+          <p>Soon, this space will hold thoughts, reviews, and reflections on films, books, technology, AI, and ideas worth exploring.</p>
         </div>
       )}
       <div className="writing-section-footer">
         <a className="writing-section-link text-link" href="/writing">
-          View all writing <span className="text-link__arrow" aria-hidden="true">↗</span>
+          View all thoughts <span className="text-link__arrow" aria-hidden="true">↗</span>
         </a>
       </div>
     </section>

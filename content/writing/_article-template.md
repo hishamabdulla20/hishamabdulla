@@ -4,6 +4,7 @@ slug: your-article-slug
 category: movies
 date: 2026-09-18
 excerpt: "A concise introduction that appears on the Writing page and in search results."
+excerpt: "A concise introduction that appears on the Thoughts page and in search results."
 readingTime: 6 min read
 subtitle: "An optional line that adds context beneath the title."
 image: /images/writing/your-image.webp
@@ -15,6 +16,7 @@ draft: true
 ---
 
 Begin the article here. Change `draft` to `false` when it is ready to publish.
+Begin the post here. Supported categories: movies, books, novels, technology, development, ai, ideas, experiences, culture, personal, essays. Change `draft` to `false` when it is ready to publish.
 
 ## A section heading
 

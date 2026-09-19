@@ -15,19 +15,19 @@ import { writingCategories, type WritingCategory } from '@/types/writing'
 const description = 'Thoughts, stories, reviews and perspectives from Hisham Abdulla on films, books, technology, AI and life.'
 
 export const metadata: Metadata = {
-  title: 'Writing',
+  title: 'Thoughts',
   description,
   alternates: { canonical: absoluteUrl('/writing') },
   openGraph: {
     type: 'website',
     url: absoluteUrl('/writing'),
     siteName: siteConfig.name,
-    title: `Writing | ${siteConfig.name}`,
+    title: `Thoughts | ${siteConfig.name}`,
     description,
   },
   twitter: {
     card: 'summary',
-    title: `Writing | ${siteConfig.name}`,
+    title: `Thoughts | ${siteConfig.name}`,
     description,
   },
 }
@@ -51,11 +51,11 @@ export default async function WritingPage({ searchParams }: WritingPageProps) {
       <Navbar />
       <main className="writing-page" id="top">
         <header className="writing-hero grid-field" data-reveal>
-          <p className="writing-hero__eyebrow technical-label">Writing</p>
+          <p className="writing-hero__eyebrow technical-label">Thoughts</p>
           <h1>Thoughts, stories <span>&amp; perspectives.</span></h1>
           <p>A collection of things I&apos;ve watched, read, learned, questioned, experienced and wanted to write about.</p>
         </header>
-        <section className="writing-collection" aria-label="Published writing" data-reveal>
+        <section className="writing-collection" aria-label="Published thoughts" data-reveal>
           <WritingIndex articles={articles} initialCategory={initialCategory} />
         </section>
       </main>
