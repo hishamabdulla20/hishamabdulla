@@ -23,4 +23,8 @@ draft: false
 
 ## My Opinion
 
-My opinion will be added here.
+The Lives of Others shows how deeply understanding someone’s life can slowly change a person. A secret officer begins by watching people only because it is his duty, but as he listens to their love, fear, pain, and loneliness, he starts to see them as human beings rather than people he must control.
+
+The most touching part is that he becomes connected to their lives without ever truly being part of them. While silently watching them, something inside him begins to change. His duty slowly gives way to empathy and conscience.
+
+For me, the film beautifully shows that sometimes we need to see another person’s life closely to understand their pain—and sometimes their life can awaken the humanity hidden inside us.
