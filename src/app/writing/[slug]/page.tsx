@@ -44,7 +44,9 @@ export async function generateMetadata({ params }: WritingArticlePageProps): Pro
   const categoryLabel = formatWritingCategory(article.category)
   const isOpinion = article.type === 'opinion'
   const title = isOpinion && article.category === 'movies'
-    ? `${article.title} — Movie Opinion | ${siteConfig.name}`
+    ? article.movieYear
+      ? `${article.title} (${article.movieYear}) — My Opinion | ${siteConfig.name}`
+      : `${article.title} — Movie Opinion | ${siteConfig.name}`
     : isOpinion
       ? `${article.title} — ${categoryLabel} Opinion | ${siteConfig.name}`
       : `${article.title} | ${siteConfig.name}`
@@ -91,6 +93,7 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
   const genresList = article.genres
     ? article.genres.split(',').map((g) => g.trim()).filter(Boolean)
     : []
+  const movieSummary = [article.movieYear, article.rating, article.runtime].filter(Boolean)
 
   const structuredData = {
     '@context': 'https://schema.org',
@@ -138,9 +141,20 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
 
               <div className="opinion-movie-info-col">
                 <p className="writing-article-header__meta technical-label">
-                  <span>{category}</span><span aria-hidden="true">·</span>
-                  <time dateTime={article.date}>{formatWritingDate(article.date)}</time><span aria-hidden="true">·</span>
-                  <span>{article.readingTime}</span>
+                  {movieSummary.length > 0 ? (
+                    movieSummary.map((item, index) => (
+                      <span key={item}>
+                        {index > 0 && <span aria-hidden="true"> · </span>}
+                        {item}
+                      </span>
+                    ))
+                  ) : (
+                    <>
+                      <span>{category}</span><span aria-hidden="true">·</span>
+                      <time dateTime={article.date}>{formatWritingDate(article.date)}</time><span aria-hidden="true">·</span>
+                      <span>{article.readingTime}</span>
+                    </>
+                  )}
                 </p>
 
                 <h1 className="opinion-movie-title">{article.title}</h1>
@@ -149,6 +163,9 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
                     <span className="technical-label">Original Title</span>
                     <span className="opinion-movie-original-title__name">{article.originalTitle}</span>
                   </p>
+                )}
+                {article.language && (
+                  <p className="technical-label">{article.language}</p>
                 )}
 
                 <div className="opinion-movie-details-block">
