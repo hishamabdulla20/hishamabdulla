@@ -1,8 +1,30 @@
 import type { Metadata, Viewport } from 'next'
 import type { ReactNode } from 'react'
+import { Cormorant_Garamond, Inter, JetBrains_Mono } from 'next/font/google'
 import { siteConfig } from '../lib/site-config'
 import '../index.css'
 import '../App.css'
+
+const cormorantGaramond = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  display: 'swap',
+  variable: '--nf-display',
+})
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  display: 'swap',
+  variable: '--nf-body',
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  display: 'swap',
+  variable: '--nf-mono',
+})
 
 const themeInitializer = `
 (() => {
@@ -45,14 +67,8 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={`${cormorantGaramond.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap"
-          rel="stylesheet"
-        />
         <script dangerouslySetInnerHTML={{ __html: themeInitializer }} />
       </head>
       <body>{children}</body>

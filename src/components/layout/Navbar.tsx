@@ -1,11 +1,11 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
-import { useAuth } from '../../hooks/useAuth'
 import { navigation } from '../../data/portfolio'
 
 type Theme = 'dark' | 'light'
+type AuthState = { user: { email?: string | null; user_metadata?: Record<string, string> } | null; loading: boolean }
 
 const themeStorageKey = 'portfolio-theme'
 
@@ -26,7 +26,30 @@ export function Navbar() {
   const headerRef = useRef<HTMLElement>(null)
   const toggleRef = useRef<HTMLButtonElement>(null)
   const firstLinkRef = useRef<HTMLAnchorElement>(null)
-  const { user, loading: authLoading, signOut } = useAuth()
+
+  // Lazy-load auth — avoids pulling Supabase JS into the critical bundle
+  const [auth, setAuth] = useState<AuthState>({ user: null, loading: true })
+  const signOutRef = useRef<(() => Promise<void>) | null>(null)
+
+  useEffect(() => {
+    let active = true
+    let cleanup: (() => void) | void
+    void import('../../hooks/useAuthLazy').then(({ initAuth }) => {
+      if (!active) return
+      cleanup = initAuth(
+        (state) => { if (active) setAuth(state) },
+        (fn) => { signOutRef.current = fn },
+      )
+    })
+    return () => {
+      active = false
+      cleanup?.()
+    }
+  }, [])
+
+  const user = auth.user
+  const authLoading = auth.loading
+  const signOut = useCallback(async () => { await signOutRef.current?.() }, [])
 
   useEffect(() => {
     const root = document.documentElement

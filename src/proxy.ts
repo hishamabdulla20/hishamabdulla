@@ -6,6 +6,26 @@ export async function proxy(request: NextRequest) {
   const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   if (!url || !anonKey) return NextResponse.next({ request })
 
+  const isAdminRoute = request.nextUrl.pathname.startsWith('/admin')
+  const isLoginPage = request.nextUrl.pathname === '/admin/login'
+
+  const hasAuthCookie = request.cookies
+    .getAll()
+    .some((cookie) => cookie.name.startsWith('sb-'))
+
+  // Fast path for unauthenticated admin route visits
+  if (isAdminRoute && !isLoginPage && !hasAuthCookie) {
+    const loginUrl = request.nextUrl.clone()
+    loginUrl.pathname = '/admin/login'
+    loginUrl.search = ''
+    return NextResponse.redirect(loginUrl)
+  }
+
+  // Fast path for public routes without session cookies
+  if (!isAdminRoute && !hasAuthCookie) {
+    return NextResponse.next({ request })
+  }
+
   let response = NextResponse.next({ request })
 
   const supabase = createServerClient(url, anonKey, {
@@ -27,9 +47,7 @@ export async function proxy(request: NextRequest) {
   // Guard admin routes — only users in the admin_users table may access /admin.
   // The full admin_users check happens in requireAdmin(), but blocking
   // unauthenticated visitors at the middleware layer avoids loading the admin layout.
-  if (request.nextUrl.pathname.startsWith('/admin')) {
-    const isLoginPage = request.nextUrl.pathname === '/admin/login'
-
+  if (isAdminRoute) {
     if (!user && !isLoginPage) {
       const loginUrl = request.nextUrl.clone()
       loginUrl.pathname = '/admin/login'

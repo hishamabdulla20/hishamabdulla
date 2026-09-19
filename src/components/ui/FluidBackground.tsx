@@ -84,13 +84,44 @@ export function FluidBackground() {
     let cancelled = false
     let dispose = () => {}
 
-    void import('three')
-      .then((THREE) => {
-        if (cancelled) return
+    const start = () => {
+      if (cancelled) return
 
-        let renderer: InstanceType<typeof THREE.WebGLRenderer>
+      try {
+        const gl = canvas.getContext('webgl2', { powerPreference: 'low-power' }) ||
+                   canvas.getContext('webgl', { powerPreference: 'low-power' })
+        if (!gl) return
+      } catch {
+        return
+      }
+
+      void Promise.all([
+        import('three/src/renderers/WebGLRenderer.js'),
+        import('three/src/scenes/Scene.js'),
+        import('three/src/cameras/OrthographicCamera.js'),
+        import('three/src/math/Vector2.js'),
+        import('three/src/math/Color.js'),
+        import('three/src/geometries/PlaneGeometry.js'),
+        import('three/src/materials/ShaderMaterial.js'),
+        import('three/src/objects/Mesh.js'),
+        import('three/src/constants.js'),
+      ])
+        .then(([
+          { WebGLRenderer },
+          { Scene },
+          { OrthographicCamera },
+          { Vector2 },
+          { Color },
+          { PlaneGeometry },
+          { ShaderMaterial },
+          { Mesh },
+          { SRGBColorSpace },
+        ]) => {
+          if (cancelled) return
+
+        let renderer: InstanceType<typeof WebGLRenderer>
         try {
-          renderer = new THREE.WebGLRenderer({
+          renderer = new WebGLRenderer({
             canvas,
             alpha: false,
             antialias: false,
@@ -102,17 +133,17 @@ export function FluidBackground() {
           return
         }
 
-        renderer.outputColorSpace = THREE.SRGBColorSpace
+        renderer.outputColorSpace = SRGBColorSpace
 
-        const scene = new THREE.Scene()
-        const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1)
-        const resolution = new THREE.Vector2(1, 1)
-        const currentBase = new THREE.Color()
-        const currentAccent = new THREE.Color()
-        const currentHighlight = new THREE.Color()
-        const targetBase = new THREE.Color()
-        const targetAccent = new THREE.Color()
-        const targetHighlight = new THREE.Color()
+        const scene = new Scene()
+        const camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1)
+        const resolution = new Vector2(1, 1)
+        const currentBase = new Color()
+        const currentAccent = new Color()
+        const currentHighlight = new Color()
+        const targetBase = new Color()
+        const targetAccent = new Color()
+        const targetHighlight = new Color()
         const uniforms = {
           uTime: { value: 0 },
           uVelocity: { value: 0 },
@@ -121,16 +152,18 @@ export function FluidBackground() {
           uAccent: { value: currentAccent },
           uHighlight: { value: currentHighlight },
         }
-        const geometry = new THREE.PlaneGeometry(2, 2)
-        const material = new THREE.ShaderMaterial({
+        const geometry = new PlaneGeometry(2, 2)
+        const material = new ShaderMaterial({
           uniforms,
           vertexShader,
           fragmentShader,
           depthTest: false,
           depthWrite: false,
         })
-        const plane = new THREE.Mesh(geometry, material)
+        const plane = new Mesh(geometry, material)
         scene.add(plane)
+
+        const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v))
 
         const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
         const mobileQuery = window.matchMedia('(max-width: 768px), (pointer: coarse)')
@@ -190,7 +223,7 @@ export function FluidBackground() {
           const currentScrollY = window.scrollY
           const scrollDelta = currentScrollY - previousScrollY
           previousScrollY = currentScrollY
-          const rawVelocity = THREE.MathUtils.clamp(scrollDelta / Math.max(elapsed, 16) * 0.55, -1, 1)
+          const rawVelocity = clamp(scrollDelta / Math.max(elapsed, 16) * 0.55, -1, 1)
           const velocityDamping = 1 - Math.exp(-deltaTime * 9)
           const colorDamping = 1 - Math.exp(-deltaTime * 5)
 
@@ -256,25 +289,35 @@ export function FluidBackground() {
         reducedMotionQuery.addEventListener('change', handleMotionPreference)
         mobileQuery.addEventListener('change', scheduleResize)
 
-        dispose = () => {
-          stopAnimation()
-          window.cancelAnimationFrame(resizeFrame)
-          themeObserver.disconnect()
-          window.removeEventListener('resize', scheduleResize)
-          document.removeEventListener('visibilitychange', handleVisibility)
-          reducedMotionQuery.removeEventListener('change', handleMotionPreference)
-          mobileQuery.removeEventListener('change', scheduleResize)
-          geometry.dispose()
-          material.dispose()
-          renderer.dispose()
-        }
-      })
-      .catch(() => {
-        // The existing CSS background remains the graceful fallback.
-      })
+          dispose = () => {
+            stopAnimation()
+            window.cancelAnimationFrame(resizeFrame)
+            themeObserver.disconnect()
+            window.removeEventListener('resize', scheduleResize)
+            document.removeEventListener('visibilitychange', handleVisibility)
+            reducedMotionQuery.removeEventListener('change', handleMotionPreference)
+            mobileQuery.removeEventListener('change', scheduleResize)
+            geometry.dispose()
+            material.dispose()
+            renderer.dispose()
+          }
+        })
+        .catch(() => {
+          // The existing CSS background remains the graceful fallback.
+        })
+    }
+
+    const idleId = typeof window !== 'undefined' && 'requestIdleCallback' in window
+      ? (window as unknown as { requestIdleCallback: (fn: () => void, opts?: { timeout: number }) => number }).requestIdleCallback(start, { timeout: 1200 })
+      : setTimeout(start, 100)
 
     return () => {
       cancelled = true
+      if (typeof window !== 'undefined' && 'cancelIdleCallback' in window && typeof idleId === 'number') {
+        (window as unknown as { cancelIdleCallback: (id: number) => void }).cancelIdleCallback(idleId)
+      } else {
+        clearTimeout(idleId as unknown as number)
+      }
       dispose()
     }
   }, [])

@@ -38,17 +38,16 @@ export function Hero({ profile }: { profile: Profile }) {
             src={darkPortraitUrl}
             alt=""
             fill
-            sizes="(max-width: 768px) 90vw, (max-width: 1200px) 45vw, 40vw"
+            priority
+            sizes="(max-width: 768px) 90vw, (max-width: 1200px) 45vw, 512px"
             className="hero-portrait__image hero-portrait__image--dark"
-            loading="eager"
           />
           <Image
             src={lightPortraitUrl}
             alt=""
             fill
-            sizes="(max-width: 768px) 90vw, (max-width: 1200px) 45vw, 40vw"
+            sizes="(max-width: 768px) 90vw, (max-width: 1200px) 45vw, 512px"
             className="hero-portrait__image hero-portrait__image--light"
-            loading="eager"
           />
         </div>
       </div>

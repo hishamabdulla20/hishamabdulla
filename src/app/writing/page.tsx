@@ -1,7 +1,11 @@
 import type { Metadata } from 'next'
+import dynamic from 'next/dynamic'
 import { Footer } from '@/components/layout/Footer'
 import { Navbar } from '@/components/layout/Navbar'
-import { FluidBackground } from '@/components/ui/FluidBackground'
+
+const FluidBackground = dynamic(
+  () => import('@/components/ui/FluidBackground').then((mod) => mod.FluidBackground),
+)
 import { RevealController } from '@/components/ui/RevealController'
 import { WritingIndex } from '@/components/writing/WritingIndex'
 import { absoluteUrl, siteConfig } from '@/lib/site-config'

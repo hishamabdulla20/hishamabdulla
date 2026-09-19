@@ -1,8 +1,12 @@
 import type { Metadata } from 'next'
+import dynamic from 'next/dynamic'
 import { notFound } from 'next/navigation'
 import { Footer } from '@/components/layout/Footer'
 import { Navbar } from '@/components/layout/Navbar'
-import { FluidBackground } from '@/components/ui/FluidBackground'
+
+const FluidBackground = dynamic(
+  () => import('@/components/ui/FluidBackground').then((mod) => mod.FluidBackground),
+)
 import { MarkdownContent } from '@/components/writing/MarkdownContent'
 import { absoluteUrl, siteConfig } from '@/lib/site-config'
 import {

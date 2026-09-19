@@ -1,3 +1,4 @@
+import { cache } from 'react'
 import { createClient } from '@supabase/supabase-js'
 import {
   articles as fallbackArticles,
@@ -53,7 +54,7 @@ function isProfileDetails(value: unknown): value is ProfileDetail[] {
   })
 }
 
-export async function getPortfolioData(): Promise<PortfolioData> {
+export const getPortfolioData = cache(async (): Promise<PortfolioData> => {
   const config = getPublicSupabaseConfig()
   if (!config) return fallbackData()
 
@@ -144,9 +145,9 @@ export async function getPortfolioData(): Promise<PortfolioData> {
     safeError('public-content', error)
     return fallbackData()
   }
-}
+})
 
-export async function getPublishedArticle(slug: string) {
+export const getPublishedArticle = cache(async (slug: string) => {
   const config = getPublicSupabaseConfig()
   if (!config || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) return null
 
@@ -175,4 +176,4 @@ export async function getPublishedArticle(slug: string) {
     coverImageUrl: data.cover_image_url as string | null,
     date: formatArticleDate(data.published_at),
   } : null
-}
+})

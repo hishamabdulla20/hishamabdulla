@@ -67,11 +67,11 @@
   --muted: var(--color-text-secondary);
   --outline: var(--color-border);
   --hairline: var(--color-border-subtle);
-  --font-display: 'Cormorant Garamond', 'Bodoni Moda', 'Bodoni 72', Georgia, serif;
-  --font-body: Inter, Manrope, 'Avenir Next', Avenir, system-ui, sans-serif;
+  --font-display: var(--nf-display), 'Bodoni Moda', 'Bodoni 72', Georgia, serif;
+  --font-body: var(--nf-body), Manrope, 'Avenir Next', Avenir, system-ui, sans-serif;
   --serif: var(--font-display);
   --sans: var(--font-body);
-  --mono: 'JetBrains Mono', ui-monospace, monospace;
+  --mono: var(--nf-mono), ui-monospace, monospace;
   --type-meta: clamp(0.6875rem, 0.66rem + 0.12vw, 0.75rem);
   --type-ui: clamp(0.6875rem, 0.65rem + 0.2vw, 0.8125rem);
   --type-role: clamp(0.75rem, 0.71rem + 0.18vw, 0.875rem);
