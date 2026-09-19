@@ -21,16 +21,10 @@ function fallbackData(): PortfolioData {
       details: fallbackProfile.details.map((detail) => ({ ...detail })),
       portraitUrl: null,
     },
-    projects: fallbackProjects.map((project) => {
-      const isBroDoctor = project.name?.toLowerCase() === 'brodoctor'
-      return {
-        ...project,
-        technologies: isBroDoctor ? [] : [...project.technologies],
-        liveUrl: isBroDoctor ? 'https://www.brodoctor.online' : project.liveUrl,
-        githubUrl: isBroDoctor ? 'https://github.com/hishamabdulla20/brodoctor' : project.githubUrl,
-        caseStudyUrl: isBroDoctor ? null : project.caseStudyUrl,
-      }
-    }),
+    projects: fallbackProjects.map((project) => ({
+      ...project,
+      technologies: [...project.technologies],
+    })),
     skillGroups: fallbackSkillGroups.map((group) => ({
       ...group,
       skills: [...group.skills],
@@ -111,17 +105,19 @@ export const getPortfolioData = cache(async (): Promise<PortfolioData> => {
         portraitUrl: profileRow.portrait_url,
       } : fallback.profile,
       projects: (projectsResult.data ?? []).map((project) => {
-        const isBroDoctor = project.name?.toLowerCase() === 'brodoctor'
+        const fallbackProject = fallback.projects.find(
+          (item) => item.name.toLowerCase() === project.name?.toLowerCase(),
+        )
         return {
           id: project.id,
           number: project.number,
           name: project.name,
           type: project.type,
           description: project.description,
-          technologies: isBroDoctor ? [] : (project.technologies ?? []),
-          liveUrl: isBroDoctor ? 'https://www.brodoctor.online' : project.live_url,
-          githubUrl: isBroDoctor ? 'https://github.com/hishamabdulla20/brodoctor' : project.github_url,
-          caseStudyUrl: isBroDoctor ? null : project.case_study_url,
+          technologies: fallbackProject?.technologies ?? project.technologies ?? [],
+          liveUrl: fallbackProject?.liveUrl ?? project.live_url,
+          githubUrl: fallbackProject?.githubUrl ?? project.github_url,
+          caseStudyUrl: fallbackProject ? fallbackProject.caseStudyUrl : project.case_study_url,
           imageUrl: project.image_url,
           status: project.status,
         }
