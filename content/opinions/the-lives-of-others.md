@@ -14,7 +14,11 @@ runtime: 2h 17m
 language: German
 director: "Florian Henckel von Donnersmarck"
 writer: "Florian Henckel von Donnersmarck"
+producers: "Max Wiedemann, Quirin Berg"
 starring: "Ulrich Mühe, Martina Gedeck, Sebastian Koch, Ulrich Tukur"
+cinematography: "Hagen Bogdanski"
+editing: "Patricia Rommel"
+music: "Gabriel Yared, Stéphane Moucha"
 genres: "Political Thriller, Psychological Drama, Spy, Drama, Mystery"
 synopsis: "Set in East Berlin in 1984, the film follows a Stasi officer assigned to secretly monitor a playwright and his partner. As he listens to their private lives, his relationship with the surveillance operation gradually begins to change."
 type: opinion
