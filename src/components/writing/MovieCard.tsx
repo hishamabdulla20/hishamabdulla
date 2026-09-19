@@ -9,6 +9,7 @@ export function MovieCard({
 }) {
   const href = movie.type === 'opinion' ? `/opinions/${movie.slug}` : `/writing/${movie.slug}`
   const posterAlt = movie.imageAlt || `${movie.title} movie poster`
+  const metadata = movie.category === 'movies' ? movie.releaseYear : movie.readingTime
 
   return (
     <Link className="movie-card" href={href} aria-label={`Read opinion on ${movie.title}`}>
@@ -31,9 +32,9 @@ export function MovieCard({
       </div>
       <div className="movie-card__body">
         <h2 className="movie-card__title">{movie.title}</h2>
-        {movie.readingTime && (
+        {metadata && (
           <span className="movie-card__meta technical-label">
-            {movie.readingTime} <span className="movie-card__arrow" aria-hidden="true">↗</span>
+            {metadata} <span className="movie-card__arrow" aria-hidden="true">↗</span>
           </span>
         )}
       </div>

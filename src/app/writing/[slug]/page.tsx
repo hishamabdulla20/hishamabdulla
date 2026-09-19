@@ -86,9 +86,12 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
   const isOpinion = article.type === 'opinion'
   const isMovieOpinion = article.category === 'movies' && Boolean(article.director || article.image)
   const articles = isOpinion ? getOpinions() : getWritingArticles()
-  const articleIndex = articles.findIndex((candidate) => candidate.slug === slug)
-  const newerArticle = articleIndex > 0 ? articles[articleIndex - 1] : null
-  const olderArticle = articleIndex < articles.length - 1 ? articles[articleIndex + 1] : null
+  const navigableArticles = isMovieOpinion
+    ? articles.filter((candidate) => candidate.category === 'movies' && !candidate.isPlaceholder)
+    : articles
+  const articleIndex = navigableArticles.findIndex((candidate) => candidate.slug === slug)
+  const newerArticle = articleIndex > 0 ? navigableArticles[articleIndex - 1] : null
+  const olderArticle = articleIndex < navigableArticles.length - 1 ? navigableArticles[articleIndex + 1] : null
   const category = formatWritingCategory(article.category)
   const basePath = isOpinion ? '/opinions' : '/writing'
   const genresList = article.genres
@@ -194,6 +197,24 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
                       <div className="opinion-movie-fact">
                         <dt className="technical-label">Writer</dt>
                         <dd>{article.writer}</dd>
+                      </div>
+                    )}
+                    {article.screenplay && (
+                      <div className="opinion-movie-fact">
+                        <dt className="technical-label">Writer / Screenplay</dt>
+                        <dd>{article.screenplay}</dd>
+                      </div>
+                    )}
+                    {article.story && (
+                      <div className="opinion-movie-fact">
+                        <dt className="technical-label">Story</dt>
+                        <dd>{article.story}</dd>
+                      </div>
+                    )}
+                    {article.producer && (
+                      <div className="opinion-movie-fact">
+                        <dt className="technical-label">Producer</dt>
+                        <dd>{article.producer}</dd>
                       </div>
                     )}
                     {article.producers && (
