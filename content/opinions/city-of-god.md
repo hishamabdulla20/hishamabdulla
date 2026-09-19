@@ -31,5 +31,10 @@ draft: false
 
 ## My Opinion
 
-Opinion coming soon.
+City of God made me think about how deeply the place we grow up in can shape our lives. It shows children growing up around poverty, crime, fear, and violence. When a child sees these things again and again, something that should never feel normal can slowly become part of everyday life.
 
+The most painful part for me was seeing childhood disappear so early. At an age when children should be playing, dreaming, learning, and thinking about their future, some of them are already facing a cruel world. They grow up too fast because life does not give them enough time to be children.
+
+The movie also shows that growing up in the same place does not mean everyone becomes the same person. Some are pulled into violence, while others still try to find a different way to live. This made me think about how our surroundings can influence us, but our dreams and choices can also take us in different directions.
+
+For me, City of God is much more than a gangster movie. Behind all the crime and violence, I saw children trying to survive in the world they were born into. What stayed with me most was not the gangsters or the violence, but the childhoods that were lost too soon. It made me wonder how different their lives could have been if they had grown up with more safety, love, and opportunities.
