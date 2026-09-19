@@ -31,6 +31,16 @@ export type WritingArticleMeta = {
   mediaTitle?: string
   mediaCreator?: string
   mediaYear?: string
+  originalTitle?: string
+  director?: string
+  writer?: string
+  producers?: string
+  starring?: string
+  cinematography?: string
+  editing?: string
+  music?: string
+  genres?: string
+  synopsis?: string
 }
 
 export type WritingArticle = WritingArticleMeta & {

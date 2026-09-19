@@ -42,14 +42,20 @@ function parseDocument(source: string, filename: string): { data: FrontMatter; b
 
   const data: FrontMatter = {}
   const frontMatter = normalized.slice(4, closingIndex)
-  for (const line of frontMatter.split('\n')) {
-    if (!line.trim() || line.trimStart().startsWith('#')) continue
-    const separator = line.indexOf(':')
-    if (separator === -1) {
-      throw new Error(`[writing] ${filename} has an invalid metadata line: ${line}`)
+  let currentKey: string | null = null
+  for (const rawLine of frontMatter.split('\n')) {
+    if (!rawLine.trim() || rawLine.trimStart().startsWith('#')) continue
+    if ((rawLine.startsWith(' ') || rawLine.startsWith('\t')) && currentKey) {
+      data[currentKey] = `${data[currentKey]} ${rawLine.trim()}`
+      continue
     }
-    const key = line.slice(0, separator).trim()
-    data[key] = parseScalar(line.slice(separator + 1))
+    const separator = rawLine.indexOf(':')
+    if (separator === -1) {
+      throw new Error(`[writing] ${filename} has an invalid metadata line: ${rawLine}`)
+    }
+    const key = rawLine.slice(0, separator).trim()
+    currentKey = key
+    data[key] = parseScalar(rawLine.slice(separator + 1))
   }
 
   return { data, body: normalized.slice(closingIndex + 5).trim() }
@@ -129,6 +135,16 @@ function parseArticle(
     ...(data.mediaTitle ? { mediaTitle: data.mediaTitle } : {}),
     ...(data.mediaCreator ? { mediaCreator: data.mediaCreator } : {}),
     ...(data.mediaYear ? { mediaYear: data.mediaYear } : {}),
+    ...(data.originalTitle ? { originalTitle: data.originalTitle } : {}),
+    ...(data.director ? { director: data.director } : {}),
+    ...(data.writer ? { writer: data.writer } : {}),
+    ...(data.producers ? { producers: data.producers } : {}),
+    ...(data.starring ? { starring: data.starring } : {}),
+    ...(data.cinematography ? { cinematography: data.cinematography } : {}),
+    ...(data.editing ? { editing: data.editing } : {}),
+    ...(data.music ? { music: data.music } : {}),
+    ...(data.genres ? { genres: data.genres } : {}),
+    ...(data.synopsis ? { synopsis: data.synopsis } : {}),
     body,
   }
 }

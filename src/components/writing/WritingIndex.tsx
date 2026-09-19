@@ -85,29 +85,32 @@ export function WritingIndex({
       </div>
 
       <div className="writing-index" aria-live="polite">
-        {visibleArticles.length > 0 ? visibleArticles.map((article, index) => (
-          <article className="writing-entry" key={article.slug}>
-            <span className="writing-entry__number technical-label">{String(index + 1).padStart(2, '0')}</span>
-            <div className="writing-entry__body">
-              <p className="writing-entry__meta technical-label">
-                <span>{categoryLabels[article.category]}</span>
-                <span aria-hidden="true">·</span>
-                <time dateTime={article.date}>{displayDate(article.date)}</time>
-              </p>
-              <h2><a href={`/writing/${article.slug}`}>{article.title}</a></h2>
-              <p className="writing-entry__excerpt">{article.excerpt}</p>
-              <a className="writing-entry__link technical-label" href={`/writing/${article.slug}`}>
-                {article.readingTime} <span aria-hidden="true">↗</span>
-                <span className="sr-only">: Read {article.title}</span>
-              </a>
-            </div>
-            {article.image && (
-              <a className="writing-entry__image" href={`/writing/${article.slug}`} tabIndex={-1} aria-hidden="true">
-                <img src={article.image} alt="" loading="lazy" />
-              </a>
-            )}
-          </article>
-        )) : (
+        {visibleArticles.length > 0 ? visibleArticles.map((article, index) => {
+          const articleHref = article.type === 'opinion' ? `/opinions/${article.slug}` : `/writing/${article.slug}`
+          return (
+            <article className="writing-entry" key={article.slug}>
+              <span className="writing-entry__number technical-label">{String(index + 1).padStart(2, '0')}</span>
+              <div className="writing-entry__body">
+                <p className="writing-entry__meta technical-label">
+                  <span>{categoryLabels[article.category]}</span>
+                  <span aria-hidden="true">·</span>
+                  <time dateTime={article.date}>{displayDate(article.date)}</time>
+                </p>
+                <h2><a href={articleHref}>{article.title}</a></h2>
+                <p className="writing-entry__excerpt">{article.excerpt}</p>
+                <a className="writing-entry__link technical-label" href={articleHref}>
+                  {article.readingTime} <span aria-hidden="true">↗</span>
+                  <span className="sr-only">: Read {article.title}</span>
+                </a>
+              </div>
+              {article.image && (
+                <a className="writing-entry__image" href={articleHref} tabIndex={-1} aria-hidden="true">
+                  <img src={article.image} alt="" loading="lazy" />
+                </a>
+              )}
+            </article>
+          )
+        }) : (
           <div className="writing-empty">
             <p className="technical-label">No entries yet</p>
             <p>{activeCategory === 'all' ? 'The first entry is being written.' : `There are no ${categoryLabels[activeCategory].toLowerCase()} entries yet.`}</p>
