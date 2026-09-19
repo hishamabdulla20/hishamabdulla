@@ -29,4 +29,10 @@ draft: false
 
 ## My Opinion
 
-Opinion coming soon.
+Bird Box is not just a thriller for me. It is also a deeply emotional movie about fear, love, determination, and the strength of a mother.
+
+What touched me most was the mother's determination to protect her children. The movie shows how strong a person can become when the people they love depend on them. Even when everything feels scary and uncertain, her love for her children gives her the strength to keep going.
+
+It is very emotional to see a mother trying to stay strong even when she is scared inside. The movie shows us that being brave does not mean that we have no fear. Sometimes, being brave simply means moving forward even when we are afraid.
+
+For me, Bird Box was breathtaking. I never felt like pausing it even for a minute. The tension kept me connected to the movie from beginning to end. But more than the thrill, what stayed with me was the emotion—the love, fear, hope, and determination of a mother who wants nothing more than to protect her children.
