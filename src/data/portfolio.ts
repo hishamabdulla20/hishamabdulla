@@ -4,7 +4,6 @@ export const navigation = [
   { label: 'Work', href: '/#work' },
   { label: 'Skills', href: '/#skills' },
   { label: 'Journey', href: '/#journey' },
-  { label: 'Thoughts', href: '/#thoughts' },
   { label: 'Beyond code', href: '/#beyond' },
   { label: 'Contact', href: '/#contact' },
 ] as const
@@ -76,7 +75,7 @@ export const currentFocus = [
 ] as const
 
 export const interests = [
-  'Books', 'Novels', 'Movies', 'Technology', 'AI', 'Photography', 'Travel', 'Writing', 'Personal Thoughts',
+  'Books', 'Novels', 'Movies', 'Technology', 'AI', 'Photography', 'Travel',
 ].map((title, index) => ({
   number: String(index + 1).padStart(2, '0'),
   title,
@@ -87,8 +86,6 @@ export const interests = [
     Books: '/opinions/books',
     Technology: '/opinions/technology',
     AI: '/opinions/technology',
-    Writing: '/writing',
-    'Personal Thoughts': '/writing',
   } as Record<string, string>)[title] ?? null,
 }))
 

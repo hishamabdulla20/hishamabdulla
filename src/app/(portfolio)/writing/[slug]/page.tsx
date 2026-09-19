@@ -131,10 +131,10 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
         <article>
           <Link
             className="writing-back technical-label"
-            href={isOpinion ? (article.category === 'books' ? '/opinions/books' : article.category === 'technology' ? '/opinions/technology' : '/opinions') : '/writing'}
+            href={isOpinion ? (article.category === 'books' ? '/opinions/books' : article.category === 'technology' ? '/opinions/technology' : '/opinions') : '/'}
             prefetch={isMovieOpinion ? true : undefined}
           >
-            {isOpinion ? '← Back to Opinions' : '← Back to Thoughts'}
+            {isOpinion ? '← Back to Opinions' : '← Back home'}
           </Link>
 
           {isMovieOpinion ? (

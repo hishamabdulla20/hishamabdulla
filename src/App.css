@@ -1059,14 +1059,6 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
 .article-row__read { display: inline-flex; align-items: center; gap: 0.65rem; justify-self: end; margin-top: 0.3rem; color: var(--cream); text-decoration: none; white-space: nowrap; }
 .article-row__read > span[aria-hidden] { color: var(--sepia); transition: transform 180ms var(--motion-ease-out); }
 
-.homepage-writing-empty {
-  padding: clamp(2.5rem, 5vw, 4rem) 0;
-  border-top: 1px solid var(--outline);
-  border-bottom: 1px solid var(--hairline);
-}
-
-.homepage-writing-empty .technical-label { margin: 0 0 0.8rem; color: var(--sepia); }
-.homepage-writing-empty p:last-child { max-width: 42rem; margin: 0; color: var(--muted); line-height: 1.7; }
 .writing-section-footer { display: flex; justify-content: flex-end; }
 .writing-section-link { margin-top: 2rem; }
 

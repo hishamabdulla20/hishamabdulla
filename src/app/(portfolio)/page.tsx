@@ -8,11 +8,9 @@ import { Opinions } from '@/components/sections/Opinions'
 import { Projects } from '@/components/sections/Projects'
 import { Services } from '@/components/sections/Services'
 import { Skills } from '@/components/sections/Skills'
-import { Writing } from '@/components/sections/Writing'
 import { RevealController } from '@/components/ui/RevealController'
 import { getPortfolioData } from '@/lib/portfolio-data'
 import { siteConfig } from '@/lib/site-config'
-import { getWritingArticleMeta } from '@/lib/writing'
 
 const Contact = dynamic(
   () => import('@/components/sections/Contact').then((mod) => mod.Contact),
@@ -52,7 +50,6 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
   const data = await getPortfolioData()
-  const recentWriting = getWritingArticleMeta().slice(0, 3)
   const sameAs = data.socialLinks
     .map((link) => link.url)
     .filter((url): url is string => Boolean(url && /^https?:\/\//.test(url)))
@@ -99,7 +96,6 @@ export default async function HomePage() {
         <Skills skillGroups={data.skillGroups} />
         <Services />
         <Journey journey={data.journey} currentFocus={data.currentFocus} />
-        <Writing articles={recentWriting} />
         <BeyondCode />
         <Contact socialLinks={data.socialLinks} />
       </main>
