@@ -86,7 +86,7 @@ const opinionCategories = [
 export function Opinions() {
   return (
     <section className="section-block opinions-section grid-field" id="opinions" aria-labelledby="opinions-title" data-reveal>
-      <SectionHeader id="opinions-title" number="02" eyebrow="Opinions" title="Direct takes &" italic="perspectives." />
+      <SectionHeader id="opinions-title" number="02" eyebrow="Opinions" title="From my" italic="point of view." />
       <p className="section-intro">Personal takes on films, books, technology, culture, and everything in between.</p>
       <div className="opinion-grid">
         {opinionCategories.map((category) => {
