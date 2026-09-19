@@ -66,19 +66,19 @@ const opinionCategories = [
   {
     key: 'movies',
     title: 'Movies',
-    href: '/opinions?category=movies',
+    href: '/opinions',
     icon: MoviesIcon,
   },
   {
     key: 'books',
     title: 'Books',
-    href: '/opinions?category=books',
+    href: '/opinions/books',
     icon: BooksIcon,
   },
   {
     key: 'technology',
     title: 'Technology',
-    href: '/opinions?category=technology',
+    href: '/opinions/technology',
     icon: TechnologyIcon,
   },
 ] as const

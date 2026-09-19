@@ -82,13 +82,13 @@ export const interests = [
   title,
   slug: title.toLowerCase().replaceAll(' ', '-'),
   href: ({
-    Movies: '/writing?category=movies',
-    Novels: '/writing?category=novels',
-    Books: '/writing?category=books',
-    Technology: '/writing?category=technology',
-    AI: '/writing?category=ai',
+    Movies: '/opinions',
+    Novels: '/opinions/books',
+    Books: '/opinions/books',
+    Technology: '/opinions/technology',
+    AI: '/opinions/technology',
     Writing: '/writing',
-    'Personal Thoughts': '/writing?category=personal',
+    'Personal Thoughts': '/writing',
   } as Record<string, string>)[title] ?? null,
 }))
 
