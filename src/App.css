@@ -1376,27 +1376,43 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
   display: flex;
   justify-content: flex-end;
   margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 20;
 }
 
 .movie-sort-wrapper {
+.movie-sort-custom {
   position: relative;
   display: inline-flex;
   align-items: center;
+  gap: 0.75rem;
 }
 
 .movie-sort-select {
+.movie-sort-label {
+  color: var(--muted);
+}
+
+.movie-sort-trigger {
   appearance: none;
   background: transparent;
   border: none;
   color: var(--muted);
   padding: 0.25rem 1.25rem 0.25rem 0;
+  color: var(--text);
+  padding: 0;
   cursor: pointer;
   outline: none;
   transition: color 180ms ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .movie-sort-select:hover,
 .movie-sort-select:focus-visible {
+.movie-sort-trigger:hover,
+.movie-sort-trigger:focus-visible {
   color: var(--sepia-light);
 }
 
@@ -1406,21 +1422,81 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
   font-family: var(--sans);
   text-transform: none;
   letter-spacing: 0;
-}
-
 .movie-sort-caret {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
   color: var(--sepia);
-  pointer-events: none;
   font-size: 0.8rem;
   transition: transform 180ms ease;
 }
 
+.movie-sort-caret {
+.movie-sort-trigger[aria-expanded="true"] .movie-sort-caret {
+  transform: rotate(180deg);
+}
+
+.movie-sort-menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--sepia);
+  min-width: 14rem;
+  margin: 0;
+  padding: 0.25rem;
+  list-style: none;
+  background: var(--surface);
+  border: 1px solid var(--outline);
+  box-shadow: 0 4px 20px var(--color-overlay-soft);
+  opacity: 0;
+  transform: translateY(-4px);
+  pointer-events: none;
+  font-size: 0.8rem;
+  transition: transform 180ms ease;
+  transition: opacity 150ms ease, transform 150ms ease;
+  border-radius: 4px;
+}
+
 .movie-sort-select:focus-visible + .movie-sort-caret {
   color: var(--sepia-light);
+.movie-sort-menu.is-open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.movie-sort-option {
+  width: 100%;
+  text-align: left;
+  appearance: none;
+  background: transparent;
+  border: none;
+  padding: 0.6rem 0.8rem;
+  color: var(--muted);
+  font-family: var(--sans);
+  font-size: var(--type-meta);
+  cursor: pointer;
+  outline: none;
+  transition: color 150ms ease, background-color 150ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 2px;
+}
+
+.movie-sort-option:hover,
+.movie-sort-option:focus-visible {
+  color: var(--text);
+  background: var(--surface-high);
+}
+
+.movie-sort-option.is-selected {
+  color: var(--text);
+}
+
+.movie-sort-option.is-selected::after {
+  content: '✓';
+  color: var(--sepia);
+  font-size: 1.1em;
 }
 
 .movie-poster-grid {

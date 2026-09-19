@@ -1,13 +1,37 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useRef, useEffect } from 'react'
 import type { WritingArticleMeta } from '@/types/writing'
 import { MovieCard } from '@/components/writing/MovieCard'
 
 type SortOption = 'default' | 'az' | 'za' | 'yearAsc' | 'yearDesc'
 
+const SORT_OPTIONS: { value: SortOption; label: string }[] = [
+  { value: 'default', label: 'Default Order' },
+  { value: 'az', label: 'A–Z' },
+  { value: 'za', label: 'Z–A' },
+  { value: 'yearAsc', label: 'Year: Oldest First' },
+  { value: 'yearDesc', label: 'Year: Newest First' },
+]
+
 export function MovieGridWithSort({ movies }: { movies: WritingArticleMeta[] }) {
   const [sort, setSort] = useState<SortOption>('default')
+  const [isOpen, setIsOpen] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setIsOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') setIsOpen(false)
+  }
 
   const sortedMovies = useMemo(() => {
     if (sort === 'default') return movies
@@ -31,24 +55,50 @@ export function MovieGridWithSort({ movies }: { movies: WritingArticleMeta[] }) 
     })
   }, [movies, sort])
 
+  const selectedLabel = SORT_OPTIONS.find(o => o.value === sort)?.label || 'Default Order'
+
   return (
     <div>
-      <div className="movie-sort-container">
-        <label htmlFor="movie-sort" className="sr-only">Sort movies</label>
-        <div className="movie-sort-wrapper">
-          <select
-            id="movie-sort"
-            className="movie-sort-select technical-label"
-            value={sort}
-            onChange={(e) => setSort(e.target.value as SortOption)}
+      <div 
+        className="movie-sort-container" 
+        ref={containerRef} 
+        onKeyDown={handleKeyDown}
+      >
+        <div className="movie-sort-custom">
+          <span className="movie-sort-label technical-label">SORT BY</span>
+          <button
+            type="button"
+            className="movie-sort-trigger technical-label"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-haspopup="listbox"
+            aria-expanded={isOpen}
           >
-            <option value="default">Sort by</option>
-            <option value="az">A–Z</option>
-            <option value="za">Z–A</option>
-            <option value="yearAsc">Year: Oldest First</option>
-            <option value="yearDesc">Year: Newest First</option>
-          </select>
-          <span className="movie-sort-caret" aria-hidden="true">▾</span>
+            {selectedLabel}
+            <span className="movie-sort-caret" aria-hidden="true">↓</span>
+          </button>
+          
+          <ul 
+            className={`movie-sort-menu ${isOpen ? 'is-open' : ''}`} 
+            role="listbox"
+            aria-label="Sort movies"
+          >
+            {SORT_OPTIONS.map((option) => (
+              <li key={option.value} role="none">
+                <button
+                  type="button"
+                  role="option"
+                  aria-selected={sort === option.value}
+                  className={`movie-sort-option ${sort === option.value ? 'is-selected' : ''}`}
+                  onClick={() => {
+                    setSort(option.value)
+                    setIsOpen(false)
+                  }}
+                >
+                  {option.label}
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
       <div className="movie-poster-grid">
@@ -59,4 +109,3 @@ export function MovieGridWithSort({ movies }: { movies: WritingArticleMeta[] }) 
     </div>
   )
 }
-
