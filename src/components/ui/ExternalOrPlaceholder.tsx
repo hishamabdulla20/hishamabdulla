@@ -13,7 +13,7 @@ export function ExternalOrPlaceholder({ label, url }: ExternalOrPlaceholderProps
   }
 
   return (
-    <a className="text-link" href={url} target="_blank" rel="noreferrer">
+    <a className="text-link" href={url} target="_blank" rel="noopener noreferrer">
       {label} <span className="text-link__arrow" aria-hidden="true">↗</span>
     </a>
   )

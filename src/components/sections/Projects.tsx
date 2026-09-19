@@ -22,13 +22,15 @@ export function Projects({ projects }: { projects: Project[] }) {
               <p className="project-card__description">{project.description}</p>
             </div>
             <div className="project-card__footer">
-              <div className="skill-tags">
-                {project.technologies.map((technology) => <TechTag key={technology}>{technology}</TechTag>)}
-              </div>
+              {project.technologies.length > 0 && (
+                <div className="skill-tags">
+                  {project.technologies.map((technology) => <TechTag key={technology}>{technology}</TechTag>)}
+                </div>
+              )}
               <div className="project-links">
                 <ExternalOrPlaceholder label="Live site" url={project.liveUrl} />
                 <ExternalOrPlaceholder label="GitHub repo" url={project.githubUrl} />
-                <ExternalOrPlaceholder label="View case study" url={project.caseStudyUrl} />
+                {project.caseStudyUrl && <ExternalOrPlaceholder label="View case study" url={project.caseStudyUrl} />}
               </div>
             </div>
           </article>

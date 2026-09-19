@@ -43,9 +43,9 @@ export const projects = [
     type: 'Medical Learning Platform',
     description:
       'A web-based learning platform for medical education. Further case-study details can be added once the product scope and implementation are documented.',
-    technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Supabase', 'PostgreSQL'],
-    liveUrl: 'https://brodoctor.online',
-    githubUrl: null as string | null,
+    technologies: [],
+    liveUrl: 'https://www.brodoctor.online',
+    githubUrl: 'https://github.com/hishamabdulla20/brodoctor',
     caseStudyUrl: null as string | null,
     status: 'Featured project',
   },
