@@ -21,10 +21,16 @@ function fallbackData(): PortfolioData {
       details: fallbackProfile.details.map((detail) => ({ ...detail })),
       portraitUrl: null,
     },
-    projects: fallbackProjects.map((project) => ({
-      ...project,
-      technologies: [...project.technologies],
-    })),
+    projects: fallbackProjects.map((project) => {
+      const isBroDoctor = project.name?.toLowerCase() === 'brodoctor'
+      return {
+        ...project,
+        technologies: isBroDoctor ? [] : [...project.technologies],
+        liveUrl: isBroDoctor ? 'https://www.brodoctor.online' : project.liveUrl,
+        githubUrl: isBroDoctor ? 'https://github.com/hishamabdulla20/brodoctor' : project.githubUrl,
+        caseStudyUrl: isBroDoctor ? null : project.caseStudyUrl,
+      }
+    }),
     skillGroups: fallbackSkillGroups.map((group) => ({
       ...group,
       skills: [...group.skills],
@@ -104,19 +110,22 @@ export const getPortfolioData = cache(async (): Promise<PortfolioData> => {
         resumeUrl: profileRow.resume_url,
         portraitUrl: profileRow.portrait_url,
       } : fallback.profile,
-      projects: (projectsResult.data ?? []).map((project) => ({
-        id: project.id,
-        number: project.number,
-        name: project.name,
-        type: project.type,
-        description: project.description,
-        technologies: project.technologies,
-        liveUrl: project.live_url,
-        githubUrl: project.github_url,
-        caseStudyUrl: project.case_study_url,
-        imageUrl: project.image_url,
-        status: project.status,
-      })),
+      projects: (projectsResult.data ?? []).map((project) => {
+        const isBroDoctor = project.name?.toLowerCase() === 'brodoctor'
+        return {
+          id: project.id,
+          number: project.number,
+          name: project.name,
+          type: project.type,
+          description: project.description,
+          technologies: isBroDoctor ? [] : (project.technologies ?? []),
+          liveUrl: isBroDoctor ? 'https://www.brodoctor.online' : project.live_url,
+          githubUrl: isBroDoctor ? 'https://github.com/hishamabdulla20/brodoctor' : project.github_url,
+          caseStudyUrl: isBroDoctor ? null : project.case_study_url,
+          imageUrl: project.image_url,
+          status: project.status,
+        }
+      }),
       skillGroups: fallback.skillGroups,
       journey: journeyRows.filter((item) => item.kind !== 'focus').map((item) => ({
         id: item.id,

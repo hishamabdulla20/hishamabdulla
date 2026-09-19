@@ -847,7 +847,7 @@ main { background: transparent; }
 
 .project-card__footer {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
   gap: 2rem;
   padding: 1.4rem;
