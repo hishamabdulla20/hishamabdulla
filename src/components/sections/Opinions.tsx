@@ -113,11 +113,6 @@ export function Opinions() {
           )
         })}
       </div>
-      <div className="opinions-section-footer writing-section-footer">
-        <Link className="opinions-section-link writing-section-link text-link" href="/opinions">
-          View all opinions <span className="text-link__arrow" aria-hidden="true">→</span>
-        </Link>
-      </div>
     </section>
   )
 }
