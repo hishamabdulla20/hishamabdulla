@@ -1428,7 +1428,7 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
   background: transparent;
   border: none;
   color: var(--text);
-  padding: 0.25rem 0.5rem;
+  padding: 0.25rem 0 0.25rem 0.5rem;
   cursor: pointer;
   outline: none;
   transition: color 180ms ease;
@@ -1512,7 +1512,7 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
 }
 
 .movie-grid-wrapper {
-  max-width: 68rem;
+  max-width: 55rem;
   width: 100%;
   margin-inline: auto;
 }
@@ -1520,9 +1520,9 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
 .movie-poster-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  column-gap: clamp(0.85rem, 1.2vw, 1.15rem);
-  row-gap: clamp(1.15rem, 1.5vw, 1.4rem);
-  padding: clamp(0.5rem, 1vw, 1rem) 0 clamp(2.5rem, 4vw, 3.5rem);
+  column-gap: 1rem;
+  row-gap: 1rem;
+  padding: 0.5rem 0 2rem;
   border-bottom: 1px solid var(--outline);
 }
 
@@ -2209,6 +2209,20 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
 
 @media (max-width: 1280px) and (min-width: 901px) {
   .about-layout { margin-left: 0; }
+}
+
+@media (min-width: 1061px) and (max-height: 820px) {
+  .opinions-collection { padding-top: 1rem; }
+  .movie-grid-wrapper { max-width: 51rem; }
+  .movie-sort-container { margin-bottom: 0.5rem; }
+  .movie-poster-grid {
+    row-gap: 0.75rem;
+    padding-block: 0.25rem 1.5rem;
+  }
+  .movie-card__body {
+    gap: 0.125rem;
+    margin-top: 0.4rem;
+  }
 }
 
 @media (max-width: 1060px) {
