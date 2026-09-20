@@ -130,6 +130,13 @@ body,
   transition: background-color 200ms ease, color 200ms ease;
 }
 
+@media (min-width: 1061px) {
+  :root {
+    /* Match the denser 90%-zoom desktop rhythm without scaling the page. */
+    font-size: clamp(0.9rem, 0.864rem + 0.18vw, 1.0125rem);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     scroll-behavior: auto !important;
