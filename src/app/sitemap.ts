@@ -13,19 +13,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .filter((article) => !article.isPlaceholder && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(article.slug))
     .map((article) => ({ url: absoluteUrl(`/articles/${article.slug}`) }))
 
-  const writingEntries = writingArticles.map((article) => ({
-    url: absoluteUrl(`/writing/${article.slug}`),
-    lastModified: new Date(`${article.date}T00:00:00Z`),
-  }))
+  const writingEntries = writingArticles
+    .filter((article) => !article.isPlaceholder)
+    .map((article) => ({
+      url: absoluteUrl(`/writing/${article.slug}`),
+      lastModified: new Date(`${article.date}T00:00:00Z`),
+    }))
 
-  const opinionEntries = opinions.map((opinion) => ({
-    url: absoluteUrl(`/opinions/${opinion.slug}`),
-    lastModified: new Date(`${opinion.date}T00:00:00Z`),
-  }))
+  const opinionEntries = opinions
+    .filter((opinion) => !opinion.isPlaceholder)
+    .map((opinion) => ({
+      url: absoluteUrl(`/opinions/${opinion.slug}`),
+      lastModified: new Date(`${opinion.date}T00:00:00Z`),
+    }))
 
   return [
     { url: siteConfig.url },
     { url: absoluteUrl('/opinions') },
+    { url: absoluteUrl('/opinions/books') },
+    { url: absoluteUrl('/opinions/technology') },
     ...writingEntries,
     ...opinionEntries,
     ...articleEntries,

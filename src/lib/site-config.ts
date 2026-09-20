@@ -1,12 +1,12 @@
 export const siteConfig = {
   name: 'Hisham Abdulla',
   fullName: 'Hisham Abdulla A P',
-  alternateNames: ['Hisham Abdulla', 'hishamabdulla'],
-  title: 'Hisham Abdulla | Full-Stack Developer',
+  alternateNames: ['Hisham Abdulla A P', 'hishamabdulla'],
+  title: 'Hisham Abdulla | Developer & Machine Learning',
   description:
-    'Hisham Abdulla A P is a full-stack developer and machine-learning learner. Explore my projects, skills, articles, and work.',
+    'Hisham Abdulla is a developer and machine-learning learner. Explore his projects, skills, experiences, movie opinions, writing, and work.',
   openGraphDescription:
-    'Personal portfolio of Hisham Abdulla A P — full-stack developer and machine-learning learner.',
+    'Official personal website of Hisham Abdulla — developer and machine-learning learner. Explore projects, skills, writing, and movie opinions.',
   url: 'https://hishamabdulla.com/',
   locale: 'en_US',
 } as const

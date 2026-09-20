@@ -54,9 +54,49 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   applicationName: `${siteConfig.name} Portfolio`,
-  authors: [{ name: siteConfig.fullName, url: siteConfig.url }],
-  creator: siteConfig.fullName,
-  publisher: siteConfig.fullName,
+  authors: [{ name: siteConfig.name, url: siteConfig.url }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/icon.png', type: 'image/png' },
+    ],
+    apple: [{ url: '/apple-icon.png' }],
+  },
+  openGraph: {
+    type: 'website',
+    locale: siteConfig.locale,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    title: siteConfig.title,
+    description: siteConfig.openGraphDescription,
+    images: [
+      {
+        url: '/images/hisham-portrait.png',
+        width: 1254,
+        height: 1254,
+        alt: `Portrait of ${siteConfig.name}`,
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary',
+    title: siteConfig.title,
+    description: siteConfig.description,
+    images: ['/images/hisham-portrait.png'],
+  },
 }
 
 export const viewport: Viewport = {

@@ -4,23 +4,32 @@ import { MovieGridWithSort } from '@/components/opinions/MovieGridWithSort'
 import { absoluteUrl, siteConfig } from '@/lib/site-config'
 import { getOpinionsMeta } from '@/lib/writing'
 
-const description = 'Personal opinions, reviews and perspectives from Hisham Abdulla on movies, books, technology, AI, and culture.'
+const description = 'Personal opinions, reflections, and reviews on cinema and films from Hisham Abdulla.'
 
 export const metadata: Metadata = {
-  title: 'Opinions',
+  title: 'Movies | Opinions',
   description,
   alternates: { canonical: absoluteUrl('/opinions') },
   openGraph: {
     type: 'website',
     url: absoluteUrl('/opinions'),
     siteName: siteConfig.name,
-    title: `Opinions | ${siteConfig.name}`,
+    title: `Movies | Opinions | ${siteConfig.name}`,
     description,
+    images: [
+      {
+        url: '/images/hisham-portrait.png',
+        width: 1254,
+        height: 1254,
+        alt: `Portrait of ${siteConfig.name}`,
+      },
+    ],
   },
   twitter: {
     card: 'summary',
-    title: `Opinions | ${siteConfig.name}`,
+    title: `Movies | Opinions | ${siteConfig.name}`,
     description,
+    images: ['/images/hisham-portrait.png'],
   },
 }
 

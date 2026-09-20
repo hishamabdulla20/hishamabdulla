@@ -10,7 +10,7 @@ import { Services } from '@/components/sections/Services'
 import { Skills } from '@/components/sections/Skills'
 import { RevealController } from '@/components/ui/RevealController'
 import { getPortfolioData } from '@/lib/portfolio-data'
-import { siteConfig } from '@/lib/site-config'
+import { absoluteUrl, siteConfig } from '@/lib/site-config'
 
 const Contact = dynamic(
   () => import('@/components/sections/Contact').then((mod) => mod.Contact),
@@ -40,11 +40,20 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     title: siteConfig.title,
     description: siteConfig.openGraphDescription,
+    images: [
+      {
+        url: '/images/hisham-portrait.png',
+        width: 1254,
+        height: 1254,
+        alt: `Portrait of ${siteConfig.name}`,
+      },
+    ],
   },
   twitter: {
     card: 'summary',
     title: siteConfig.title,
     description: siteConfig.description,
+    images: ['/images/hisham-portrait.png'],
   },
 }
 
@@ -56,16 +65,19 @@ export default async function HomePage() {
   const knowsAbout = data.skillGroups
     .filter((group) => !group.isPlaceholder)
     .flatMap((group) => group.skills)
+  const portraitUrl = data.profile.portraitUrl || '/images/hisham-portrait.png'
+
   const structuredData = {
     '@context': 'https://schema.org',
     '@graph': [
       {
         '@type': 'Person',
         '@id': `${siteConfig.url}#person`,
-        name: siteConfig.fullName,
+        name: siteConfig.name,
         alternateName: siteConfig.alternateNames,
         url: siteConfig.url,
-        ...(data.profile.roles[0] ? { jobTitle: data.profile.roles[0] } : {}),
+        image: absoluteUrl(portraitUrl),
+        jobTitle: data.profile.roles[0] || 'Developer',
         ...(knowsAbout.length ? { knowsAbout } : {}),
         ...(sameAs.length ? { sameAs } : {}),
       },
@@ -77,6 +89,14 @@ export default async function HomePage() {
         description: siteConfig.description,
         inLanguage: 'en',
         author: { '@id': `${siteConfig.url}#person` },
+        publisher: { '@id': `${siteConfig.url}#person` },
+      },
+      {
+        '@type': 'ProfilePage',
+        '@id': `${siteConfig.url}#profilepage`,
+        url: siteConfig.url,
+        name: siteConfig.title,
+        mainEntity: { '@id': `${siteConfig.url}#person` },
       },
     ],
   }

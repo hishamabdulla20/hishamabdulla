@@ -14,11 +14,20 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     title: `Books | Opinions | ${siteConfig.name}`,
     description,
+    images: [
+      {
+        url: '/images/hisham-portrait.png',
+        width: 1254,
+        height: 1254,
+        alt: `Portrait of ${siteConfig.name}`,
+      },
+    ],
   },
   twitter: {
     card: 'summary',
     title: `Books | Opinions | ${siteConfig.name}`,
     description,
+    images: ['/images/hisham-portrait.png'],
   },
 }
 

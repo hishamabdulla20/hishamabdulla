@@ -39,11 +39,12 @@ export async function generateMetadata({ params }: WritingArticlePageProps): Pro
   const isOpinion = article.type === 'opinion'
   const title = isOpinion && article.category === 'movies'
     ? article.movieYear
-      ? `${article.title} (${article.movieYear}) — My Opinion | ${siteConfig.name}`
-      : `${article.title} — Movie Opinion | ${siteConfig.name}`
+      ? `${article.title} (${article.movieYear}) — My Opinion`
+      : `${article.title} — Movie Opinion`
     : isOpinion
-      ? `${article.title} — ${categoryLabel} Opinion | ${siteConfig.name}`
-      : `${article.title} | ${siteConfig.name}`
+      ? `${article.title} — ${categoryLabel} Opinion`
+      : article.title
+  const fullTitle = `${title} | ${siteConfig.name}`
   const socialImage = article.image
     ? { url: absoluteUrl(article.image), alt: article.imageAlt ?? article.title }
     : null
@@ -56,15 +57,15 @@ export async function generateMetadata({ params }: WritingArticlePageProps): Pro
       type: 'article',
       url: canonical,
       siteName: siteConfig.name,
-      title,
+      title: fullTitle,
       description: article.excerpt,
       publishedTime: `${article.date}T00:00:00Z`,
-      authors: [siteConfig.fullName],
+      authors: [siteConfig.name],
       ...(socialImage ? { images: [socialImage] } : {}),
     },
     twitter: {
       card: socialImage ? 'summary_large_image' : 'summary',
-      title,
+      title: fullTitle,
       description: article.excerpt,
       ...(socialImage ? { images: [socialImage.url] } : {}),
     },
@@ -117,7 +118,19 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
     description: article.excerpt,
     datePublished: article.date,
     mainEntityOfPage: absoluteUrl(`${basePath}/${article.slug}`),
-    author: { '@type': 'Person', name: siteConfig.fullName, url: siteConfig.url },
+    author: {
+      '@type': 'Person',
+      '@id': `${siteConfig.url}#person`,
+      name: siteConfig.name,
+      alternateName: siteConfig.fullName,
+      url: siteConfig.url,
+    },
+    publisher: {
+      '@type': 'Person',
+      '@id': `${siteConfig.url}#person`,
+      name: siteConfig.name,
+      url: siteConfig.url,
+    },
     ...(article.image ? { image: absoluteUrl(article.image) } : {}),
   }
 
