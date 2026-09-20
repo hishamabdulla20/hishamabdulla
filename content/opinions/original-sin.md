@@ -29,4 +29,12 @@ draft: false
 
 ## My Opinion
 
-Opinion coming soon.
+Original Sin made me think about how easily love and desire can change the way we see another person.
+
+For me, this movie is about love, trust, attraction, lies, jealousy, obsession, and betrayal. When we desperately want someone to be the person we imagine, sometimes we ignore what is right in front of us. Desire can make us believe things that our mind would normally question.
+
+What interested me most is how complicated people become when love, money, trust, and deception come together. Sometimes we know something may hurt us, but our emotions still pull us towards it.
+
+The movie reminded me that love can make us vulnerable, and that vulnerability can be both beautiful and dangerous.
+
+*Sometimes we don't fall in love with who someone is. We fall in love with who we believe they are.*

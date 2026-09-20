@@ -31,5 +31,12 @@ draft: false
 
 ## My Opinion
 
-Opinion coming soon.
+Oldboy made me think about how dangerous revenge can become when we allow it to control our life.
 
+For me, this movie is about much more than revenge. It shows anger, guilt, obsession, ego, love, and the pain of living with the consequences of our actions. Sometimes we spend years blaming someone else without realizing how deeply our own choices can affect another person's life.
+
+What stayed with me is how revenge slowly destroys everyone involved. We may think hurting someone will finally give us peace, but pain usually creates more pain.
+
+Oldboy is dark, uncomfortable, and sometimes difficult to watch, but beneath all of that, it feels deeply human.
+
+*Sometimes revenge doesn't heal the wound. It only makes sure nobody escapes it.*

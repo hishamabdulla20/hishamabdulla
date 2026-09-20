@@ -30,4 +30,12 @@ draft: false
 
 ## My Opinion
 
-Opinion coming soon.
+The Platform made me think about how people change when survival becomes more important than everything else.
+
+For me, the movie is not only about food or people trapped inside a strange system. It shows greed, selfishness, inequality, fear, power, and also kindness. When people have more than they need, they often forget about the people below them. But when the same people are placed at the bottom, suddenly fairness becomes important.
+
+That is what stayed with me. Sometimes the problem is not only the system—we are also part of it. Our behaviour can change depending on where we stand. When we have power, we may ignore suffering. When we suffer, we expect others to care.
+
+The movie is dark, but the idea behind it feels very real.
+
+*Sometimes we don't realize how unfair a system is until we are the ones at the bottom.*

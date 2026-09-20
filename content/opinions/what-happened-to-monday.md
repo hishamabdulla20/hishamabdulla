@@ -28,4 +28,12 @@ draft: false
 
 ## My Opinion
 
-Opinion coming soon.
+What Happened to Monday made me think about individuality, family, sacrifice, and how much freedom matters when a system decides how people should live.
+
+For me, the seven sisters make the movie interesting because they share one identity with the outside world, but inside they are completely different human beings. Each one has her own emotions, desires, fears, and dreams. It made me think about how difficult it would be to hide who you really are just to survive.
+
+The movie also shows something very human: even when people love each other, fear, jealousy, selfishness, sacrifice, and the desire for freedom can create difficult choices.
+
+Beyond the science-fiction story, I see it as a movie about the value of having your own identity and your own life.
+
+*Surviving is important, but being allowed to live as yourself matters too.*
