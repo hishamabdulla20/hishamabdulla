@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import { About } from '@/components/sections/About'
-import { BeyondCode } from '@/components/sections/BeyondCode'
 import { Hero } from '@/components/sections/Hero'
 import { Journey } from '@/components/sections/Journey'
 import { Opinions } from '@/components/sections/Opinions'
@@ -116,7 +115,6 @@ export default async function HomePage() {
         <Skills skillGroups={data.skillGroups} />
         <Services />
         <Journey journey={data.journey} currentFocus={data.currentFocus} />
-        <BeyondCode />
         <Contact socialLinks={data.socialLinks} />
       </main>
     </>
