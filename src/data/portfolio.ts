@@ -12,7 +12,7 @@ export const profile = {
   firstName: 'Hisham',
   lastName: 'Abdulla',
   eyebrow: "Hello, I'm",
-  roles: ['Full-stack developer', 'Machine learning', 'Technology enthusiast'],
+  roles: ['Developer', 'Machine learning', 'Technology'],
   introduction:
     'I’m Hisham Abdulla, a curious person who loves learning, exploring ideas, and building useful things.\n\nI’m a developer, but my interests go beyond technology. I enjoy movies, books, and different perspectives on life.\n\nThis website is my portfolio and personal journal—a place to share what I build, learn, experience, and think about. Feel free to connect with me.',
   about:

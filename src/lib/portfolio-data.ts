@@ -87,9 +87,12 @@ export const getPortfolioData = cache(async (): Promise<PortfolioData> => {
         firstName: profileRow.first_name,
         lastName: profileRow.last_name,
         eyebrow: profileRow.eyebrow,
-        roles: profileRow.roles.map((role: string) => (
-          role === 'Machine learning learner' ? 'Machine learning' : role
-        )),
+        roles: profileRow.roles.map((role: string) => {
+          if (role === 'Full-stack developer') return 'Developer'
+          if (role === 'Machine learning learner') return 'Machine learning'
+          if (role === 'Technology enthusiast') return 'Technology'
+          return role
+        }),
         introduction: fallback.profile.introduction,
         about: profileRow.about,
         details: isProfileDetails(profileRow.details)
