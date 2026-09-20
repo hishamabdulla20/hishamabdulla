@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import { About } from '@/components/sections/About'
 import { Hero } from '@/components/sections/Hero'
-import { Journey } from '@/components/sections/Journey'
+import { Lab } from '@/components/sections/Lab'
 import { Opinions } from '@/components/sections/Opinions'
 import { Projects } from '@/components/sections/Projects'
 import { Services } from '@/components/sections/Services'
@@ -114,7 +114,7 @@ export default async function HomePage() {
         <Projects projects={data.projects} />
         <Skills skillGroups={data.skillGroups} />
         <Services />
-        <Journey journey={data.journey} currentFocus={data.currentFocus} />
+        <Lab />
         <Contact socialLinks={data.socialLinks} />
       </main>
     </>

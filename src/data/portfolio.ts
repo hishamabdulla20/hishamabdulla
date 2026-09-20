@@ -3,7 +3,7 @@ export const navigation = [
   { label: 'Opinions', href: '/#opinions' },
   { label: 'Work', href: '/#work' },
   { label: 'Skills', href: '/#skills' },
-  { label: 'Journey', href: '/#journey' },
+  { label: 'Lab', href: '/#lab' },
   { label: 'Contact', href: '/#contact' },
 ] as const
 
@@ -58,19 +58,10 @@ export const services = [
   { number: '06', title: 'Deployment & Cloud Infrastructure', description: 'Production deployment and infrastructure suited to each project.' },
 ] as const
 
-export const journey = [
-  {
-    period: 'Timeline',
-    title: 'Education & experience',
-    description: 'Verified education, employment, certifications and dates will be added here.',
-    isPlaceholder: true,
-  },
-] as const
-
-export const currentFocus = [
-  { number: '01', label: 'Currently building', value: 'Project details to be added' },
-  { number: '02', label: 'Currently learning', value: 'Learning focus to be added' },
-  { number: '03', label: 'Currently exploring', value: 'Exploration notes to be added' },
+export const labCategories = [
+  { number: '01', title: 'Experiments', description: "Small things I'm building just to see what happens." },
+  { number: '02', title: 'Ideas', description: 'Things living somewhere between\n"this could work" and "probably not."' },
+  { number: '03', title: 'Failed successfully', description: 'Things I broke, mistakes I made,\nand what they taught me.' },
 ] as const
 
 export const articles = [

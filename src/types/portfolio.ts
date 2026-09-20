@@ -39,22 +39,6 @@ export type SkillGroup = {
   isPlaceholder?: boolean
 }
 
-export type JourneyItem = {
-  id?: string
-  period: string
-  title: string
-  description: string
-  kind?: 'education' | 'experience' | 'focus'
-  isPlaceholder: boolean
-}
-
-export type FocusItem = {
-  id?: string
-  number: string
-  label: string
-  value: string
-}
-
 export type Article = {
   id?: string
   title: string
@@ -78,8 +62,6 @@ export type PortfolioData = {
   profile: Profile
   projects: Project[]
   skillGroups: SkillGroup[]
-  journey: JourneyItem[]
-  currentFocus: FocusItem[]
   articles: Article[]
   socialLinks: SocialLink[]
 }

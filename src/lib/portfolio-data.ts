@@ -2,8 +2,6 @@ import { cache } from 'react'
 import { createClient } from '@supabase/supabase-js'
 import {
   articles as fallbackArticles,
-  currentFocus as fallbackFocus,
-  journey as fallbackJourney,
   profile as fallbackProfile,
   projects as fallbackProjects,
   skillGroups as fallbackSkillGroups,
@@ -29,8 +27,6 @@ function fallbackData(): PortfolioData {
       ...group,
       skills: [...group.skills],
     })),
-    journey: fallbackJourney.map((item) => ({ ...item })),
-    currentFocus: fallbackFocus.map((item) => ({ ...item })),
     articles: fallbackArticles.map((article) => ({ ...article })),
     socialLinks: fallbackSocialLinks.map((link) => ({ ...link })),
   }
@@ -63,24 +59,21 @@ export const getPortfolioData = cache(async (): Promise<PortfolioData> => {
   })
 
   try {
-    const [profileResult, projectsResult, skillsResult, journeyResult, articlesResult, socialsResult] =
+    const [profileResult, projectsResult, skillsResult, articlesResult, socialsResult] =
       await Promise.all([
         supabase.from('profiles').select('*').eq('id', 'main').maybeSingle(),
         supabase.from('projects').select('*').eq('published', true).order('sort_order'),
         supabase.from('skill_groups').select('*').eq('published', true).order('sort_order'),
-        supabase.from('journey_items').select('*').eq('published', true).order('sort_order'),
         supabase.from('articles').select('*').eq('published', true).order('sort_order'),
         supabase.from('social_links').select('*').eq('visible', true).order('sort_order'),
       ])
 
-    const firstError = [profileResult, projectsResult, skillsResult, journeyResult, articlesResult, socialsResult]
+    const firstError = [profileResult, projectsResult, skillsResult, articlesResult, socialsResult]
       .find((result) => result.error)?.error
     if (firstError) throw firstError
 
     const fallback = fallbackData()
     const profileRow = profileResult.data
-    const journeyRows = journeyResult.data ?? []
-
     return {
       profile: profileRow ? {
         name: profileRow.name,
@@ -126,20 +119,6 @@ export const getPortfolioData = cache(async (): Promise<PortfolioData> => {
         }
       }),
       skillGroups: fallback.skillGroups,
-      journey: journeyRows.filter((item) => item.kind !== 'focus').map((item) => ({
-        id: item.id,
-        period: item.period,
-        title: item.title,
-        description: item.description,
-        kind: item.kind,
-        isPlaceholder: item.is_placeholder,
-      })),
-      currentFocus: journeyRows.filter((item) => item.kind === 'focus').map((item) => ({
-        id: item.id,
-        number: item.period,
-        label: item.title,
-        value: item.description,
-      })),
       articles: (articlesResult.data ?? []).map((article) => ({
         id: article.id,
         title: article.title,
