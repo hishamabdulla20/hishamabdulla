@@ -17,11 +17,15 @@ const SORT_OPTIONS: { value: SortOption; label: string }[] = [
 export function MovieGridWithSort({ movies }: { movies: WritingArticleMeta[] }) {
   const [sort, setSort] = useState<SortOption>('default')
   const [isOpen, setIsOpen] = useState(false)
-  const containerRef = useRef<HTMLDivElement>(null)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [query, setQuery] = useState('')
+  const sortContainerRef = useRef<HTMLDivElement>(null)
+  const searchButtonRef = useRef<HTMLButtonElement>(null)
+  const searchInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+      if (sortContainerRef.current && !sortContainerRef.current.contains(event.target as Node)) {
         setIsOpen(false)
       }
     }
@@ -29,14 +33,43 @@ export function MovieGridWithSort({ movies }: { movies: WritingArticleMeta[] }) 
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
+  useEffect(() => {
+    if (isSearchOpen) searchInputRef.current?.focus()
+  }, [isSearchOpen])
+
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Escape') setIsOpen(false)
+    if (e.key !== 'Escape') return
+
+    setIsOpen(false)
+    if (isSearchOpen) {
+      setQuery('')
+      setIsSearchOpen(false)
+      searchButtonRef.current?.focus()
+    }
   }
 
-  const sortedMovies = useMemo(() => {
-    if (sort === 'default') return movies
+  const visibleMovies = useMemo(() => {
+    const normalizedQuery = query.trim().toLocaleLowerCase()
+    const filteredMovies = normalizedQuery
+      ? movies.filter((movie) => {
+          const searchableFields = [
+            movie.title,
+            movie.movieYear,
+            movie.releaseYear,
+            movie.director,
+            movie.coDirector,
+            movie.genres,
+          ]
 
-    return [...movies].sort((a, b) => {
+          return searchableFields.some((field) =>
+            field?.toLocaleLowerCase().includes(normalizedQuery),
+          )
+        })
+      : movies
+
+    if (sort === 'default') return filteredMovies
+
+    return [...filteredMovies].sort((a, b) => {
       if (sort === 'az') return a.title.localeCompare(b.title)
       if (sort === 'za') return b.title.localeCompare(a.title)
       
@@ -53,18 +86,69 @@ export function MovieGridWithSort({ movies }: { movies: WritingArticleMeta[] }) 
       }
       return 0
     })
-  }, [movies, sort])
+  }, [movies, query, sort])
 
   const selectedLabel = SORT_OPTIONS.find(o => o.value === sort)?.label || 'Default Order'
+
+  const toggleSearch = () => {
+    setIsOpen(false)
+    if (isSearchOpen) setQuery('')
+    setIsSearchOpen(!isSearchOpen)
+  }
+
+  const clearSearch = () => {
+    setQuery('')
+    searchInputRef.current?.focus()
+  }
 
   return (
     <div className="movie-grid-wrapper">
       <div 
         className="movie-sort-container" 
-        ref={containerRef} 
         onKeyDown={handleKeyDown}
       >
-        <div className="movie-sort-custom">
+        <div className="movie-search">
+          <button
+            ref={searchButtonRef}
+            type="button"
+            className="movie-search-toggle"
+            aria-label={isSearchOpen ? 'Close movie search' : 'Open movie search'}
+            aria-controls="movie-search-input"
+            aria-expanded={isSearchOpen}
+            onClick={toggleSearch}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="10.75" cy="10.75" r="6.25" />
+              <path d="m15.5 15.5 4 4" />
+            </svg>
+          </button>
+          <div
+            className={`movie-search-field${isSearchOpen ? ' is-open' : ''}`}
+            aria-hidden={!isSearchOpen}
+          >
+            <input
+              ref={searchInputRef}
+              id="movie-search-input"
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Search movies..."
+              aria-label="Search movies"
+              tabIndex={isSearchOpen ? 0 : -1}
+            />
+            {query && (
+              <button
+                type="button"
+                className="movie-search-clear"
+                aria-label="Clear movie search"
+                onClick={clearSearch}
+              >
+                ×
+              </button>
+            )}
+          </div>
+        </div>
+        <div className="movie-sort-custom" ref={sortContainerRef}>
           <span className="movie-sort-label technical-label">SORT BY</span>
           <button
             type="button"
@@ -102,9 +186,11 @@ export function MovieGridWithSort({ movies }: { movies: WritingArticleMeta[] }) 
         </div>
       </div>
       <div className="movie-poster-grid">
-        {sortedMovies.map((movie) => (
-          <MovieCard movie={movie} key={movie.slug} />
-        ))}
+        {visibleMovies.length > 0 ? (
+          visibleMovies.map((movie) => <MovieCard movie={movie} key={movie.slug} />)
+        ) : (
+          <p className="movie-grid-empty" role="status" aria-live="polite">No movies found.</p>
+        )}
       </div>
     </div>
   )
