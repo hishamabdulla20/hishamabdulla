@@ -109,7 +109,7 @@ export default async function HomePage() {
       <RevealController />
       <main>
         <Hero profile={data.profile} />
-        <About profile={data.profile} />
+        <About />
         <Opinions />
         <Projects projects={data.projects} />
         <Skills skillGroups={data.skillGroups} />

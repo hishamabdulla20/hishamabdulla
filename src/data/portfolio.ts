@@ -16,7 +16,7 @@ export const profile = {
   introduction:
     'I’m Hisham Abdulla, a curious person who loves learning, exploring ideas, and building useful things.\n\nI’m a developer, but my interests go beyond technology. I enjoy movies, books, and different perspectives on life.\n\nThis website is my portfolio and personal journal—a place to share what I build, learn, experience, and think about. Feel free to connect with me.',
   about:
-    'I’m interested in the full shape of a digital product: how it reads, how it feels, how the system behind it works, and what can be learned by building it well.',
+    'I enjoy turning ideas into working digital products—from the interface people see to the systems working behind it. I explore, experiment, solve problems, and keep improving until an idea becomes something real and useful.',
   details: [
     { label: 'Name', value: 'Hisham Abdulla', isPlaceholder: false },
     { label: 'Role', value: 'Full-stack developer', isPlaceholder: false },
