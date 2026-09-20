@@ -9,7 +9,16 @@ export function Projects({ projects }: { projects: Project[] }) {
       <SectionHeader id="work-title" number="03" eyebrow="Selected projects" title="Work with" italic="purpose." />
       <div className="projects-list">
         {projects.map((project) => (
-          <article className="project-card" key={project.name}>
+          <article className={`project-card${project.liveUrl ? ' project-card--clickable' : ''}`} key={project.name}>
+            {project.liveUrl && (
+              <a
+                className="project-card__overlay-link"
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Visit ${project.name} website`}
+              />
+            )}
             <div className="project-card__meta">
               <span className="technical-label">Project / {project.number}</span>
               <span className="technical-label">{project.status}</span>
