@@ -1512,7 +1512,7 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
 }
 
 .movie-grid-wrapper {
-  max-width: 55rem;
+  max-width: 54.5rem;
   width: 100%;
   margin-inline: auto;
 }
@@ -1520,7 +1520,7 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
 .movie-poster-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  column-gap: 1rem;
+  column-gap: 0.875rem;
   row-gap: 1rem;
   padding: 0.5rem 0 2rem;
   border-bottom: 1px solid var(--outline);
@@ -2211,9 +2211,13 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
   .about-layout { margin-left: 0; }
 }
 
+@media (min-width: 1061px) {
+  .movie-grid-wrapper { width: calc(100% - 0.5rem); }
+}
+
 @media (min-width: 1061px) and (max-height: 820px) {
   .opinions-collection { padding-top: 1rem; }
-  .movie-grid-wrapper { max-width: 51rem; }
+  .movie-grid-wrapper { max-width: 50.5rem; }
   .movie-sort-container { margin-bottom: 0.5rem; }
   .movie-poster-grid {
     row-gap: 0.75rem;
