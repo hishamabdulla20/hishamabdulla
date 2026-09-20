@@ -58,7 +58,7 @@ export function MovieGridWithSort({ movies }: { movies: WritingArticleMeta[] }) 
   const selectedLabel = SORT_OPTIONS.find(o => o.value === sort)?.label || 'Default Order'
 
   return (
-    <div>
+    <div className="movie-grid-wrapper">
       <div 
         className="movie-sort-container" 
         ref={containerRef} 

@@ -113,7 +113,7 @@ export const getPortfolioData = cache(async (): Promise<PortfolioData> => {
           number: project.number,
           name: project.name,
           type: project.type,
-          description: project.description,
+          description: fallbackProject?.description ?? project.description,
           technologies: fallbackProject?.technologies ?? project.technologies ?? [],
           liveUrl: fallbackProject?.liveUrl ?? project.live_url,
           githubUrl: fallbackProject?.githubUrl ?? project.github_url,

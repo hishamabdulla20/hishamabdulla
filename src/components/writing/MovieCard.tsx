@@ -20,7 +20,7 @@ export function MovieCard({
             alt={posterAlt}
             width={455}
             height={674}
-            sizes="(max-width: 340px) 220px, (max-width: 640px) calc(50vw - 1.7rem), (max-width: 900px) calc(33vw - 1rem), 240px"
+            sizes="(max-width: 340px) 220px, (max-width: 640px) calc(50vw - 1.5rem), (max-width: 820px) calc(33.3vw - 1.5rem), (max-width: 1060px) calc(25vw - 1.5rem), 215px"
             className="movie-card__poster"
           />
         ) : (
