@@ -267,7 +267,7 @@ insert into public.projects (
   number, name, type, description, technologies, live_url, github_url, status, featured, published, sort_order
 ) select
   '01', 'BroDoctor', 'Medical Learning Platform',
-  'A web-based learning platform for medical education. Further case-study details can be added once the product scope and implementation are documented.',
+  'A digital learning platform built to make medical education simpler, organized, and more accessible.',
   array[]::text[],
   'https://www.brodoctor.online', 'https://github.com/hishamabdulla20/brodoctor', 'Featured project', true, true, 10
 where not exists (select 1 from public.projects where name = 'BroDoctor');

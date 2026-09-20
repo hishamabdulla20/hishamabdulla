@@ -40,7 +40,7 @@ export const projects = [
     name: 'BroDoctor',
     type: 'Medical Learning Platform',
     description:
-      'A web-based learning platform for medical education. Further case-study details can be added once the product scope and implementation are documented.',
+      'A digital learning platform built to make medical education simpler, organized, and more accessible.',
     technologies: [],
     liveUrl: 'https://www.brodoctor.online',
     githubUrl: 'https://github.com/hishamabdulla20/brodoctor',
@@ -50,12 +50,12 @@ export const projects = [
 ] as const
 
 export const services = [
-  { number: '01', title: 'Full-Stack Development', description: 'Cohesive digital products spanning interface, application logic, data and deployment.' },
-  { number: '02', title: 'Frontend Development', description: 'Responsive, accessible interfaces with deliberate interaction and visual craft.' },
-  { number: '03', title: 'Backend & System Design', description: 'Clear application architecture designed around maintainability and real product needs.' },
-  { number: '04', title: 'API Development & Integration', description: 'Purposeful APIs and reliable connections between products, services and data.' },
-  { number: '05', title: 'Database Integration / Optimization', description: 'Practical data modeling and integration for dependable application workflows.' },
-  { number: '06', title: 'Deployment & Cloud Infrastructure', description: 'Production-minded delivery and infrastructure shaped to the needs of the project.' },
+  { number: '01', title: 'Full-Stack Development', description: 'Digital products across interface, application logic, data and deployment.' },
+  { number: '02', title: 'Frontend Development', description: 'Responsive, accessible interfaces with thoughtful interactions.' },
+  { number: '03', title: 'Backend & System Design', description: 'Maintainable backend architecture built around real product needs.' },
+  { number: '04', title: 'API Development & Integration', description: 'Reliable APIs and connections between products, services and data.' },
+  { number: '05', title: 'Database Integration / Optimization', description: 'Practical data modeling and optimization for reliable applications.' },
+  { number: '06', title: 'Deployment & Cloud Infrastructure', description: 'Production deployment and infrastructure suited to each project.' },
 ] as const
 
 export const journey = [
