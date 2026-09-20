@@ -28,5 +28,12 @@ draft: false
 
 ## My Opinion
 
-Opinion coming soon.
+Mulholland Drive stayed with me because of the emotions hidden beneath its strange and dreamlike world.
 
+For me, the movie is not only about dreams and reality. It is also about very human emotions—love, desire, jealousy, ego, rejection, disappointment, and regret. We dream about becoming someone, being loved by someone, and living the life we imagine. But when reality goes in another direction, those dreams can slowly turn into pain.
+
+What affected me most is how emotions can change the world inside our minds. Love can become jealousy, confidence can become ego, hope can become disappointment, and sometimes we create our own version of reality just to escape what hurts us.
+
+That is what makes Mulholland Drive special to me. Beneath all its mystery, it feels deeply human.
+
+*Sometimes the hardest reality to face is the one inside ourselves.*
