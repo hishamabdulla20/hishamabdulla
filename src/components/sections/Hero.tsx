@@ -22,7 +22,20 @@ export function Hero({ profile }: { profile: Profile }) {
             </span>
           ))}
         </div>
-        <p className="hero-intro">{profile.introduction}</p>
+        <div className="hero-intro">
+          <p>
+            I’m Hisham Abdulla—a curious mind who loves exploring ideas, building useful things, and occasionally getting lost in movies, books, and thoughts about life.
+          </p>
+          <p>
+            I’m a developer, but code is only part of the story. This little corner of the internet is where I share what I build, learn, experience, and think about.
+          </p>
+          <p>
+            Since you’ve already made it this far, you might as well look around. <em>Who knows? You might find something interesting.</em>
+          </p>
+          <p>
+            And if you have an idea, a story, a different perspective, or simply something worth sharing, <a href="#contact">let’s connect</a>. <em>I’d love to hear it.</em>
+          </p>
+        </div>
         <div className="hero-actions">
           <ButtonLink href="#work">View my work</ButtonLink>
           <ButtonLink href="#contact" variant="secondary">Contact me</ButtonLink>

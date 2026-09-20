@@ -353,15 +353,40 @@ main { background: transparent; }
 
 .hero-intro {
   max-width: 40rem;
-  margin: 1.8rem 0 0;
+  margin: 1.5rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
   color: var(--muted);
   font-size: var(--type-body);
   line-height: 1.7;
-  white-space: pre-line;
   animation: hero-enter 620ms 380ms var(--motion-ease-out) both;
 }
 
-.hero-actions { display: flex; gap: 0.9rem; margin-top: 2rem; animation: hero-enter 620ms 460ms var(--motion-ease-out) both; }
+.hero-intro p {
+  margin: 0;
+}
+
+.hero-intro em {
+  color: var(--sepia);
+  font-style: normal;
+}
+
+.hero-intro a {
+  color: var(--cream);
+  text-decoration: underline;
+  text-decoration-color: var(--sepia);
+  text-underline-offset: 0.25em;
+  transition: color 180ms ease, text-decoration-color 180ms ease;
+}
+
+.hero-intro a:hover,
+.hero-intro a:focus-visible {
+  color: var(--sepia);
+  text-decoration-color: var(--cream);
+}
+
+.hero-actions { display: flex; gap: 0.9rem; margin-top: 1.75rem; animation: hero-enter 620ms 460ms var(--motion-ease-out) both; }
 
 .button-link {
   min-height: 3.25rem;
