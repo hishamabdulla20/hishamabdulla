@@ -157,7 +157,7 @@ export function Contact({ socialLinks }: { socialLinks: SocialLink[] }) {
         </div>
         <div className="form-field form-field--full">
           <label htmlFor="message">Message</label>
-          <textarea id="message" name="message" minLength={10} maxLength={5000} rows={6} placeholder="Tell me a little about your idea..." {...field('message')} />
+          <textarea id="message" name="message" minLength={10} maxLength={5000} rows={4} placeholder="Tell me a little about your idea..." {...field('message')} />
           {errors.message && <span className="form-error" id="message-error">{errors.message}</span>}
         </div>
         <div className="contact-form__footer">

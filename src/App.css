@@ -2020,12 +2020,13 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
   position: relative;
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
-  gap: clamp(3rem, 8vw, 9rem);
-  padding: clamp(6rem, 10vw, 10rem) clamp(1.25rem, 7vw, 8rem);
+  align-items: start;
+  gap: clamp(2.5rem, 5vw, 5.5rem);
+  padding: clamp(3rem, 5vw, 4.5rem) clamp(1.25rem, 7vw, 8rem);
   border-top: 1px solid var(--hairline);
 }
 
-.contact-kicker { margin: 3rem 0 1rem; color: var(--muted); font-family: var(--mono); font-size: var(--type-role); letter-spacing: 0.12em; text-transform: uppercase; }
+.contact-kicker { margin: clamp(1.5rem, 2.5vw, 2.25rem) 0 0.85rem; color: var(--muted); font-family: var(--mono); font-size: var(--type-role); letter-spacing: 0.12em; text-transform: uppercase; }
 
 .contact-heading h2 {
   margin: 0;
@@ -2039,7 +2040,7 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
 }
 
 .contact-heading h2 em { color: var(--sepia); font-style: normal; font-weight: 400; }
-.social-list { display: flex; flex-wrap: wrap; gap: 1.4rem; margin-top: 1.75rem; }
+.social-list { display: flex; flex-wrap: wrap; gap: 1.4rem; margin-top: clamp(1.35rem, 2vw, 1.75rem); }
 .social-link { transition: color 240ms var(--motion-ease-out); }
 .social-link__icon {
   width: 1.0625rem;
@@ -2056,14 +2057,13 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
 .contact-form {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.6rem;
-  align-self: end;
-  padding: clamp(1.5rem, 3.5vw, 3.5rem);
+  gap: 1.15rem 1.4rem;
+  padding: clamp(1.35rem, 2.4vw, 2.25rem);
   border: 1px solid var(--outline);
   background: var(--bg-elevated);
 }
 
-.form-field { display: flex; flex-direction: column; gap: 0.6rem; }
+.form-field { display: flex; flex-direction: column; gap: 0.45rem; }
 .form-field--full { grid-column: 1 / -1; }
 .form-field label { color: var(--sepia-light); font-family: var(--mono); font-size: var(--type-meta); letter-spacing: 0.08em; text-transform: uppercase; transition: color 180ms ease; }
 .form-field:focus-within label { color: var(--cream); }
@@ -2073,10 +2073,20 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
   border: 0;
   border-bottom: 1px solid var(--outline);
   border-radius: 0;
-  padding: 0.9rem 0;
   color: var(--cream);
   background: transparent;
   outline: none;
+}
+
+.form-field input {
+  padding: 0.65rem 0 0.7rem;
+}
+
+.form-field textarea {
+  min-height: 9rem;
+  height: 9.5rem;
+  padding: 0.75rem 0;
+  line-height: 1.55;
   resize: vertical;
 }
 
@@ -2085,7 +2095,7 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
 .form-field input::placeholder, .form-field textarea::placeholder { color: var(--color-placeholder); }
 .form-error { color: var(--sepia-light); font-size: 0.75rem; animation: feedback-in 200ms var(--motion-ease-out) both; }
 
-.contact-form__footer { grid-column: 1 / -1; display: flex; align-items: center; gap: 1.5rem; margin-top: 0.8rem; }
+.contact-form__footer { grid-column: 1 / -1; display: flex; align-items: center; gap: 1.5rem; margin-top: 0.25rem; }
 .contact-form__footer button { cursor: pointer; }
 .contact-form__footer button:disabled { cursor: wait; opacity: 0.65; }
 .form-status { margin: 0; color: var(--muted); font-size: 0.8125rem; line-height: 1.5; }
@@ -2302,9 +2312,17 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
   .article-row__meta { flex-direction: row; }
   .article-row__read { justify-self: start; }
   .social-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.1rem; }
-  .contact-form { grid-template-columns: 1fr; }
+  .contact-form {
+    grid-template-columns: 1fr;
+    gap: 1.15rem;
+    padding: clamp(1.25rem, 4vw, 1.6rem);
+  }
   .form-field { grid-column: 1; }
-  .contact-form__footer { align-items: stretch; flex-direction: column; }
+  .form-field textarea {
+    min-height: 7.5rem;
+    height: 8.5rem;
+  }
+  .contact-form__footer { align-items: stretch; flex-direction: column; margin-top: 0.2rem; }
   .contact-form__footer .button-link { width: 100%; }
   .site-footer { grid-template-columns: 1fr; gap: 1rem; padding-block: 2rem; text-align: center; }
   .site-footer p:last-child { text-align: center; }
