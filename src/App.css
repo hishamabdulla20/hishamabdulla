@@ -1147,8 +1147,13 @@ a.text-link:hover .text-link__arrow { transform: translate(0.12rem, -0.12rem); }
 .lab-categories { border-top: 1px solid var(--outline); }
 .lab-category { display: grid; grid-template-columns: 2rem 1fr; gap: 0.7rem 1rem; padding: 1.5rem 0; border-bottom: 1px solid var(--hairline); }
 .lab-category > span { grid-row: 1 / 3; color: var(--sepia); }
-.lab-category h3 { font-size: clamp(1rem, 1.3vw, 1.25rem); line-height: 1.25; text-transform: uppercase; }
+.lab-category h3 { display: flex; align-items: center; gap: 0.55rem; font-size: clamp(1rem, 1.3vw, 1.25rem); line-height: 1.25; text-transform: uppercase; }
+.lab-category__icon { width: 1.05em; height: 1.05em; flex: 0 0 auto; color: var(--sepia); opacity: 0.82; transition: opacity 180ms ease, color 180ms ease; }
 .lab-category p { margin: 0; color: var(--muted); line-height: 1.7; white-space: pre-line; }
+
+@media (hover: hover) {
+  .lab-category:hover .lab-category__icon { color: var(--sepia-light); opacity: 1; }
+}
 
 .section-intro { max-width: 45rem; margin: -2.5rem 0 4rem 34%; color: var(--muted); font-size: var(--type-body); line-height: 1.7; }
 
