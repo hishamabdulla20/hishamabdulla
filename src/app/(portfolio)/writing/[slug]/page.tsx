@@ -79,6 +79,7 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
 
   const isOpinion = article.type === 'opinion'
   const isMovieOpinion = article.category === 'movies' && Boolean(article.director || article.image)
+  const movieOpinionBody = article.body.replace(/^## My Opinion\r?$/m, '## My Take')
   const articles = isOpinion ? getOpinions() : getWritingArticles()
   const navigableArticles = isMovieOpinion
     ? articles.filter((candidate) => candidate.category === 'movies' && !candidate.isPlaceholder)
@@ -272,7 +273,7 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
 
           {isMovieOpinion ? (
             <div className="opinion-movie-perspective">
-              <MarkdownContent source={article.body} />
+              <MarkdownContent source={movieOpinionBody} />
             </div>
           ) : (
             <MarkdownContent source={article.body} />
