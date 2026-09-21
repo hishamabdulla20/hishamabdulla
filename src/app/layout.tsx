@@ -68,13 +68,7 @@ export const metadata: Metadata = {
       'max-video-preview': -1,
     },
   },
-  icons: {
-    icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/icon.png', type: 'image/png' },
-    ],
-    apple: [{ url: '/apple-icon.png' }],
-  },
+
   openGraph: {
     type: 'website',
     locale: siteConfig.locale,

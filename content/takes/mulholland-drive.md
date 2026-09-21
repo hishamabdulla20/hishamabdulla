@@ -22,7 +22,7 @@ excerpt: "An aspiring actress and an amnesiac woman search for the truth behind 
 readingTime: 1 min read
 image: /images/opinions/mulholland-drive.jpg
 imageAlt: "Mulholland Drive movie poster"
-type: opinion
+type: take
 draft: false
 ---
 

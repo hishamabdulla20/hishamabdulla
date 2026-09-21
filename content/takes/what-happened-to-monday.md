@@ -22,7 +22,7 @@ editing: "Martin Stoltz"
 music: "Christian Wibe"
 genres: "Action, Science Fiction, Thriller, Dystopian, Drama"
 synopsis: "In a future shaped by overpopulation, families are restricted to one child. Seven identical sisters secretly share a single identity as they try to survive without being discovered by the system that forbids their existence."
-type: opinion
+type: take
 draft: false
 ---
 

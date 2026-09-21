@@ -9,10 +9,17 @@ const nextConfig: NextConfig = {
     useTypeScriptCli: false,
     optimizePackageImports: ['@supabase/supabase-js', '@supabase/ssr'],
   },
+  async redirects() {
+    return [
+      { source: '/opinions', destination: '/takes', permanent: true },
+      { source: '/opinions/:path*', destination: '/takes/:path*', permanent: true },
+    ]
+  },
   async rewrites() {
     return [
       { source: '/thoughts/:slug', destination: '/writing/:slug' },
       { source: '/opinions/:slug', destination: '/writing/:slug' },
+      { source: '/takes/:slug', destination: '/writing/:slug' },
     ]
   },
 }

@@ -7,7 +7,7 @@ export function MovieCard({
 }: {
   movie: WritingArticleMeta
 }) {
-  const href = movie.type === 'opinion' ? `/opinions/${movie.slug}` : `/writing/${movie.slug}`
+  const href = movie.type === 'take' ? `/takes/${movie.slug}` : `/writing/${movie.slug}`
   const posterAlt = movie.imageAlt || `${movie.title} movie poster`
   const metadata = movie.category === 'movies' ? movie.releaseYear : movie.readingTime
 

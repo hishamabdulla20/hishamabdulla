@@ -23,7 +23,7 @@ editing: "Ben Lester"
 music: "Trent Reznor, Atticus Ross"
 genres: "Horror, Science Fiction, Thriller, Post-apocalyptic, Drama"
 synopsis: "A mysterious force drives anyone who sees it to take their own life. To find safety, a woman and two children must make a dangerous journey through the changed world while keeping themselves blindfolded."
-type: opinion
+type: take
 draft: false
 ---
 

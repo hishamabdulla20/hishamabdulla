@@ -7,7 +7,7 @@ import { absoluteUrl, siteConfig } from '@/lib/site-config'
 import {
   formatWritingCategory,
   formatWritingDate,
-  getOpinions,
+  getTakes,
   getWritingArticle,
   getWritingArticles,
 } from '@/lib/writing'
@@ -17,14 +17,14 @@ type WritingArticlePageProps = { params: Promise<{ slug: string }> }
 // oxlint-disable-next-line react/only-export-components -- Next.js route files require this named export.
 export function generateStaticParams() {
   const writings = getWritingArticles().map((article) => ({ slug: article.slug }))
-  const opinions = getOpinions().map((article) => ({ slug: article.slug }))
-  return [...writings, ...opinions]
+  const takes = getTakes().map((article) => ({ slug: article.slug }))
+  return [...writings, ...takes]
 }
 
 export async function generateMetadata({ params }: WritingArticlePageProps): Promise<Metadata> {
   const { slug } = await params
   const article = getWritingArticle(slug)
-  const canonicalPath = article?.type === 'opinion' ? `/opinions/${slug}` : `/writing/${slug}`
+  const canonicalPath = article?.type === 'take' ? `/takes/${slug}` : `/writing/${slug}`
   const canonical = absoluteUrl(canonicalPath)
 
   if (!article) {
@@ -36,13 +36,13 @@ export async function generateMetadata({ params }: WritingArticlePageProps): Pro
   }
 
   const categoryLabel = formatWritingCategory(article.category)
-  const isOpinion = article.type === 'opinion'
-  const title = isOpinion && article.category === 'movies'
+  const isTake = article.type === 'take'
+  const title = isTake && article.category === 'movies'
     ? article.movieYear
-      ? `${article.title} (${article.movieYear}) — My Opinion`
-      : `${article.title} — Movie Opinion`
-    : isOpinion
-      ? `${article.title} — ${categoryLabel} Opinion`
+      ? `${article.title} (${article.movieYear}) — My Take`
+      : `${article.title} — Movie Take`
+    : isTake
+      ? `${article.title} — ${categoryLabel} Take`
       : article.title
   const fullTitle = `${title} | ${siteConfig.name}`
   const socialImage = article.image
@@ -77,18 +77,18 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
   const article = getWritingArticle(slug)
   if (!article) notFound()
 
-  const isOpinion = article.type === 'opinion'
-  const isMovieOpinion = article.category === 'movies' && Boolean(article.director || article.image)
-  const movieOpinionBody = article.body.replace(/^## My Opinion\r?$/m, '## My Take')
-  const articles = isOpinion ? getOpinions() : getWritingArticles()
-  const navigableArticles = isMovieOpinion
+  const isTake = article.type === 'take'
+  const isMovieTake = article.category === 'movies' && Boolean(article.director || article.image)
+  const movieTakeBody = article.body.replace(/^## My Opinion\r?$/m, '## My Take')
+  const articles = isTake ? getTakes() : getWritingArticles()
+  const navigableArticles = isMovieTake
     ? articles.filter((candidate) => candidate.category === 'movies' && !candidate.isPlaceholder)
     : articles
   const articleIndex = navigableArticles.findIndex((candidate) => candidate.slug === slug)
   const newerArticle = articleIndex > 0 ? navigableArticles[articleIndex - 1] : null
   const olderArticle = articleIndex < navigableArticles.length - 1 ? navigableArticles[articleIndex + 1] : null
   const category = formatWritingCategory(article.category)
-  const basePath = isOpinion ? '/opinions' : '/writing'
+  const basePath = isTake ? '/takes' : '/writing'
   const genresList = article.genres
     ? article.genres.split(',').map((g) => g.trim()).filter(Boolean)
     : []
@@ -145,13 +145,13 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
         <article>
           <Link
             className="writing-back technical-label"
-            href={isOpinion ? (article.category === 'books' ? '/opinions/books' : article.category === 'technology' ? '/opinions/technology' : '/opinions') : '/'}
-            prefetch={isMovieOpinion ? true : undefined}
+            href={isTake ? (article.category === 'books' ? '/takes/books' : article.category === 'technology' ? '/takes/technology' : '/takes') : '/'}
+            prefetch={isMovieTake ? true : undefined}
           >
-            {isOpinion ? '← Back to Opinions' : '← Back home'}
+            {isTake ? '← Back to Takes' : '← Back home'}
           </Link>
 
-          {isMovieOpinion ? (
+          {isMovieTake ? (
             <>
               <header className="opinion-movie-header">
                 <div className="opinion-movie-poster-col">
@@ -265,21 +265,21 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
             </>
           )}
 
-          {isMovieOpinion && (
+          {isMovieTake && (
             <div className="opinion-section-divider">
               <span className="technical-label">Personal Perspective</span>
             </div>
           )}
 
-          {isMovieOpinion ? (
+          {isMovieTake ? (
             <div className="opinion-movie-perspective">
-              <MarkdownContent source={movieOpinionBody} />
+              <MarkdownContent source={movieTakeBody} />
             </div>
           ) : (
             <MarkdownContent source={article.body} />
           )}
 
-          <nav className={`writing-article-nav${isMovieOpinion ? ' opinion-movie-nav' : ''}`} aria-label={isOpinion ? 'More opinions' : 'More thoughts'}>
+          <nav className={`writing-article-nav${isMovieTake ? ' opinion-movie-nav' : ''}`} aria-label={isTake ? 'More takes' : 'More thoughts'}>
             {newerArticle ? (
               <Link href={`${basePath}/${newerArticle.slug}`}>
                 <span className="technical-label">← Newer</span>

@@ -22,7 +22,7 @@ editing: "Joan Manel Vilaseca"
 music: "Sergio Moure de Oteyza"
 genres: "Psychological Drama, Psychological Thriller, Crime, Drama, Mystery, Thriller"
 synopsis: "A detective investigates the disappearance of a woman's body from a morgue, uncovering a mystery in which appearances and motives become increasingly difficult to trust."
-type: opinion
+type: take
 draft: false
 ---
 

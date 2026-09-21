@@ -23,7 +23,7 @@ excerpt: "Four interconnected individuals in Brooklyn find their dreams unraveli
 readingTime: 1 min read
 image: /images/opinions/requiem-for-a-dream.jpg
 imageAlt: "Requiem for a Dream movie poster"
-type: opinion
+type: take
 draft: false
 ---
 

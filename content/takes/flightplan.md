@@ -22,7 +22,7 @@ editing: "Thom Noble"
 music: "James Horner"
 genres: "Mystery, Thriller, Psychological Thriller, Drama"
 synopsis: "While travelling aboard an aircraft after a recent loss, a woman discovers that her young daughter has suddenly disappeared. As she searches the plane, the people around her begin questioning whether the girl was ever on board."
-type: opinion
+type: take
 draft: false
 ---
 

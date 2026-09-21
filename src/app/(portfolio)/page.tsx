@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic'
 import { About } from '@/components/sections/About'
 import { Hero } from '@/components/sections/Hero'
 import { Lab } from '@/components/sections/Lab'
-import { Opinions } from '@/components/sections/Opinions'
+import { Takes } from '@/components/sections/Takes'
 import { Projects } from '@/components/sections/Projects'
 import { Services } from '@/components/sections/Services'
 import { Skills } from '@/components/sections/Skills'
@@ -110,7 +110,7 @@ export default async function HomePage() {
       <main>
         <Hero profile={data.profile} />
         <About />
-        <Opinions />
+        <Takes />
         <Projects projects={data.projects} />
         <Skills skillGroups={data.skillGroups} />
         <Services />

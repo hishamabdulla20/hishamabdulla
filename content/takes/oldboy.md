@@ -25,7 +25,7 @@ excerpt: "Imprisoned without explanation for fifteen years, a desperate man is a
 readingTime: 1 min read
 image: /images/opinions/oldboy.jpg
 imageAlt: "Oldboy movie poster"
-type: opinion
+type: take
 draft: false
 ---
 

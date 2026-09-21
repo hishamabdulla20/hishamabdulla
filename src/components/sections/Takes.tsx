@@ -66,27 +66,27 @@ const opinionCategories = [
   {
     key: 'movies',
     title: 'Movies',
-    href: '/opinions',
+    href: '/takes',
     icon: MoviesIcon,
   },
   {
     key: 'books',
     title: 'Books',
-    href: '/opinions/books',
+    href: '/takes/books',
     icon: BooksIcon,
   },
   {
     key: 'technology',
     title: 'Technology',
-    href: '/opinions/technology',
+    href: '/takes/technology',
     icon: TechnologyIcon,
   },
 ] as const
 
-export function Opinions() {
+export function Takes() {
   return (
-    <section className="section-block opinions-section grid-field" id="opinions" aria-labelledby="opinions-title" data-reveal>
-      <SectionHeader id="opinions-title" number="02" eyebrow="Opinions" title="Through my" italic="eyes." />
+    <section className="section-block opinions-section grid-field" id="takes" aria-labelledby="takes-title" data-reveal>
+      <SectionHeader id="takes-title" number="02" eyebrow="Takes" title="Through my" italic="eyes." />
       <p className="section-intro">My thoughts on films, books, technology, and everything that makes me think.</p>
       <div className="opinion-grid">
         {opinionCategories.map((category) => {
@@ -96,7 +96,7 @@ export function Opinions() {
               className="opinion-card"
               href={category.href}
               key={category.key}
-              aria-label={`Explore ${category.title} opinions`}
+              aria-label={`Explore ${category.title} takes`}
             >
               <div className="opinion-card__icon-wrap">
                 <Icon />
@@ -106,7 +106,7 @@ export function Opinions() {
               </div>
               <div className="opinion-card__footer">
                 <span className="opinion-card__action technical-label">
-                  Explore opinions <span className="opinion-card__arrow" aria-hidden="true">→</span>
+                  Explore takes <span className="opinion-card__arrow" aria-hidden="true">→</span>
                 </span>
               </div>
             </Link>

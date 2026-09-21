@@ -24,7 +24,7 @@ editing: "Haritz Zubillaga, Elena Ruiz"
 music: "Aranzazu Calleja"
 genres: "Thriller, Sci-Fi, Horror, Dystopian, Drama"
 synopsis: "In a vertical prison where inmates live on different levels, food is delivered on a platform that descends from the top. As those above take more than they need, the people below are left to survive on what remains."
-type: opinion
+type: take
 draft: false
 ---
 

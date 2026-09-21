@@ -25,7 +25,7 @@ excerpt: "An aspiring photographer documents the turbulent evolution of gang war
 readingTime: 1 min read
 image: /images/opinions/city-of-god.jpg
 imageAlt: "City of God movie poster"
-type: opinion
+type: take
 draft: false
 ---
 

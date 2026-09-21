@@ -1,20 +1,20 @@
 import type { Metadata } from 'next'
 import { RevealController } from '@/components/ui/RevealController'
-import { MovieGridWithSort } from '@/components/opinions/MovieGridWithSort'
+import { MovieGridWithSort } from '@/components/takes/MovieGridWithSort'
 import { absoluteUrl, siteConfig } from '@/lib/site-config'
-import { getOpinionsMeta } from '@/lib/writing'
+import { getTakesMeta } from '@/lib/writing'
 
 const description = 'Personal opinions, reflections, and reviews on cinema and films from Hisham Abdulla.'
 
 export const metadata: Metadata = {
-  title: 'Movies | Opinions',
+  title: 'Movies | Takes',
   description,
-  alternates: { canonical: absoluteUrl('/opinions') },
+  alternates: { canonical: absoluteUrl('/takes') },
   openGraph: {
     type: 'website',
-    url: absoluteUrl('/opinions'),
+    url: absoluteUrl('/takes'),
     siteName: siteConfig.name,
-    title: `Movies | Opinions | ${siteConfig.name}`,
+    title: `Movies | Takes | ${siteConfig.name}`,
     description,
     images: [
       {
@@ -27,21 +27,21 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary',
-    title: `Movies | Opinions | ${siteConfig.name}`,
+    title: `Movies | Takes | ${siteConfig.name}`,
     description,
     images: ['/images/hisham-portrait.png'],
   },
 }
 
-export default function OpinionsPage() {
-  const movies = getOpinionsMeta().filter((opinion) => opinion.category === 'movies')
+export default function TakesPage() {
+  const movies = getTakesMeta().filter((take) => take.category === 'movies')
 
   return (
     <>
       <RevealController />
       <main className="writing-page opinions-page" id="top">
         <header className="writing-hero opinions-hero grid-field" data-reveal>
-          <p className="writing-hero__eyebrow technical-label">Opinions</p>
+          <p className="writing-hero__eyebrow technical-label">Takes</p>
           <h1>Movies</h1>
           <p>My personal opinions about movies.</p>
         </header>

@@ -2,17 +2,17 @@ import type { Metadata } from 'next'
 import { RevealController } from '@/components/ui/RevealController'
 import { absoluteUrl, siteConfig } from '@/lib/site-config'
 
-const description = 'Technology notes and perspectives from Hisham Abdulla.'
+const description = 'Book reviews and reflections from Hisham Abdulla.'
 
 export const metadata: Metadata = {
-  title: 'Technology | Opinions',
+  title: 'Books | Takes',
   description,
-  alternates: { canonical: absoluteUrl('/opinions/technology') },
+  alternates: { canonical: absoluteUrl('/takes/books') },
   openGraph: {
     type: 'website',
-    url: absoluteUrl('/opinions/technology'),
+    url: absoluteUrl('/takes/books'),
     siteName: siteConfig.name,
-    title: `Technology | Opinions | ${siteConfig.name}`,
+    title: `Books | Takes | ${siteConfig.name}`,
     description,
     images: [
       {
@@ -25,21 +25,21 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary',
-    title: `Technology | Opinions | ${siteConfig.name}`,
+    title: `Books | Takes | ${siteConfig.name}`,
     description,
     images: ['/images/hisham-portrait.png'],
   },
 }
 
-export default function TechnologyOpinionsPage() {
+export default function BooksTakesPage() {
   return (
     <>
       <RevealController />
       <main className="writing-page opinions-page" id="top">
         <header className="writing-hero opinions-hero grid-field" data-reveal>
-          <p className="writing-hero__eyebrow technical-label">Opinions</p>
-          <h1>Technology</h1>
-          <p>Technology notes and perspectives are coming soon.</p>
+          <p className="writing-hero__eyebrow technical-label">Takes</p>
+          <h1>Books</h1>
+          <p>Book reviews and reflections are coming soon.</p>
         </header>
       </main>
     </>

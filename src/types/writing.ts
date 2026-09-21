@@ -23,7 +23,7 @@ export type WritingArticleMeta = {
   date: string
   excerpt: string
   readingTime: string
-  type?: 'opinion' | 'thought'
+  type?: 'take' | 'thought'
   isPlaceholder?: boolean
   subtitle?: string
   image?: string

@@ -12,7 +12,7 @@ import {
 } from '@/types/writing'
 
 const writingDirectory = join(process.cwd(), 'content', 'writing')
-const opinionsDirectory = join(process.cwd(), 'content', 'opinions')
+const takesDirectory = join(process.cwd(), 'content', 'takes')
 const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 const datePattern = /^\d{4}-\d{2}-\d{2}$/
 
@@ -87,7 +87,7 @@ function estimateReadingTime(body: string): string {
 function parseArticle(
   filename: string,
   directory: string,
-  defaultType: 'opinion' | 'thought',
+  defaultType: 'take' | 'thought',
 ): WritingArticle | null {
   const source = readFileSync(join(directory, filename), 'utf8')
   const { data, body } = parseDocument(source, filename)
@@ -117,7 +117,7 @@ function parseArticle(
   }
   if (!body) throw new Error(`[writing] ${filename} has no article body.`)
 
-  const articleType: 'opinion' | 'thought' = data.type === 'opinion' || data.type === 'thought'
+  const articleType: 'take' | 'thought' = data.type === 'take' || data.type === 'thought'
     ? data.type
     : defaultType
 
@@ -174,22 +174,22 @@ export const getWritingArticles = cache((): WritingArticle[] => {
     .sort((a, b) => b.date.localeCompare(a.date))
 })
 
-export const getOpinions = cache((): WritingArticle[] => {
-  if (!existsSync(opinionsDirectory)) return []
-  const filenames = readdirSync(opinionsDirectory)
+export const getTakes = cache((): WritingArticle[] => {
+  if (!existsSync(takesDirectory)) return []
+  const filenames = readdirSync(takesDirectory)
     .filter((filename) => filename.endsWith('.md') && !filename.startsWith('_'))
     .sort()
 
   return filenames
-    .map((filename) => parseArticle(filename, opinionsDirectory, 'opinion'))
+    .map((filename) => parseArticle(filename, takesDirectory, 'take'))
     .filter((article): article is WritingArticle => Boolean(article))
     .sort((a, b) => b.date.localeCompare(a.date))
 })
 
 export function getWritingArticle(slug: string): WritingArticle | null {
   if (!slugPattern.test(slug)) return null
-  const opinion = getOpinions().find((article) => article.slug === slug)
-  if (opinion) return opinion
+  const take = getTakes().find((article) => article.slug === slug)
+  if (take) return take
   return getWritingArticles().find((article) => article.slug === slug) ?? null
 }
 
@@ -197,8 +197,8 @@ export function getWritingArticleMeta(): WritingArticleMeta[] {
   return getWritingArticles().map(({ body: _body, ...article }) => article)
 }
 
-export function getOpinionsMeta(): WritingArticleMeta[] {
-  return getOpinions().map(({ body: _body, ...article }) => article)
+export function getTakesMeta(): WritingArticleMeta[] {
+  return getTakes().map(({ body: _body, ...article }) => article)
 }
 
 export function formatWritingDate(date: string): string {

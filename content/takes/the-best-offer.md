@@ -22,7 +22,7 @@ editing: "Massimo Quaglia"
 music: "Ennio Morricone"
 genres: "Psychological Drama, Crime, Drama, Mystery, Romance, Thriller"
 synopsis: "Virgil Oldman, a wealthy art auctioneer, takes the help of a young artificer, Robert, to understand and woo Claire Ibbetson, a young heiress who hires him to auction off an antique collection."
-type: opinion
+type: take
 draft: false
 ---
 

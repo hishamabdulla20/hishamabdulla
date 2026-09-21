@@ -23,7 +23,7 @@ editing: "Eric A. Sears"
 music: "Terence Blanchard"
 genres: "Romance, Thriller, Mystery, Drama"
 synopsis: "A wealthy Cuban businessman marries a woman with whom he has corresponded from afar. As their relationship unfolds, he begins to discover that appearances and identities may not be what they seem."
-type: opinion
+type: take
 draft: false
 ---
 
