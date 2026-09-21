@@ -4,11 +4,14 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { navigation } from '../../data/portfolio'
+import type { SocialLink } from '../../types/portfolio'
+import { SocialLinks } from '../ui/SocialLinks'
 
 type Theme = 'dark' | 'light'
 type AuthState = { user: { email?: string | null; user_metadata?: Record<string, string> } | null; loading: boolean }
 
 const themeStorageKey = 'portfolio-theme'
+const navbarSocialLabels = new Set(['github', 'linkedin', 'email', 'instagram'])
 
 function applyTheme(theme: Theme) {
   document.documentElement.dataset.theme = theme
@@ -18,7 +21,7 @@ function applyTheme(theme: Theme) {
     ?.setAttribute('content', theme === 'light' ? '#F3EFE5' : '#000000')
 }
 
-export function Navbar() {
+export function Navbar({ socialLinks }: { socialLinks: SocialLink[] }) {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
   const [theme, setTheme] = useState<Theme>('dark')
@@ -198,6 +201,10 @@ export function Navbar() {
     }
   }
 
+  const navbarSocialLinks = socialLinks.filter((link) => (
+    navbarSocialLabels.has(link.label.toLowerCase())
+  ))
+
   return (
     <header
       ref={headerRef}
@@ -212,6 +219,7 @@ export function Navbar() {
         HA<span className="wordmark__dot">.</span>
       </Link>
       <div className="header-actions">
+        <SocialLinks links={navbarSocialLinks} iconsOnly className="header-social-links" />
         <button
           className="theme-toggle"
           type="button"
@@ -279,6 +287,14 @@ export function Navbar() {
               </Link>
             </li>
           ))}
+          <li className="nav-social-item">
+            <SocialLinks
+              links={navbarSocialLinks}
+              iconsOnly
+              className="nav-social-links"
+              onLinkClick={() => setIsOpen(false)}
+            />
+          </li>
           {!authLoading && (
             <li className="nav-auth-item">
               {user ? (

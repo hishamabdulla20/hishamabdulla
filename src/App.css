@@ -241,7 +241,38 @@ main { background: transparent; }
   border-color: var(--sepia);
 }
 
-.primary-nav .nav-auth-item { display: none; }
+.primary-nav .nav-auth-item,
+.primary-nav .nav-social-item { display: none; }
+
+.header-actions .header-social-links {
+  align-items: center;
+  gap: 0.65rem;
+  margin: 0;
+  padding: 0 0.9rem;
+  border-right: 1px solid var(--hairline);
+}
+
+.social-list--icons .social-link {
+  width: 1.5rem;
+  height: 1.5rem;
+  justify-content: center;
+  color: var(--color-nav-text);
+}
+
+.social-list--icons .social-link__icon {
+  width: 1.0625rem;
+  height: 1.0625rem;
+}
+
+.social-list--icons .social-link::after { display: none; }
+
+.social-list--icons .social-link:hover,
+.social-list--icons .social-link:focus-visible { color: var(--sepia); }
+
+.social-list--icons .social-link:hover .social-link__icon,
+.social-list--icons .social-link:focus-visible .social-link__icon {
+  transform: translateY(-0.1rem);
+}
 
 .theme-toggle svg {
   width: 1.05rem;
@@ -494,6 +525,10 @@ main { background: transparent; }
   .hero-section { grid-template-columns: minmax(0, 1.1fr) minmax(20rem, 0.9fr); }
 }
 
+@media (max-width: 1060px) {
+  .header-actions .header-social-links { display: none; }
+}
+
 @media (max-width: 820px) {
   .site-header { height: 4.5rem; grid-template-columns: 4.5rem 1fr 6.7rem; }
   .menu-toggle { display: flex; justify-content: center; grid-column: 3; cursor: pointer; border-left: 1px solid var(--hairline); }
@@ -592,7 +627,25 @@ main { background: transparent; }
   .primary-nav ul { flex-direction: column; align-items: stretch; gap: 0; padding: 0; }
   .primary-nav li { display: block; border-bottom: 1px solid var(--hairline); }
   .primary-nav li:first-child { border-top: 1px solid var(--hairline); }
-  .primary-nav .nav-auth-item { display: list-item; }
+  .primary-nav .nav-auth-item,
+  .primary-nav .nav-social-item { display: list-item; }
+  .primary-nav .nav-social-item { padding: 0.7rem 0.25rem; }
+  .primary-nav .nav-social-links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 0;
+  }
+  .primary-nav .nav-social-links .social-link {
+    width: 2.75rem;
+    min-height: 2.75rem;
+    justify-content: center;
+    padding: 0;
+  }
+  .primary-nav .nav-social-links .social-link__icon {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
   .primary-nav a {
     min-height: clamp(3.75rem, 8.5vh, 4.75rem);
     display: flex;
