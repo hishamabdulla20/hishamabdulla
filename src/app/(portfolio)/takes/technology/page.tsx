@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     description,
     images: [
       {
-        url: '/images/hisham-portrait.png',
+        url: '/images/profile-portrait.jpg',
         width: 1254,
         height: 1254,
         alt: `Portrait of ${siteConfig.name}`,
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     card: 'summary',
     title: `Technology | Takes | ${siteConfig.name}`,
     description,
-    images: ['/images/hisham-portrait.png'],
+    images: ['/images/profile-portrait.jpg'],
   },
 }
 

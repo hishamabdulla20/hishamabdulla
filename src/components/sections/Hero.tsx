@@ -42,14 +42,10 @@ export function Hero({ profile }: { profile: Profile }) {
         </div>
       </div>
       <div className="hero-portrait">
-        <div
-          className="hero-portrait__frame"
-          role="img"
-          aria-label={`Portrait of ${profile.name}`}
-        >
+        <div className="hero-portrait__frame">
           <Image
             src={darkPortraitUrl}
-            alt=""
+            alt="Portrait of Hisham Abdulla A P"
             fill
             priority
             sizes="(max-width: 768px) 90vw, (max-width: 1200px) 45vw, 512px"
@@ -57,10 +53,11 @@ export function Hero({ profile }: { profile: Profile }) {
           />
           <Image
             src={lightPortraitUrl}
-            alt=""
+            alt="Hisham Abdulla A P"
             fill
             sizes="(max-width: 768px) 90vw, (max-width: 1200px) 45vw, 512px"
             className="hero-portrait__image hero-portrait__image--light"
+            aria-hidden="true"
           />
         </div>
       </div>

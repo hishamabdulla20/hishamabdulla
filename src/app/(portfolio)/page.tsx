@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     description: siteConfig.openGraphDescription,
     images: [
       {
-        url: '/images/hisham-portrait.png',
+        url: '/images/profile-portrait.jpg',
         width: 1254,
         height: 1254,
         alt: `Portrait of ${siteConfig.name}`,
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     card: 'summary',
     title: siteConfig.title,
     description: siteConfig.description,
-    images: ['/images/hisham-portrait.png'],
+    images: ['/images/profile-portrait.jpg'],
   },
 }
 
@@ -64,7 +64,7 @@ export default async function HomePage() {
   const knowsAbout = data.skillGroups
     .filter((group) => !group.isPlaceholder)
     .flatMap((group) => group.skills)
-  const portraitUrl = data.profile.portraitUrl || '/images/hisham-portrait.png'
+  const portraitUrl = data.profile.portraitUrl || '/images/profile-portrait.jpg'
 
   const structuredData = {
     '@context': 'https://schema.org',
@@ -72,7 +72,7 @@ export default async function HomePage() {
       {
         '@type': 'Person',
         '@id': `${siteConfig.url}#person`,
-        name: siteConfig.name,
+        name: siteConfig.fullName,
         alternateName: siteConfig.alternateNames,
         url: siteConfig.url,
         image: absoluteUrl(portraitUrl),

@@ -60,7 +60,7 @@ export async function generateMetadata({ params }: WritingArticlePageProps): Pro
       title: fullTitle,
       description: article.excerpt,
       publishedTime: `${article.date}T00:00:00Z`,
-      authors: [siteConfig.name],
+      authors: [siteConfig.fullName],
       ...(socialImage ? { images: [socialImage] } : {}),
     },
     twitter: {
@@ -122,14 +122,14 @@ export default async function WritingArticlePage({ params }: WritingArticlePageP
     author: {
       '@type': 'Person',
       '@id': `${siteConfig.url}#person`,
-      name: siteConfig.name,
-      alternateName: siteConfig.fullName,
+      name: siteConfig.fullName,
+      alternateName: siteConfig.alternateNames,
       url: siteConfig.url,
     },
     publisher: {
       '@type': 'Person',
       '@id': `${siteConfig.url}#person`,
-      name: siteConfig.name,
+      name: siteConfig.fullName,
       url: siteConfig.url,
     },
     ...(article.image ? { image: absoluteUrl(article.image) } : {}),

@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
   const socialTitle = `${article.title} | ${siteConfig.name}`
   const socialImage = article.coverImageUrl
     ? { url: article.coverImageUrl, alt: `Cover image for ${article.title}` }
-    : { url: '/images/hisham-portrait.png', alt: `Portrait of ${siteConfig.name}` }
+    : { url: '/images/profile-portrait.jpg', alt: `Portrait of ${siteConfig.fullName}` }
 
   return {
     title: article.title,
@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
       siteName: siteConfig.name,
       title: socialTitle,
       description: article.description,
-      authors: [siteConfig.name],
+      authors: [siteConfig.fullName],
       images: [socialImage],
     },
     twitter: {
