@@ -3,8 +3,8 @@ import type { Profile } from '../../types/portfolio'
 import { ButtonLink } from '../ui/ButtonLink'
 
 export function Hero({ profile }: { profile: Profile }) {
-  const darkPortraitUrl = profile.portraitUrl || '/images/hisham-portrait-dark.webp'
-  const lightPortraitUrl = profile.portraitUrl || '/images/hisham-portrait-light.webp'
+  const darkPortraitUrl = profile.portraitUrl || '/images/profile-portrait-dark.webp'
+  const lightPortraitUrl = profile.portraitUrl || '/images/profile-portrait-light.webp'
 
   return (
     <section className="hero-section grid-field" id="top" aria-labelledby="hero-title">
